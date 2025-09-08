@@ -28,7 +28,7 @@ import { Label } from '@/components/ui/label';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 // Import screenshots
-import logoP from '@/assets/logo-p.png';
+import prospectorLogo from '/lovable-uploads/ca9da5b8-7e1a-4901-9e3f-07d28a663c4b.png';
 import screenshot1 from '@/assets/screenshot-1.png';
 import screenshot2 from '@/assets/screenshot-2.png';
 import screenshot3 from '@/assets/screenshot-3.png';
@@ -118,7 +118,7 @@ export default function ProspectorLanding() {
         <div className="container mx-auto h-full flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center gap-2">
-            <img src={logoP} alt="Prospector logo" className="w-8 h-8" />
+            <img src={prospectorLogo} alt="Prospector logo" className="w-8 h-8" />
             <span className="text-body-s font-semibold tracking-wide hidden md:block">PROSPECTOR</span>
           </div>
 
@@ -166,7 +166,7 @@ export default function ProspectorLanding() {
             <div className="text-center lg:text-left">
               <motion.div className="mb-3">
                 <div className="flex items-center gap-2 justify-center lg:justify-start mb-2">
-                  <img src={logoP} alt="Prospector" className="w-6 h-6" />
+                  <img src={prospectorLogo} alt="Prospector" className="w-6 h-6" />
                   <span className="text-body-s font-medium text-text-medium">Prospector</span>
                 </div>
                 <p className="text-body-s text-text-medium">Your all-in-one sales gym</p>
@@ -700,7 +700,7 @@ export default function ProspectorLanding() {
             {/* Logo & Company */}
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <img src={logoP} alt="Prospector" className="w-6 h-6" />
+                <img src={prospectorLogo} alt="Prospector" className="w-6 h-6" />
                 <span className="font-semibold text-text-high">Prospector</span>
               </div>
             </div>
