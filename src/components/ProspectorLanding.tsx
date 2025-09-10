@@ -26,6 +26,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 
 // Import screenshots
 import prospectorLogo from '/lovable-uploads/ca9da5b8-7e1a-4901-9e3f-07d28a663c4b.png';
@@ -202,19 +203,84 @@ export default function ProspectorLanding() {
               </motion.div>
             </div>
 
-            {/* Hero Visual */}
+            {/* Hero Visual Carousel */}
             <motion.div 
               animate={shouldReduceMotion ? {} : { y: [0, -8, 0] }}
               transition={shouldReduceMotion ? {} : { duration: 6, repeat: Infinity, ease: "easeInOut" }}
               className="relative flex justify-center lg:justify-end"
             >
-              <div className="relative">
+              <div className="relative w-[350px] lg:w-[450px]">
                 <div className="absolute inset-0 bg-accent-glow/40 blur-[120px] rounded-full transform scale-150" />
-                <img 
-                  src="/lovable-uploads/f0760eb8-3e65-4be2-8896-12f6399c28f4.png" 
-                  alt="Prospector app showing progress tracking and confidence metrics" 
-                  className="relative w-[300px] lg:w-[400px] h-auto rounded-2xl shadow-card transform rotate-[8deg] hover:rotate-[6deg] transition-transform duration-300"
-                />
+                <Carousel className="relative w-full">
+                  <CarouselContent>
+                    <CarouselItem>
+                      <img 
+                        src="/lovable-uploads/f0760eb8-3e65-4be2-8896-12f6399c28f4.png" 
+                        alt="Prospector app showing progress tracking and confidence metrics" 
+                        className="relative w-[300px] lg:w-[400px] h-auto rounded-2xl shadow-card transform rotate-[8deg] hover:rotate-[6deg] transition-transform duration-300 mx-auto"
+                      />
+                    </CarouselItem>
+                    <CarouselItem>
+                      <img 
+                        src="/lovable-uploads/174515f4-2764-45a7-94c0-6fc000700708.png" 
+                        alt="Prospector app dashboard with quick actions and practice sessions" 
+                        className="relative w-[300px] lg:w-[400px] h-auto rounded-2xl shadow-card transform rotate-[8deg] hover:rotate-[6deg] transition-transform duration-300 mx-auto"
+                      />
+                    </CarouselItem>
+                    <CarouselItem>
+                      <img 
+                        src="/lovable-uploads/af58059c-852e-4f10-aa65-7c6e38d4752e.png" 
+                        alt="Prospector practice scenarios and difficulty settings" 
+                        className="relative w-[300px] lg:w-[400px] h-auto rounded-2xl shadow-card transform rotate-[8deg] hover:rotate-[6deg] transition-transform duration-300 mx-auto"
+                      />
+                    </CarouselItem>
+                    <CarouselItem>
+                      <img 
+                        src="/lovable-uploads/ba1cac70-bf7c-474f-a593-07b4425a1783.png" 
+                        alt="Prospector practice session setup and AI prospect simulation" 
+                        className="relative w-[300px] lg:w-[400px] h-auto rounded-2xl shadow-card transform rotate-[8deg] hover:rotate-[6deg] transition-transform duration-300 mx-auto"
+                      />
+                    </CarouselItem>
+                    <CarouselItem>
+                      <img 
+                        src="/lovable-uploads/8fd65cbd-798f-47f2-8496-9aae12212e27.png" 
+                        alt="Prospector performance breakdown and AI coach feedback" 
+                        className="relative w-[300px] lg:w-[400px] h-auto rounded-2xl shadow-card transform rotate-[8deg] hover:rotate-[6deg] transition-transform duration-300 mx-auto"
+                      />
+                    </CarouselItem>
+                    <CarouselItem>
+                      <img 
+                        src="/lovable-uploads/d4e9d449-8ef0-4fb7-a0ba-da91a411c9c1.png" 
+                        alt="Prospector call upload and review features" 
+                        className="relative w-[300px] lg:w-[400px] h-auto rounded-2xl shadow-card transform rotate-[8deg] hover:rotate-[6deg] transition-transform duration-300 mx-auto"
+                      />
+                    </CarouselItem>
+                    <CarouselItem>
+                      <img 
+                        src="/lovable-uploads/003235b7-d316-4ae7-9962-36ad0e1bcc2d.png" 
+                        alt="Prospector AI insights and psychological analysis" 
+                        className="relative w-[300px] lg:w-[400px] h-auto rounded-2xl shadow-card transform rotate-[8deg] hover:rotate-[6deg] transition-transform duration-300 mx-auto"
+                      />
+                    </CarouselItem>
+                    <CarouselItem>
+                      <img 
+                        src="/lovable-uploads/9f18a205-33d8-4f5b-a3f2-b9c027edd7fc.png" 
+                        alt="Prospector replay mode and moment selection" 
+                        className="relative w-[300px] lg:w-[400px] h-auto rounded-2xl shadow-card transform rotate-[8deg] hover:rotate-[6deg] transition-transform duration-300 mx-auto"
+                      />
+                    </CarouselItem>
+                  </CarouselContent>
+                  <CarouselPrevious className="left-4 bg-surface-1/80 backdrop-blur-sm border-divider hover:bg-surface-1" />
+                  <CarouselNext className="right-4 bg-surface-1/80 backdrop-blur-sm border-divider hover:bg-surface-1" />
+                </Carousel>
+                
+                {/* View More Indicator */}
+                <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2">
+                  <div className="flex items-center gap-2 text-text-low text-sm">
+                    <span>Swipe to explore features</span>
+                    <ChevronRight className="w-4 h-4 animate-pulse" />
+                  </div>
+                </div>
               </div>
             </motion.div>
           </MotionDiv>
