@@ -211,8 +211,8 @@ export default function ProspectorLanding() {
               <div className="relative">
                 <div className="absolute inset-0 bg-accent-glow/40 blur-[120px] rounded-full transform scale-150" />
                 <img 
-                  src={screenshot1} 
-                  alt="Prospector dashboard showing Quick Actions" 
+                  src="/lovable-uploads/f0760eb8-3e65-4be2-8896-12f6399c28f4.png" 
+                  alt="Prospector app showing progress tracking and confidence metrics" 
                   className="relative w-[300px] lg:w-[400px] h-auto rounded-2xl shadow-card transform rotate-[8deg] hover:rotate-[6deg] transition-transform duration-300"
                 />
               </div>
