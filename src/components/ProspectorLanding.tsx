@@ -193,18 +193,11 @@ export default function ProspectorLanding() {
                 <Button 
                   variant="ghost" 
                   size="lg" 
-                  asChild
+                  onClick={() => window.open('https://instagram.com/prospector.app', '_blank')}
                   className="w-full sm:w-auto"
                 >
-                  <a 
-                    href="https://instagram.com/prospector.app" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center"
-                  >
-                    <Instagram className="w-4 h-4 mr-2" />
-                    Follow on Instagram
-                  </a>
+                  <Instagram className="w-4 h-4 mr-2" />
+                  Follow on Instagram
                 </Button>
               </motion.div>
             </div>
@@ -675,16 +668,13 @@ export default function ProspectorLanding() {
               <Button variant="primary" size="lg" onClick={scrollToBeta}>
                 Join the Beta
               </Button>
-              <Button variant="ghost" size="lg" asChild>
-                <a 
-                  href="https://instagram.com/prospector.app" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center"
-                >
-                  <Instagram className="w-4 h-4 mr-2" />
-                  Follow on Instagram
-                </a>
+              <Button 
+                variant="ghost" 
+                size="lg"
+                onClick={() => window.open('https://instagram.com/prospector.app', '_blank')}
+              >
+                <Instagram className="w-4 h-4 mr-2" />
+                Follow on Instagram
               </Button>
             </div>
             
@@ -726,15 +716,13 @@ export default function ProspectorLanding() {
             {/* Social */}
             <div>
               <h4 className="text-body-s font-medium text-text-high mb-4">Social</h4>
-              <a 
-                href="https://instagram.com/prospector.app" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 text-body-s text-text-medium hover:text-text-high transition-colors"
+              <button
+                onClick={() => window.open('https://instagram.com/prospector.app', '_blank')}
+                className="flex items-center gap-2 text-body-s text-text-medium hover:text-text-high transition-colors cursor-pointer"
               >
                 <Instagram className="w-4 h-4" />
                 Instagram
-              </a>
+              </button>
             </div>
           </div>
 
