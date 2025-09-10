@@ -27,6 +27,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 // Import screenshots
 import prospectorLogo from '/lovable-uploads/ca9da5b8-7e1a-4901-9e3f-07d28a663c4b.png';
@@ -72,7 +73,7 @@ const floatVariants = {
 
 export default function ProspectorLanding() {
   const [isNavVisible, setIsNavVisible] = useState(false);
-  const [formData, setFormData] = useState({ email: '', name: '' });
+  const [formData, setFormData] = useState({ email: '', name: '', reason: '' });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const shouldReduceMotion = useReducedMotion();
@@ -642,15 +643,38 @@ export default function ProspectorLanding() {
                         />
                       </div>
                     </div>
-                    <Button 
-                      type="submit" 
-                      variant="primary" 
-                      size="lg" 
-                      className="w-full"
-                      disabled={isLoading}
-                    >
-                      {isLoading ? 'Joining...' : 'Join the Beta'}
-                    </Button>
+                    <div className="space-y-2">
+                      <Label htmlFor="reason" className="text-text-medium">Why you want access</Label>
+                      <Select value={formData.reason} onValueChange={(value) => setFormData({ ...formData, reason: value })}>
+                        <SelectTrigger className="bg-surface-2 border-border focus:border-accent-primary">
+                          <SelectValue placeholder="Select your primary goal" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="practice-cold-calling">Practice cold calling</SelectItem>
+                          <SelectItem value="improve-objection-handling">Improve objection handling</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="flex flex-col sm:flex-row gap-3">
+                      <Button 
+                        type="submit" 
+                        variant="primary" 
+                        size="lg" 
+                        className="flex-1"
+                        disabled={isLoading}
+                      >
+                        {isLoading ? 'Joining...' : 'Join the Beta'}
+                      </Button>
+                      <Button 
+                        type="button" 
+                        variant="ghost" 
+                        size="lg" 
+                        className="flex-1"
+                        onClick={() => window.open('mailto:feedback@prospector.app?subject=Feature Request', '_blank')}
+                      >
+                        Submit a feature request
+                      </Button>
+                    </div>
                   </form>
                 </CardContent>
               </Card>
