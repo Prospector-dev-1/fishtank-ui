@@ -1,0 +1,53 @@
+You are Lovable.dev. Create a single project called “Unified App” that merges three existing UIs (Creator, Innovator, Investor) into one codebase with a shared Supabase backend and role-based routing.
+
+Onboarding & Role Selection
+• First run shows a full-screen selector at /onboarding: “What best describes you?” Buttons: Creator, Innovator, Investor.
+• On select: save to localStorage key userRole and Supabase profiles.role; then redirect per mapping:
+  - Creator → /creator/dashboard
+  - Innovator → /innovator/dashboard
+  - Investor → /investor/dashboard
+• Add a Settings screen that allows changing role later (updates profiles.role and userRole).
+
+Backend
+• Use Supabase as the single backend. Read credentials from env:
+  - NEXT_PUBLIC_SUPABASE_URL
+  - NEXT_PUBLIC_SUPABASE_ANON_KEY
+  - SUPABASE_SERVICE_KEY (server only)
+• Initialize Supabase client for client and server usage. Lock all data access to this backend; remove references to Lovable Cloud storage.
+
+Routing & Guards
+• Public routes: /, /onboarding, /auth/*, /pricing
+• Protected routes: /app/*, /creator/*, /innovator/*, /investor/*
+• If not authenticated, redirect protected routes to /auth/sign-in.
+• After auth, route by role using localStorage userRole and profiles.role; if they disagree, prefer profiles.role.
+
+Namespaces & Imports
+• Create three route namespaces and mount each UI under them:
+  - /creator/*  (from Creator UI package)
+  - /innovator/* (from Innovator UI package)
+  - /investor/* (from Investor UI package)
+• Keep per-role component folders and avoid cross-imports unless explicitly referenced.
+• For duplicate component names across roles, rename with -creator / -innovator / -investor and update imports.
+
+Data Models & Services
+• Preserve API shapes found in source packages. For any fetch/axios calls or supabase.from() usages, point them to Supabase or /api routes.
+• Implement profiles table with role column (enum: creator|innovator|investor). RLS: users can read/write their own profile; admins bypass via service role.
+• Shared tables (create if missing): users, profiles, pitches, messages, investments, follows, credits. Do not invent columns—only scaffold common ones.
+
+Auth
+• Enable Email + OAuth providers if present in the packages.
+• Guard protected routes; expose a useSession hook and sign-in/out actions.
+
+Design
+• Use existing Tailwind configs from packages; if conflicts, prefer latest and merge tokens minimally.
+• Global nav with tabs: Home, Discover, Create, Messages, Account. Tab content can be role-specific.
+
+Edge Functions
+• For any detected edge/server functions, scaffold Supabase Edge Functions with same names and provide /api/* passthrough endpoints.
+• Do not expose service key on the client.
+
+Artifacts Provided
+• master_manifest.json describing env keys, onboarding mapping, and namespaces.
+• conflict_report.txt listing filename collisions to resolve during import.
+
+Now ingest the three UI packages and apply this plan using master_manifest.json as the source of truth.
