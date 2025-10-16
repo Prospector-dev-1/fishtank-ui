@@ -1,6 +1,8 @@
-import { createContext, useContext, useEffect, useState, ReactNode } from "react";
-import { User, Session } from "@supabase/supabase-js";
-import { supabase } from "@/integrations/supabase/client";
+import { createContext, useContext, ReactNode } from "react";
+
+// Mock types - backend removed
+type User = { id: string; email: string; name?: string };
+type Session = { access_token: string; user: User };
 
 interface AuthContextType {
   user: User | null;
@@ -8,10 +10,14 @@ interface AuthContextType {
   loading: boolean;
 }
 
+// Mock user - always authenticated
+const mockUser: User = { id: 'demo-user-1', email: 'demo@fishtank.app', name: 'Demo User' };
+const mockSession: Session = { access_token: 'mock-token', user: mockUser };
+
 const AuthContext = createContext<AuthContextType>({
-  user: null,
-  session: null,
-  loading: true,
+  user: mockUser,
+  session: mockSession,
+  loading: false,
 });
 
 export const useAuth = () => {
@@ -23,32 +29,9 @@ export const useAuth = () => {
 };
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
-  const [session, setSession] = useState<Session | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    // Set up auth state listener FIRST
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        setSession(session);
-        setUser(session?.user ?? null);
-        setLoading(false);
-      }
-    );
-
-    // THEN check for existing session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setUser(session?.user ?? null);
-      setLoading(false);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
-
+  // Always return mock authenticated user - no backend
   return (
-    <AuthContext.Provider value={{ user, session, loading }}>
+    <AuthContext.Provider value={{ user: mockUser, session: mockSession, loading: false }}>
       {children}
     </AuthContext.Provider>
   );

@@ -1,26 +1,97 @@
-Unified App
+# Fishtank Unified Platform
 
-This repository merges three role-specific UIs (Creator, Innovator, Investor) into a single app with role-based routing and a shared Supabase backend, following master_manifest.json.
+**⚠️ IMPORTANT: Backend Removed**  
+This UI now uses local mocks in `src/mocks/`. All backend, cloud, and database code has been completely removed.
 
-Quickstart
-1) Install: pnpm i (or npm i / yarn)
-2) Env: copy .env.example to .env and set your Supabase keys.
-3) Run: pnpm dev
-4) First visit /onboarding to pick your role, then you'll be routed under /creator, /innovator, or /investor.
+See **`BACKEND_PURGE_COMPLETE.md`** for comprehensive details on what was removed and how to restore backend functionality.
 
-Env keys (from manifest env_matrix)
-- NEXT_PUBLIC_SUPABASE_ANON_KEY
-- NEXT_PUBLIC_SUPABASE_URL
-- SUPABASE_SERVICE_KEY
-- VITE_SUPABASE_PROJECT_ID
-- VITE_SUPABASE_PUBLISHABLE_KEY
-- VITE_SUPABASE_URL
+---
 
-Routing
-- Public: /, /onboarding
-- Protected (placeholder guard): /app/*, /creator/*, /innovator/*, /investor/*
+## Quick Start
 
-Notes
-- Each original UI is copied under src/roles/<role>.
-- You may need to reconcile internal imports or duplicated file names within those packages depending on how they reference absolute paths.
-- See conflict_report.txt for filename collisions (by basename) across roles.
+### Unified Landing Page
+```bash
+npm install
+npm run dev
+```
+Visit: http://localhost:5173
+
+### Independent Role Apps
+
+**Creator App** (Port 5174)
+```bash
+cd src/roles/creator
+npm install
+npm run dev -- --port 5174
+```
+
+**Innovator App** (Port 5175)
+```bash
+cd src/roles/innovator
+npm install
+npm run dev -- --port 5175
+```
+
+**Investor App** (Port 5176)
+```bash
+cd src/roles/investor
+npm install
+npm run dev -- --port 5176
+```
+
+---
+
+## Architecture
+
+- **Pure Client-Side**: Zero network calls, no backend dependencies
+- **Mock Data**: All data comes from `src/mocks/`
+- **No Authentication**: Auth pages navigate directly to app (no barriers)
+- **Offline-Capable**: Runs without internet connection
+
+---
+
+## Project Structure
+
+```
+/
+├── src/
+│   ├── mocks/              # Mock data layer (NEW)
+│   │   ├── data/          # JSON fixtures
+│   │   └── api.ts         # Mock API functions
+│   ├── pages/             # Unified landing pages
+│   ├── router/            # App routing
+│   ├── state/             # Zustand stores
+│   └── roles/             # Independent role apps
+│       ├── creator/       # Creator app (port 5174)
+│       ├── innovator/     # Innovator app (port 5175)
+│       └── investor/      # Investor app (port 5176)
+├── BACKEND_PURGE_COMPLETE.md   # Full purge documentation
+└── package.json           # Root dependencies
+```
+
+---
+
+## What Was Removed
+
+- ❌ Supabase (auth, database, realtime)
+- ❌ All SQL migrations (36 files)
+- ❌ Environment variables
+- ❌ Backend API calls
+- ❌ Cloud SDKs and services
+
+---
+
+## Tech Stack (Client-Side Only)
+
+- **Framework**: React 18 + TypeScript + Vite
+- **Styling**: Tailwind CSS + shadcn/ui
+- **Routing**: React Router v6
+- **State**: Zustand (local only)
+- **Forms**: React Hook Form + Zod
+- **UI**: Radix UI primitives
+- **Icons**: Lucide React
+- **Charts**: Recharts
+
+---
+
+For restoration instructions and full deletion details, see `BACKEND_PURGE_COMPLETE.md`.

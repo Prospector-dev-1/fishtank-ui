@@ -1,0 +1,1 @@
+{"root":["./src/main.tsx","./src/mocks/api.ts","./src/pages/onboarding.tsx","./src/router/app.tsx","./src/state/auth.ts"],"version":"5.9.3"}

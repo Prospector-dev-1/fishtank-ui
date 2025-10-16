@@ -185,6 +185,31 @@
     padding-right: var(--safe-area-right);
   }
 
+  /* Ensure proper text visibility - Override any white/light text */
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-foreground;
+    color: hsl(var(--foreground)) !important;
+  }
+
+  p, span, div, label, button:not(.bg-primary):not(.bg-gradient-primary):not([class*="gradient"]):not([class*="white"]):not([class*="destructive"]):not([class*="success"]):not([class*="warning"]) {
+    color: hsl(var(--foreground));
+  }
+
+  /* Ensure main element text is visible */
+  main {
+    color: hsl(var(--foreground));
+  }
+
+  /* Card text should always be visible */
+  [class*="Card"], [class*="card"], .ios-card {
+    color: hsl(var(--card-foreground));
+  }
+
+  /* Button text overrides */
+  button[class*="outline"], button[class*="secondary"], button[class*="ghost"] {
+    color: hsl(var(--foreground)) !important;
+  }
+
   /* iOS Typography Scale */
   .text-hero {
     font-size: 34px;

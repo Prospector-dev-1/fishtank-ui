@@ -417,7 +417,7 @@ export function SmartSwipeCard({
       </div>
 
       {/* Analytics Display (Development only) */}
-      {enableAnalytics && process.env.NODE_ENV === 'development' && (
+      {enableAnalytics && false && (
         <div className="mt-4 bg-muted p-3 rounded-lg text-xs">
           <div className="grid grid-cols-3 gap-4 text-center">
             <div>

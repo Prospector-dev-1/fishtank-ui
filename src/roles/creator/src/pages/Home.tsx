@@ -289,11 +289,14 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Earnings Overview */}
-      <Card className="bg-gradient-primary text-white shadow-elegant animate-scale-in">
+      {/* Earnings Overview Widget */}
+      <Card 
+        className="bg-gradient-primary text-white shadow-elegant animate-scale-in cursor-pointer hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]"
+        onClick={() => navigate('/earnings')}
+      >
         <CardContent className="p-6">
           <div className="flex items-center justify-between mb-4">
-            <div>
+            <div className="flex-1">
               <p className="text-white/80 text-sm font-medium">Total Earnings</p>
               <p className="text-3xl font-bold tracking-tight">${totalEarnings.toLocaleString()}</p>
               <p className="text-white/70 text-sm">Released: ${releasedEarnings.toLocaleString()}</p>
@@ -302,16 +305,34 @@ export default function Home() {
               <TrendingUp className="h-8 w-8 text-white" />
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-4 text-sm">
+          
+          <div className="grid grid-cols-3 gap-3 text-sm mb-4">
             <div className="bg-white/10 p-3 rounded-lg">
-              <p className="text-white/80 font-medium">This Month</p>
-              <p className="font-semibold text-lg">${thisMonthEarnings.toLocaleString()}</p>
+              <p className="text-white/80 font-medium text-xs">Held</p>
+              <p className="font-semibold text-base">${heldEarnings.toLocaleString()}</p>
             </div>
             <div className="bg-white/10 p-3 rounded-lg">
-              <p className="text-white/80 font-medium">Held</p>
-              <p className="font-semibold text-lg">${heldEarnings.toLocaleString()}</p>
+              <p className="text-white/80 font-medium text-xs">Pending</p>
+              <p className="font-semibold text-base">${pendingEarnings.toLocaleString()}</p>
+            </div>
+            <div className="bg-white/10 p-3 rounded-lg">
+              <p className="text-white/80 font-medium text-xs">This Month</p>
+              <p className="font-semibold text-base">${thisMonthEarnings.toLocaleString()}</p>
             </div>
           </div>
+
+          <Button 
+            variant="secondary" 
+            size="sm" 
+            className="w-full bg-white/20 hover:bg-white/30 text-white border-white/30"
+            onClick={(e) => {
+              e.stopPropagation();
+              navigate('/earnings');
+            }}
+          >
+            View Full Details
+            <DollarSign className="ml-2 h-4 w-4" />
+          </Button>
         </CardContent>
       </Card>
 

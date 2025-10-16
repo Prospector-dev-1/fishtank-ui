@@ -1,0 +1,23 @@
+[
+  {
+    "id": "s_001",
+    "name": "QuantPay",
+    "founder": "Sofia Duarte",
+    "stage": "Pre-Seed",
+    "sector": "Fintech",
+    "description": "Treasury yield for SMB cash.",
+    "tags": ["Fintech", "B2B", "Payments"],
+    "videoUrl": "/placeholder.svg"
+  },
+  {
+    "id": "s_002",
+    "name": "VitalAI",
+    "founder": "Dr. Rachel Kim",
+    "stage": "Seed",
+    "sector": "HealthTech",
+    "description": "AI-powered preventive care for remote patients.",
+    "tags": ["HealthTech", "AI", "Remote Care"],
+    "videoUrl": "/placeholder.svg"
+  }
+]
+

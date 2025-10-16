@@ -1,0 +1,11 @@
+[
+  {
+    "id": "demo-user-1",
+    "email": "demo@fishtank.app",
+    "name": "Demo User",
+    "role": "innovator",
+    "avatar": "/placeholder.svg",
+    "createdAt": "2025-01-01T00:00:00Z"
+  }
+]
+

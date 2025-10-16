@@ -509,7 +509,7 @@ export const AdvancedVideoPlayer = forwardRef<AdvancedVideoPlayerRef, AdvancedVi
       </div>
 
       {/* Analytics Overlay (Development) */}
-      {enableAnalytics && process.env.NODE_ENV === 'development' && (
+      {enableAnalytics && false && (
         <div className="absolute top-4 left-4 bg-black/80 text-white text-xs p-2 rounded z-30">
           <div>Watch Time: {formatTime(watchTime)}</div>
           <div>Engagement: {engagementScore.toFixed(1)}%</div>
