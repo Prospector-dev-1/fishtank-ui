@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Edit, ExternalLink, Plus, MapPin, DollarSign, Clock, Star } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
@@ -15,12 +14,13 @@ import { IOSChip } from "@/components/creator/ui/ios-chip";
 import ProfileSettings from "@/components/creator/ProfileSettings";
 import { ServiceModal } from "@/components/creator/ServiceModal";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/creator/ui/tabs";
+import { currentCreator } from "@/lib/creator/mockData";
 
 export default function Profile() {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("services");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [profileData, setProfileData] = useState<any>(null);
   const [services, setServices] = useState<any[]>([]);
   const [skills, setSkills] = useState<string[]>([]);
@@ -40,42 +40,37 @@ export default function Profile() {
     try {
       setLoading(true);
 
-      // Load profile
-      const { data: profile, error: profileError } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('id', user.id)
-        .single();
+      // Use mock data instead of Supabase
+      setProfileData({
+        full_name: currentCreator.name,
+        avatar_url: currentCreator.avatar,
+        bio: currentCreator.bio,
+        location: "San Francisco, CA",
+        hourly_rate: 85,
+        years_experience: 5,
+        availability_status: 'available'
+      });
 
-      if (profileError) throw profileError;
-      setProfileData(profile);
+      // Map services from mock data
+      setServices(currentCreator.services.map(s => ({
+        id: s.id,
+        title: s.title,
+        description: s.description,
+        price: s.price,
+        delivery_days: parseInt(s.timeline.split('-')[0]),
+        active: true
+      })));
 
-      // Load services
-      const { data: servicesData, error: servicesError } = await supabase
-        .from('services')
-        .select('*')
-        .eq('creator_id', user.id);
+      // Set skills from mock data
+      setSkills(currentCreator.skills);
 
-      if (servicesError) throw servicesError;
-      setServices(servicesData || []);
-
-      // Load skills
-      const { data: skillsData, error: skillsError } = await supabase
-        .from('creator_skills')
-        .select('skill_id, skills(name)')
-        .eq('creator_id', user.id);
-
-      if (skillsError) throw skillsError;
-      setSkills(skillsData?.map((s: any) => s.skills?.name).filter(Boolean) || []);
-
-      // Load portfolio
-      const { data: portfolioData, error: portfolioError } = await supabase
-        .from('portfolio_items')
-        .select('*')
-        .eq('creator_id', user.id);
-
-      if (portfolioError) throw portfolioError;
-      setPortfolio(portfolioData || []);
+      // Map portfolio from mock data
+      setPortfolio(currentCreator.portfolio.map(p => ({
+        id: p.id,
+        title: p.title,
+        image_url: p.thumbnail,
+        description: p.category
+      })));
 
     } catch (error) {
       console.error('Error loading profile:', error);
