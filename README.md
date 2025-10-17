@@ -2,6 +2,8 @@
 
 A modern monorepo for the Fishtank platform, containing multiple applications that share a common backend and database.
 
+> **✨ Recently Cleaned**: October 2025 - Removed 51,146 lines of legacy code. See `_cleanup/` for details.
+
 ## 🏗️ Architecture
 
 ```
