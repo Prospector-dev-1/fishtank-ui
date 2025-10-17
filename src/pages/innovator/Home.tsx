@@ -49,16 +49,16 @@ export default function Home() {
     action: () => navigate('/innovator/tank/pitch/new')
   }, {
     icon: Users,
-    title: "Explore Network",
-    description: "Find collaborators",
+    title: "Share a Thought",
+    description: "Ask a question or share your thoughts with the community",
     color: "bg-gradient-to-br from-purple-500 to-pink-500",
     action: () => navigate('/innovator/network')
   }, {
     icon: Target,
-    title: "Share a Thought",
-    description: "Discover projects",
+    title: "Find Talent",
+    description: "Find the perfect team members for your project",
     color: "bg-gradient-to-br from-orange-500 to-red-500",
-    action: () => navigate('/innovator/network')
+    action: () => navigate('/innovator/collaborate')
   }];
   const recentActivity = [{
     icon: Play,
