@@ -1,26 +1,45 @@
-# Fishtank Monorepo
+# Fishtank - Unified Application
 
-A modern monorepo for the Fishtank platform, containing multiple applications that share a common backend and database.
+A unified mobile-first platform connecting creators, innovators, and investors.
 
-> **✨ Recently Cleaned**: October 2025 - Removed 51,146 lines of legacy code. See `_cleanup/` for details.
+> **✨ Recently Unified**: October 2025 - Consolidated from 4 separate apps into ONE single application.
 
 ## 🏗️ Architecture
 
 ```
-fishtank-monorepo/
-├── apps/                    # Application packages
-│   ├── onboarding/         # Role selection landing page (port 5173)
-│   ├── creator/            # Creator app (port 5177)
-│   ├── innovator/          # Innovator app (port 5179)
-│   └── investor/           # Investor app (port 5180)
+fishtank-unified/
+├── src/
+│   ├── pages/
+│   │   ├── onboarding/          # Role selection landing
+│   │   ├── creator/             # Creator pages
+│   │   ├── innovator/           # Innovator pages
+│   │   └── investor/            # Investor pages
+│   │
+│   ├── components/
+│   │   ├── ui/                  # Shared UI components (buttons, cards, etc.)
+│   │   ├── creator/             # Creator-specific components
+│   │   ├── innovator/           # Innovator-specific components
+│   │   └── investor/            # Investor-specific components
+│   │
+│   ├── lib/                     # Utility functions by role
+│   ├── hooks/                   # React hooks by role
+│   ├── contexts/                # React contexts
+│   ├── store/                   # State management (Zustand)
+│   ├── data/                    # Mock data
+│   ├── types/                   # TypeScript types
+│   ├── integrations/            # Third-party integrations (Supabase)
+│   ├── assets/                  # Images and static files
+│   │
+│   ├── App.tsx                  # Main app router
+│   ├── main.tsx                 # Entry point
+│   └── index.css               # Global styles
 │
-├── packages/               # Shared packages
-│   ├── shared-types/      # Shared TypeScript types
-│   ├── shared-utils/      # Utility functions
-│   ├── api-client/        # Backend API client
-│   └── shared-ui/         # Shared React components
-│
-└── backend/               # Backend server (coming soon)
+├── public/                      # Static assets
+├── index.html                   # HTML entry point
+├── vite.config.ts              # Vite configuration
+├── tailwind.config.ts          # Tailwind configuration
+├── tsconfig.json               # TypeScript configuration
+└── package.json                # Dependencies and scripts
 ```
 
 ## 🚀 Quick Start
@@ -33,96 +52,138 @@ fishtank-monorepo/
 ### Installation
 
 ```bash
-# Install all dependencies for all apps and packages
+# Install all dependencies
 npm install
 ```
 
 ### Development
 
 ```bash
-# Run all apps simultaneously
+# Run the unified app (single dev server, single port!)
 npm run dev
-
-# Or run individual apps
-npm run dev:onboarding   # http://localhost:5173
-npm run dev:creator      # http://localhost:5177
-npm run dev:innovator    # http://localhost:5179
-npm run dev:investor     # http://localhost:5180
 ```
+
+The app will be available at **http://localhost:5173**
 
 ### Building
 
 ```bash
-# Build all apps
+# Build for production
 npm run build
+
+# Preview production build
+npm run preview
 ```
 
-## 📦 Apps
+## 🎯 How It Works
 
-### Onboarding App
-- **Port**: 5173
-- **Purpose**: Role selection landing page
-- **Tech**: React, Vite, Tailwind CSS
-- **Entry point**: Users start here to choose their role
+### Single Application, Multiple Roles
 
-### Creator App
-- **Port**: 5177
-- **Purpose**: Interface for freelancers and interns
-- **Features**: Portfolio showcase, project discovery, collaboration tools
+This is now a **truly unified application** that runs on a single dev server. All three role interfaces (Creator, Innovator, Investor) are part of ONE codebase.
 
-### Innovator App
-- **Port**: 5179
-- **Purpose**: Platform for idea pitching and collaboration
-- **Features**: Pitch creation, video uploads, team collaboration
+### Routes
 
-### Investor App
-- **Port**: 5180
-- **Purpose**: Deal flow and investment tracking
-- **Features**: Startup discovery, due diligence, portfolio management
+- `/` - Onboarding/Role selection
+- `/creator/*` - All creator pages
+- `/innovator/*` - All innovator pages
+- `/investor/*` - All investor pages
 
-## 📚 Shared Packages
+### Navigation Flow
 
-### @fishtank/shared-types
-TypeScript types used across all applications for type consistency.
+1. User lands on `/` (onboarding page)
+2. Selects their role (Creator, Innovator, or Investor)
+3. React Router navigates to the appropriate route within the same app
+4. No page reloads, no separate servers, just smooth SPA navigation
 
-### @fishtank/shared-utils
-Common utility functions (formatting, validation, etc.).
+## 📱 Features by Role
 
-### @fishtank/api-client
-Centralized API client for backend communication.
+### Creator Interface (`/creator/`)
+- Portfolio showcase
+- Project discovery
+- Team collaboration
+- Earnings tracking
+- Proposals and contracts
 
-### @fishtank/shared-ui
-Reusable React components shared across apps.
+### Innovator Interface (`/innovator/`)
+- Pitch creation with video
+- Team management
+- Collaboration tools
+- Analytics dashboard
+- NDA requests
 
-## 🔗 How Apps Communicate
+### Investor Interface (`/investor/`)
+- Startup discovery (Tinder-style swipe)
+- Deal flow management
+- Market intelligence
+- Portfolio tracking
+- Due diligence tools
 
-- **Frontend**: Apps are independent but share common types and utilities
-- **Backend**: All apps connect to the same backend API
-- **Database**: Shared database accessed via the backend
-- **Navigation**: Onboarding app redirects to appropriate role app
+## 🛠️ Tech Stack
 
-## 🛠️ Development Workflow
+- **Framework**: React 18 + TypeScript
+- **Build Tool**: Vite 5
+- **Routing**: React Router 6
+- **Styling**: Tailwind CSS + shadcn/ui
+- **State Management**: Zustand
+- **Forms**: React Hook Form + Zod
+- **Data Fetching**: TanStack Query
+- **Backend**: Supabase (optional)
 
-1. **Start from onboarding**: `npm run dev:onboarding`
-2. **Select a role**: Navigate to http://localhost:5173
-3. **Role app opens**: System redirects to the appropriate app
-4. **Shared code**: Import from `@fishtank/*` packages
+## 🎨 UI Philosophy
 
-## 📝 Adding a New Shared Package
+- **Mobile-first**: Designed for mobile with desktop support
+- **iOS-inspired**: Clean, native-feeling interfaces
+- **Dark mode**: Default dark theme with system support
+- **Accessibility**: ARIA labels, keyboard navigation
+- **Performance**: Code splitting, lazy loading
 
-```bash
-mkdir -p packages/my-package/src
-cd packages/my-package
-npm init -y
-# Update package.json with proper name and exports
+## 🔗 Benefits of Unified Architecture
+
+✅ **Single codebase** - Easier to maintain and update
+✅ **Shared components** - Reusable UI components across roles
+✅ **Single build** - One deployment artifact
+✅ **Faster development** - No context switching between apps
+✅ **Better state management** - Can share state across roles if needed
+✅ **Consistent UX** - Same look and feel everywhere
+✅ **Simpler deployment** - One app to deploy, not four
+
+## 📝 Development Tips
+
+### Adding a New Page
+
+```typescript
+// 1. Create page component
+src/pages/creator/NewPage.tsx
+
+// 2. Add route in App.tsx
+<Route path="new-page" element={<NewPage />} />
 ```
 
-## 🤝 Contributing
+### Adding Shared Components
 
-- Each app is independent and can be developed separately
-- Shared code goes in `packages/`
-- Follow existing patterns for consistency
-- Test in all relevant apps before committing
+```typescript
+// Place in src/components/ui/ for shared UI
+src/components/ui/my-component.tsx
+
+// Import from anywhere
+import { MyComponent } from "@/components/ui/my-component";
+```
+
+### Role-Specific Code
+
+```typescript
+// Keep role-specific code in role directories
+src/components/creator/CreatorCard.tsx
+src/lib/creator/creatorUtils.ts
+```
+
+## 🧹 Code Quality
+
+- ESLint configured for React and TypeScript
+- Strict TypeScript settings enabled
+- Tailwind CSS for consistent styling
+- Component organization by role
+- Path aliases (@/) for clean imports
 
 ## 📄 License
 
