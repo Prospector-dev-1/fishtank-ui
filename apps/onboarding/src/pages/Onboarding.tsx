@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 function FishIcon({ className = "h-8 w-8", fill = "currentColor" }: { className?: string; fill?: string }) {
   return (
