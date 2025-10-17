@@ -2,4 +2,410 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body, #root { height: 100%; }
+/* Fiverr x iOS Design System - Mobile-First
+   Blends Fiverr's clean, modern UX with Apple's iOS/SwiftUI polish
+   Primary accent: #1E2126
+   All colors are HSL format
+   8pt spacing system throughout
+*/
+
+@layer base {
+  :root {
+    /* Fiverr x iOS Design System - Light Mode */
+    --background: 210 17% 98%;
+    --foreground: 210 11% 6%;
+
+    /* Cards & Surfaces with subtle elevation */
+    --card: 0 0% 100%;
+    --card-foreground: 210 11% 6%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 210 11% 6%;
+
+    /* Primary Accent - #1E2126 */
+    --primary: 214 13% 14%;
+    --primary-foreground: 0 0% 100%;
+    
+    /* Hover/Pressed states for primary */
+    --primary-hover: 214 13% 23%;
+    --primary-pressed: 214 13% 8%;
+
+    /* Secondary fills - Fiverr light gray */
+    --secondary: 210 17% 98%;
+    --secondary-foreground: 210 11% 6%;
+
+    /* Muted/Tertiary elements */
+    --muted: 210 17% 95%;
+    --muted-foreground: 218 5% 45%;
+
+    /* Accent (matches primary) */
+    --accent: 214 13% 14%;
+    --accent-foreground: 0 0% 100%;
+
+    /* State colors */
+    --destructive: 0 83% 63%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --success: 142 76% 47%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 38 99% 64%;
+    --warning-foreground: 0 0% 13%;
+
+    --info: 199 97% 63%;
+    --info-foreground: 0 0% 100%;
+
+    /* Borders & Inputs - Clean Fiverr style */
+    --border: 210 10% 90%;
+    --input: 210 10% 90%;
+    --ring: 214 13% 14%;
+
+    /* Gray scale (Fiverr-inspired) */
+    --gray-50: 210 17% 98%;
+    --gray-100: 210 17% 95%;
+    --gray-200: 210 10% 90%;
+    --gray-300: 210 8% 75%;
+    --gray-400: 210 6% 60%;
+    --gray-500: 218 5% 45%;
+    --gray-600: 214 8% 30%;
+    --gray-700: 214 10% 20%;
+    --gray-800: 214 12% 15%;
+    --gray-900: 214 13% 10%;
+
+    /* iOS-style shadows with accent-tinted opacity */
+    --shadow-sm: 0 2px 8px 0 rgba(30, 33, 38, 0.08);
+    --shadow-md: 0 4px 12px 0 rgba(30, 33, 38, 0.12);
+    --shadow-lg: 0 8px 24px 0 rgba(30, 33, 38, 0.15);
+    --shadow-xl: 0 12px 32px 0 rgba(30, 33, 38, 0.18);
+
+    /* Fiverr-inspired Border radius scale */
+    --radius-sm: 8px;
+    --radius: 12px;      /* Cards */
+    --radius-md: 16px;   /* Sheets */
+    --radius-lg: 20px;
+    --radius-xl: 24px;   /* Modals */
+    --radius-full: 9999px;
+
+    /* Safe area insets for iOS notch */
+    --safe-area-top: env(safe-area-inset-top);
+    --safe-area-bottom: env(safe-area-inset-bottom);
+    --safe-area-left: env(safe-area-inset-left);
+    --safe-area-right: env(safe-area-inset-right);
+  }
+
+  .dark {
+    /* Fiverr x iOS Design System - Dark Mode */
+    --background: 210 11% 8%;
+    --foreground: 210 11% 91%;
+
+    --card: 210 11% 11%;
+    --card-foreground: 210 11% 91%;
+
+    --popover: 210 11% 11%;
+    --popover-foreground: 210 11% 91%;
+
+    /* Primary Accent - #1E2126 (slightly lighter for dark mode) */
+    --primary: 214 13% 20%;
+    --primary-foreground: 0 0% 100%;
+    
+    --primary-hover: 214 13% 28%;
+    --primary-pressed: 214 13% 14%;
+
+    --secondary: 210 11% 15%;
+    --secondary-foreground: 210 11% 91%;
+
+    --muted: 210 11% 15%;
+    --muted-foreground: 210 7% 71%;
+
+    --accent: 214 13% 20%;
+    --accent-foreground: 0 0% 100%;
+
+    /* State colors adjusted for dark mode */
+    --destructive: 0 76% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 142 76% 47%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 38 99% 64%;
+    --warning-foreground: 0 0% 13%;
+
+    --info: 199 97% 63%;
+    --info-foreground: 0 0% 100%;
+
+    --border: 210 11% 18%;
+    --input: 210 11% 18%;
+    --ring: 214 13% 20%;
+
+    /* Dark mode gray scale */
+    --gray-50: 210 11% 15%;
+    --gray-100: 210 11% 18%;
+    --gray-200: 210 10% 25%;
+    --gray-300: 210 8% 35%;
+    --gray-400: 210 6% 50%;
+    --gray-500: 210 7% 71%;
+    --gray-600: 210 10% 80%;
+    --gray-700: 210 11% 85%;
+    --gray-800: 210 11% 88%;
+    --gray-900: 210 11% 91%;
+
+    /* Deeper shadows for dark mode with accent tint */
+    --shadow-sm: 0 2px 8px 0 rgba(30, 33, 38, 0.4);
+    --shadow-md: 0 4px 12px 0 rgba(30, 33, 38, 0.5);
+    --shadow-lg: 0 8px 24px 0 rgba(30, 33, 38, 0.6);
+    --shadow-xl: 0 12px 32px 0 rgba(30, 33, 38, 0.7);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    /* Enable smooth scrolling */
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    /* SF Pro / Inter fallback font stack - Fiverr x iOS style */
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Inter', system-ui, sans-serif;
+    /* iOS Typography scale - 17px base */
+    font-size: 17px;
+    line-height: 1.47;
+    /* Smooth font rendering for iOS */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    /* Safe area padding for iOS notch */
+    padding-top: var(--safe-area-top);
+    padding-bottom: var(--safe-area-bottom);
+    padding-left: var(--safe-area-left);
+    padding-right: var(--safe-area-right);
+  }
+
+  /* Ensure proper text visibility - Override any white/light text */
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-foreground;
+    color: hsl(var(--foreground)) !important;
+  }
+
+  p, span, div, label, button:not(.bg-primary):not(.bg-gradient-primary):not([class*="gradient"]):not([class*="white"]):not([class*="destructive"]):not([class*="success"]):not([class*="warning"]) {
+    color: hsl(var(--foreground));
+  }
+
+  /* Ensure main element text is visible */
+  main {
+    color: hsl(var(--foreground));
+  }
+
+  /* Card text should always be visible */
+  [class*="Card"], [class*="card"], .ios-card {
+    color: hsl(var(--card-foreground));
+  }
+
+  /* Button text overrides */
+  button[class*="outline"], button[class*="secondary"], button[class*="ghost"] {
+    color: hsl(var(--foreground)) !important;
+  }
+
+  /* iOS Typography Scale */
+  .text-hero {
+    font-size: 34px;
+    line-height: 1.24;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+  }
+
+  .text-title-1 {
+    font-size: 28px;
+    line-height: 1.29;
+    font-weight: 700;
+    letter-spacing: -0.013em;
+  }
+
+  .text-title-2 {
+    font-size: 22px;
+    line-height: 1.27;
+    font-weight: 600;
+    letter-spacing: -0.012em;
+  }
+
+  .text-title-3 {
+    font-size: 20px;
+    line-height: 1.3;
+    font-weight: 600;
+    letter-spacing: -0.011em;
+  }
+
+  .text-body {
+    font-size: 17px;
+    line-height: 1.47;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+
+  .text-callout {
+    font-size: 16px;
+    line-height: 1.38;
+    font-weight: 400;
+    letter-spacing: -0.009em;
+  }
+
+  .text-subhead {
+    font-size: 15px;
+    line-height: 1.4;
+    font-weight: 400;
+    letter-spacing: -0.008em;
+  }
+
+  .text-footnote {
+    font-size: 13px;
+    line-height: 1.38;
+    font-weight: 400;
+    letter-spacing: -0.006em;
+  }
+
+  .text-caption-1 {
+    font-size: 12px;
+    line-height: 1.33;
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+
+  .text-caption-2 {
+    font-size: 11px;
+    line-height: 1.27;
+    font-weight: 400;
+    letter-spacing: 0.006em;
+  }
+}
+
+@layer components {
+  /* iOS-style Card with elevation */
+  .ios-card {
+    @apply bg-card rounded-xl shadow-md border border-border/50;
+  }
+
+  /* iOS-style List Cell */
+  .ios-list-cell {
+    @apply bg-card p-4 border-b border-border/50 last:border-b-0;
+    @apply active:bg-gray-50 dark:active:bg-gray-800;
+    @apply transition-colors duration-150;
+  }
+
+  /* iOS Button States */
+  .ios-button-primary {
+    @apply bg-primary text-primary-foreground rounded-xl px-6 py-3;
+    @apply font-semibold text-body;
+    @apply shadow-sm active:scale-[0.98];
+    @apply transition-all duration-120;
+    min-height: 44px;
+  }
+
+  .ios-button-secondary {
+    @apply bg-secondary text-secondary-foreground rounded-xl px-6 py-3;
+    @apply font-semibold text-body border border-border;
+    @apply active:scale-[0.98];
+    @apply transition-all duration-120;
+    min-height: 44px;
+  }
+
+  .ios-button-tertiary {
+    @apply text-primary rounded-xl px-6 py-3;
+    @apply font-semibold text-body;
+    @apply active:opacity-60;
+    @apply transition-opacity duration-120;
+    min-height: 44px;
+  }
+
+  /* iOS Input Field */
+  .ios-input {
+    @apply w-full px-4 py-3 rounded-xl;
+    @apply bg-secondary border border-border;
+    @apply text-body text-foreground;
+    @apply placeholder:text-muted-foreground;
+    @apply focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent;
+    @apply transition-all duration-200;
+    min-height: 44px;
+  }
+
+  /* iOS Search Field */
+  .ios-search {
+    @apply ios-input pl-10;
+    @apply rounded-full;
+  }
+
+  /* iOS Badge */
+  .ios-badge {
+    @apply inline-flex items-center px-3 py-1;
+    @apply rounded-full text-caption-1 font-medium;
+    @apply bg-secondary text-secondary-foreground;
+  }
+
+  /* iOS Chip (Selectable) */
+  .ios-chip {
+    @apply inline-flex items-center px-3 py-1.5;
+    @apply rounded-full text-subhead font-medium;
+    @apply bg-secondary text-secondary-foreground;
+    @apply border border-border;
+    @apply active:scale-95 transition-transform duration-120;
+    @apply cursor-pointer;
+  }
+
+  .ios-chip-selected {
+    @apply bg-primary text-primary-foreground border-primary;
+  }
+
+  /* iOS Divider */
+  .ios-divider {
+    @apply h-px bg-border/50;
+  }
+
+  /* Frosted Glass Effect (for headers/tab bar) */
+  .ios-frosted {
+    @apply bg-background/80 backdrop-blur-xl;
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    backdrop-filter: blur(20px) saturate(180%);
+  }
+
+  /* Safe Area Aware */
+  .safe-top {
+    padding-top: max(12px, var(--safe-area-top));
+  }
+
+  .safe-bottom {
+    padding-bottom: max(12px, var(--safe-area-bottom));
+  }
+
+  /* Large Title Pattern (iOS) */
+  .ios-large-title {
+    @apply text-hero font-bold px-4 py-6;
+  }
+
+  /* Spring Animation Utility */
+  .spring-bounce {
+    transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+}
+
+@layer utilities {
+  /* Touch Target - Minimum 44x44px hit area */
+  .touch-target {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  /* Reduce Motion Support */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}

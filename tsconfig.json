@@ -29,10 +29,5 @@
   },
   "include": [
     "src"
-  ],
-  "exclude": [
-    "src/roles/creator",
-    "src/roles/innovator",
-    "src/roles/investor"
   ]
 }

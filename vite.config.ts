@@ -12,7 +12,7 @@ function roleAliasPlugin(): Plugin {
   return {
     name: 'role-alias',
     enforce: 'pre',
-    async resolveId(source: string, importer: string | undefined, options) {
+    async resolveId(source: string, importer: string | undefined) {
       if (!source.startsWith('@/') || !importer) {
         return null;
       }
@@ -24,11 +24,12 @@ function roleAliasPlugin(): Plugin {
       const normalizedImporter = importer.replace(/\\/g, '/');
 
       // Detect which role context we're in based on the importer path
-      if (normalizedImporter.includes('/roles/creator/src/')) {
+      // Check for any file within the roles directories
+      if (normalizedImporter.includes('/src/roles/creator/')) {
         basePath = path.resolve(__dirname, './src/roles/creator/src');
-      } else if (normalizedImporter.includes('/roles/innovator/src/')) {
+      } else if (normalizedImporter.includes('/src/roles/innovator/')) {
         basePath = path.resolve(__dirname, './src/roles/innovator/src');
-      } else if (normalizedImporter.includes('/roles/investor/src/')) {
+      } else if (normalizedImporter.includes('/src/roles/investor/')) {
         basePath = path.resolve(__dirname, './src/roles/investor/src');
       } else {
         // Default to root src for non-role files  
@@ -38,7 +39,7 @@ function roleAliasPlugin(): Plugin {
       const resolvedPath = path.resolve(basePath, sourcePath);
 
       // Try to find the file with different extensions
-      const extensions = ['', '.ts', '.tsx', '.js', '.jsx', '.mjs', '.cjs'];
+      const extensions = ['', '.ts', '.tsx', '.js', '.jsx', '.mjs', '.cjs', '.json'];
       for (const ext of extensions) {
         const fullPath = resolvedPath + ext;
         try {

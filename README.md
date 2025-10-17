@@ -1,97 +1,127 @@
-# Fishtank Unified Platform
+# Fishtank Monorepo
 
-**⚠️ IMPORTANT: Backend Removed**  
-This UI now uses local mocks in `src/mocks/`. All backend, cloud, and database code has been completely removed.
+A modern monorepo for the Fishtank platform, containing multiple applications that share a common backend and database.
 
-See **`BACKEND_PURGE_COMPLETE.md`** for comprehensive details on what was removed and how to restore backend functionality.
+## 🏗️ Architecture
 
----
+```
+fishtank-monorepo/
+├── apps/                    # Application packages
+│   ├── onboarding/         # Role selection landing page (port 5173)
+│   ├── creator/            # Creator app (port 5177)
+│   ├── innovator/          # Innovator app (port 5179)
+│   └── investor/           # Investor app (port 5180)
+│
+├── packages/               # Shared packages
+│   ├── shared-types/      # Shared TypeScript types
+│   ├── shared-utils/      # Utility functions
+│   ├── api-client/        # Backend API client
+│   └── shared-ui/         # Shared React components
+│
+└── backend/               # Backend server (coming soon)
+```
 
-## Quick Start
+## 🚀 Quick Start
 
-### Unified Landing Page
+### Prerequisites
+
+- Node.js >= 18.0.0
+- npm >= 9.0.0
+
+### Installation
+
 ```bash
+# Install all dependencies for all apps and packages
 npm install
+```
+
+### Development
+
+```bash
+# Run all apps simultaneously
 npm run dev
+
+# Or run individual apps
+npm run dev:onboarding   # http://localhost:5173
+npm run dev:creator      # http://localhost:5177
+npm run dev:innovator    # http://localhost:5179
+npm run dev:investor     # http://localhost:5180
 ```
-Visit: http://localhost:5173
 
-### Independent Role Apps
+### Building
 
-**Creator App** (Port 5174)
 ```bash
-cd src/roles/creator
-npm install
-npm run dev -- --port 5174
+# Build all apps
+npm run build
 ```
 
-**Innovator App** (Port 5175)
+## 📦 Apps
+
+### Onboarding App
+- **Port**: 5173
+- **Purpose**: Role selection landing page
+- **Tech**: React, Vite, Tailwind CSS
+- **Entry point**: Users start here to choose their role
+
+### Creator App
+- **Port**: 5177
+- **Purpose**: Interface for freelancers and interns
+- **Features**: Portfolio showcase, project discovery, collaboration tools
+
+### Innovator App
+- **Port**: 5179
+- **Purpose**: Platform for idea pitching and collaboration
+- **Features**: Pitch creation, video uploads, team collaboration
+
+### Investor App
+- **Port**: 5180
+- **Purpose**: Deal flow and investment tracking
+- **Features**: Startup discovery, due diligence, portfolio management
+
+## 📚 Shared Packages
+
+### @fishtank/shared-types
+TypeScript types used across all applications for type consistency.
+
+### @fishtank/shared-utils
+Common utility functions (formatting, validation, etc.).
+
+### @fishtank/api-client
+Centralized API client for backend communication.
+
+### @fishtank/shared-ui
+Reusable React components shared across apps.
+
+## 🔗 How Apps Communicate
+
+- **Frontend**: Apps are independent but share common types and utilities
+- **Backend**: All apps connect to the same backend API
+- **Database**: Shared database accessed via the backend
+- **Navigation**: Onboarding app redirects to appropriate role app
+
+## 🛠️ Development Workflow
+
+1. **Start from onboarding**: `npm run dev:onboarding`
+2. **Select a role**: Navigate to http://localhost:5173
+3. **Role app opens**: System redirects to the appropriate app
+4. **Shared code**: Import from `@fishtank/*` packages
+
+## 📝 Adding a New Shared Package
+
 ```bash
-cd src/roles/innovator
-npm install
-npm run dev -- --port 5175
+mkdir -p packages/my-package/src
+cd packages/my-package
+npm init -y
+# Update package.json with proper name and exports
 ```
 
-**Investor App** (Port 5176)
-```bash
-cd src/roles/investor
-npm install
-npm run dev -- --port 5176
-```
+## 🤝 Contributing
 
----
+- Each app is independent and can be developed separately
+- Shared code goes in `packages/`
+- Follow existing patterns for consistency
+- Test in all relevant apps before committing
 
-## Architecture
+## 📄 License
 
-- **Pure Client-Side**: Zero network calls, no backend dependencies
-- **Mock Data**: All data comes from `src/mocks/`
-- **No Authentication**: Auth pages navigate directly to app (no barriers)
-- **Offline-Capable**: Runs without internet connection
-
----
-
-## Project Structure
-
-```
-/
-├── src/
-│   ├── mocks/              # Mock data layer (NEW)
-│   │   ├── data/          # JSON fixtures
-│   │   └── api.ts         # Mock API functions
-│   ├── pages/             # Unified landing pages
-│   ├── router/            # App routing
-│   ├── state/             # Zustand stores
-│   └── roles/             # Independent role apps
-│       ├── creator/       # Creator app (port 5174)
-│       ├── innovator/     # Innovator app (port 5175)
-│       └── investor/      # Investor app (port 5176)
-├── BACKEND_PURGE_COMPLETE.md   # Full purge documentation
-└── package.json           # Root dependencies
-```
-
----
-
-## What Was Removed
-
-- ❌ Supabase (auth, database, realtime)
-- ❌ All SQL migrations (36 files)
-- ❌ Environment variables
-- ❌ Backend API calls
-- ❌ Cloud SDKs and services
-
----
-
-## Tech Stack (Client-Side Only)
-
-- **Framework**: React 18 + TypeScript + Vite
-- **Styling**: Tailwind CSS + shadcn/ui
-- **Routing**: React Router v6
-- **State**: Zustand (local only)
-- **Forms**: React Hook Form + Zod
-- **UI**: Radix UI primitives
-- **Icons**: Lucide React
-- **Charts**: Recharts
-
----
-
-For restoration instructions and full deletion details, see `BACKEND_PURGE_COMPLETE.md`.
+Private - © 2025 Fishtank App INC.
