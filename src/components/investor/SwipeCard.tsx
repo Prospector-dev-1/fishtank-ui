@@ -67,8 +67,8 @@ export function SwipeCard({
   const rotation = dragOffset.x * 0.1;
   const isPassingLeft = dragOffset.x < -40;
   const isPassingRight = dragOffset.x > 40;
-  return <div className="flex flex-col items-center justify-center min-h-screen px-4 bg-background">
-      <div ref={cardRef} className={cn('relative w-full max-w-sm h-[600px] rounded-3xl overflow-hidden', 'shadow-xl transform transition-all duration-200', isDragging ? 'scale-105' : 'scale-100')} style={{
+  return <div className="flex flex-col items-center justify-between h-screen px-4 py-6 bg-background">
+      <div ref={cardRef} className={cn('relative w-full max-w-sm rounded-3xl overflow-hidden flex-shrink-0', 'shadow-xl transform transition-all duration-200', 'h-[calc(100vh-220px)] max-h-[600px]', isDragging ? 'scale-105' : 'scale-100')} style={{
       transform: `translate(${dragOffset.x}px, ${dragOffset.y}px) rotate(${rotation}deg)`,
       boxShadow: isPassingLeft ? '0 0 30px rgba(239, 68, 68, 0.4)' : isPassingRight ? '0 0 30px rgba(34, 197, 94, 0.4)' : '0 10px 30px rgba(0, 0, 0, 0.2)'
     }} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}>
@@ -113,15 +113,15 @@ export function SwipeCard({
       </div>
       
       {/* Action Buttons */}
-      <div className="flex flex-col items-center space-y-4 mt-8">
+      <div className="flex flex-col items-center space-y-4 w-full pb-safe-bottom">
         {/* Main CTA Button */}
-        <button onClick={onDeepDive} className={cn('flex items-center justify-center px-8 py-4 rounded-full', 'bg-primary text-primary-foreground shadow-xl', 'hover:scale-105 active:scale-95 transition-all duration-200', 'text-lg font-semibold min-h-[56px]', 'border-2 border-primary/20')}>
-          <Info size={24} className="mr-2" />
+        <button onClick={onDeepDive} className={cn('flex items-center justify-center px-8 py-3 rounded-full w-full max-w-sm', 'bg-primary text-primary-foreground shadow-xl', 'hover:scale-105 active:scale-95 transition-all duration-200', 'text-base font-semibold min-h-[52px]', 'border-2 border-primary/20')}>
+          <Info size={20} className="mr-2" />
           View More
         </button>
         
         {/* Secondary Action Buttons */}
-        <div className="flex items-center justify-center space-x-8 pb-24">
+        <div className="flex items-center justify-center space-x-8">
           <button onClick={onPass} className={cn('flex items-center justify-center w-14 h-14 rounded-full', 'bg-destructive text-destructive-foreground shadow-lg', 'hover:scale-110 active:scale-95 transition-transform duration-200', 'min-h-[44px] min-w-[44px]')}>
             <X size={20} />
           </button>

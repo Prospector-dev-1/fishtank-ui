@@ -215,13 +215,6 @@ export default function Discover() {
         </div>
         
         <SwipeCard startup={currentStartup} onPass={handlePass} onInterested={handleInterested} onDeepDive={handleDeepDive} isInterested={false} />
-        
-        {/* Progress Indicator */}
-        <div className="absolute bottom-safe-bottom left-4 right-4">
-          <div className="flex space-x-1">
-            {filteredStartups.map((_, index) => <div key={index} className={cn('h-1 flex-1 rounded-full transition-colors duration-300', index === currentIndex ? 'bg-primary' : 'bg-muted')} />)}
-          </div>
-        </div>
       </div>;
   }
 
@@ -280,33 +273,29 @@ export default function Discover() {
                   </div>}
                 
                 {/* Right Side Actions */}
-                <div className="absolute right-4 bottom-32 flex flex-col space-y-3 py-[55px] mx-0 my-[8px]">
+                <div className="absolute right-3 bottom-[220px] flex flex-col space-y-4 z-10">
                   <button onClick={() => {
                 setShowTimeModal(startup.id);
                 if ('vibrate' in navigator) navigator.vibrate(30);
-              }} className={cn('flex flex-col items-center justify-center w-16 h-16 rounded-full', 'bg-gradient-to-br from-success to-success/80 text-white shadow-lg shadow-success/30', 'hover:scale-110 active:scale-95 transition-all duration-300', 'hover:shadow-xl hover:shadow-success/40', 'min-h-[44px] min-w-[44px] relative group')}>
-                    <Clock size={20} />
-                    <span className="absolute -bottom-8 text-xs font-medium text-white bg-black/50 px-2 py-1 rounded-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 backdrop-blur-sm">
-                      Save For Later
-                    </span>
+              }} className={cn('flex flex-col items-center justify-center w-14 h-14 rounded-full', 'bg-gradient-to-br from-success to-success/80 text-white shadow-lg shadow-success/30', 'active:scale-95 transition-all duration-200', 'min-h-[44px] min-w-[44px]')}>
+                    <Clock size={18} />
                   </button>
                   
                   <button onClick={() => {
                 handleReport();
                 if ('vibrate' in navigator) navigator.vibrate(50);
-              }} className={cn('flex flex-col items-center justify-center w-16 h-16 rounded-full', 'bg-gradient-to-br from-destructive to-destructive/80 text-white shadow-lg shadow-destructive/30', 'hover:scale-110 active:scale-95 transition-all duration-300', 'hover:shadow-xl hover:shadow-destructive/40', 'min-h-[44px] min-w-[44px] relative group')}>
-                    <Flag size={20} />
-                    <span className="absolute -bottom-8 text-xs font-medium text-white bg-black/50 px-2 py-1 rounded-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 backdrop-blur-sm">
-                      Report
-                    </span>
+              }} className={cn('flex flex-col items-center justify-center w-14 h-14 rounded-full', 'bg-gradient-to-br from-destructive to-destructive/80 text-white shadow-lg shadow-destructive/30', 'active:scale-95 transition-all duration-200', 'min-h-[44px] min-w-[44px]')}>
+                    <Flag size={18} />
                   </button>
                   
-                  <ActionButton icon={<FileText size={24} />} onClick={() => navigate(`/investor/startup/${startup.id}/nda`)} />
+                  <button onClick={() => navigate(`/investor/startup/${startup.id}/nda`)} className={cn('flex flex-col items-center justify-center w-14 h-14 rounded-full', 'bg-gradient-to-br from-primary to-primary/80 text-white shadow-lg shadow-primary/30', 'active:scale-95 transition-all duration-200', 'min-h-[44px] min-w-[44px]')}>
+                    <FileText size={18} />
+                  </button>
                 </div>
                 
                 {/* Bottom Content Overlay */}
-                <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
-                  <div className="space-y-3">
+                <div className="absolute bottom-0 left-0 right-0 pt-8 pb-20 px-4 bg-gradient-to-t from-black/90 via-black/60 to-transparent">
+                  <div className="space-y-2">
                     {/* Stage and Sector Chips */}
                     <div className="flex items-center space-x-2">
                       <Chip variant={startup.stage === 'Pre-Seed' ? 'warning' : startup.stage === 'Seed' ? 'primary' : startup.stage === 'Series A' ? 'success' : 'stage'} size="sm">
@@ -319,13 +308,13 @@ export default function Discover() {
 
                     {/* Startup Info */}
                     <div className="space-y-1">
-                      <h2 className="text-h2 text-white font-bold drop-shadow-lg">
+                      <h2 className="text-2xl text-white font-bold drop-shadow-lg">
                         {startup.name}
                       </h2>
-                      <p className="text-caption text-white/80">
+                      <p className="text-sm text-white/80">
                         Founded by {startup.founder}
                       </p>
-                      <p className="text-body text-white font-medium">
+                      <p className="text-sm text-white font-medium">
                         {startup.tagline}
                       </p>
                     </div>
