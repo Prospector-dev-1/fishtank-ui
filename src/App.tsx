@@ -59,7 +59,6 @@ import { FishtankNavigation } from "@/components/innovator/layout/FishtankNaviga
 
 // Investor Pages & Components
 import { BottomNav as InvestorBottomNav } from "@/components/investor/BottomNav";
-import InvestorIndex from "@/pages/investor/Index";
 import InvestorDashboard from "@/pages/investor/Dashboard";
 import InvestorDealFlow from "@/pages/investor/DealFlow";
 import InvestorMarketIntel from "@/pages/investor/MarketIntel";

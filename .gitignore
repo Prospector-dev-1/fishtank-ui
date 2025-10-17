@@ -1,13 +1,8 @@
 # Dependencies
 node_modules/
-*/node_modules/
-apps/*/node_modules/
-packages/*/node_modules/
 
 # Build outputs
 dist/
-*/dist/
-apps/*/dist/
 build/
 *.tsbuildinfo
 
