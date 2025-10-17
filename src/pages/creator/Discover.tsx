@@ -18,6 +18,7 @@ export default function Discover() {
   const [sortBy, setSortBy] = useState("relevance");
   const [filterOpen, setFilterOpen] = useState(false);
   const [showAllSkills, setShowAllSkills] = useState(false);
+  const [paymentFilter, setPaymentFilter] = useState("All");
 
   // Get all unique positions/skills from startups
   const allSkills = useMemo(() => {
@@ -207,6 +208,20 @@ export default function Discover() {
               <X className="h-4 w-4 text-muted-foreground" />
             </button>
           )}
+        </div>
+      </div>
+
+      {/* Payment Type Filter Pills */}
+      <div className="px-4 mb-4">
+        <div className="flex gap-2">
+          {['All', 'Fixed', 'Equity', 'Commission'].map((filter) => (
+            <IOSChip
+              key={filter}
+              label={filter}
+              selected={paymentFilter === filter}
+              onSelect={() => setPaymentFilter(filter)}
+            />
+          ))}
         </div>
       </div>
 
