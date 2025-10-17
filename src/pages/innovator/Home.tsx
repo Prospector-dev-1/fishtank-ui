@@ -55,10 +55,10 @@ export default function Home() {
     action: () => navigate('/innovator/network')
   }, {
     icon: Target,
-    title: "Find Opportunities",
+    title: "Share a Thought",
     description: "Discover projects",
     color: "bg-gradient-to-br from-orange-500 to-red-500",
-    action: () => navigate('/innovator/collaborate')
+    action: () => navigate('/innovator/network')
   }];
   const recentActivity = [{
     icon: Play,
