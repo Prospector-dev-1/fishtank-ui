@@ -15,7 +15,7 @@ export default function Settings() {
     try {
       await supabase.auth.signOut();
       toast.success("Signed out successfully");
-      navigate("/auth");
+      navigate("/innovator/auth");
     } catch (error) {
       console.error("Error signing out:", error);
       toast.error("Failed to sign out");
