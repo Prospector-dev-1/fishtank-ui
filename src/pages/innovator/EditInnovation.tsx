@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { FishtankHeader } from "@/components/layout/FishtankHeader";
-import { InnovationSetupWizard } from "@/components/tank/InnovationSetupWizard";
-import { innovationAPI } from "@/lib/tankApi";
-import { useTeamPermissions } from "@/hooks/useTeamPermissions";
+import { FishtankHeader } from "@/components/innovator/layout/FishtankHeader";
+import { InnovationSetupWizard } from "@/components/innovator/tank/InnovationSetupWizard";
+import { innovationAPI } from "@/lib/innovator/tankApi";
+import { useTeamPermissions } from "@/hooks/innovator/useTeamPermissions";
 import { toast } from "sonner";
 import type { Innovation } from "@/types";
 
@@ -20,7 +20,7 @@ export default function EditInnovation() {
   useEffect(() => {
     if (!permissionsLoading && innovation && !canEditInnovation) {
       toast.error('You do not have permission to edit this innovation');
-      navigate('/tank');
+      navigate('/innovator/tank');
     }
   }, [canEditInnovation, permissionsLoading, innovation, navigate]);
 
@@ -31,7 +31,7 @@ export default function EditInnovation() {
     } catch (error) {
       console.error('Error loading innovation:', error);
       toast.error('Failed to load innovation');
-      navigate('/tank');
+      navigate('/innovator/tank');
     } finally {
       setIsLoading(false);
     }

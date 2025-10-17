@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/innovator/ui/badge";
+import { Button } from "@/components/innovator/ui/button";
+import { Switch } from "@/components/innovator/ui/switch";
+import { Label } from "@/components/innovator/ui/label";
 import { Check, X, Loader2 } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/innovator/utils";
 
 interface OpportunityType {
   key: string;

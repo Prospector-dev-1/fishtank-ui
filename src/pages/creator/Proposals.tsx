@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { Plus, Edit3, Send, Trash2, Clock, CheckCircle2, XCircle, Eye } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { proposals, briefs } from "@/lib/creatorData";
-import type { Proposal, Milestone } from "@/lib/types";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/creator/ui/card";
+import { Button } from "@/components/creator/ui/button";
+import { Badge } from "@/components/creator/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/creator/ui/tabs";
+import { Input } from "@/components/creator/ui/input";
+import { Textarea } from "@/components/creator/ui/textarea";
+import { proposals, briefs } from "@/lib/creator/creatorData";
+import type { Proposal, Milestone } from "@/lib/creator/types";
 
 export default function Proposals() {
   const [selectedTab, setSelectedTab] = useState("all");

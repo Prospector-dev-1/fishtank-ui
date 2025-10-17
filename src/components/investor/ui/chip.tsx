@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { cn } from '@/lib/utils';
+import { cn } from "@/lib/investor/utils";
 
 const chipVariants = cva(
   'inline-flex items-center justify-center whitespace-nowrap rounded-full text-sm font-medium transition-colors duration-normal',

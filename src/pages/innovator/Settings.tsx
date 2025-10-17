@@ -1,9 +1,9 @@
-import { FishtankHeader } from "@/components/layout/FishtankHeader";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
+import { FishtankHeader } from "@/components/innovator/layout/FishtankHeader";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/innovator/ui/card";
+import { Button } from "@/components/innovator/ui/button";
+import { Switch } from "@/components/innovator/ui/switch";
+import { Label } from "@/components/innovator/ui/label";
+import { Separator } from "@/components/innovator/ui/separator";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";

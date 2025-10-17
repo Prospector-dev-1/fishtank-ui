@@ -1,5 +1,5 @@
 import * as React from "react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/creator/utils";
 
 export interface IOSInputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {

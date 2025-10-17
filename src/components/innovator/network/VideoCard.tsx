@@ -1,7 +1,7 @@
 import { useState, useRef, useCallback } from "react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/innovator/ui/button";
+import { Badge } from "@/components/innovator/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/innovator/ui/avatar";
 import { Play, Pause, Heart, MessageCircle, Share, UserPlus, Send, MapPin, Award, Briefcase, Volume2, VolumeX, Search } from "lucide-react";
 import { toast } from "sonner";
 interface VideoCardProps {

@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/innovator/ui/dialog";
+import { Button } from "@/components/innovator/ui/button";
+import { Card } from "@/components/innovator/ui/card";
+import { Badge } from "@/components/innovator/ui/badge";
 import { Check, Fish, Users, Briefcase, TrendingUp, MessageSquare, Handshake, Search, BarChart3, User } from "lucide-react";
 import { QuickAction, AppPreferences } from "@/types";
-import { lsGet, lsSet, STORAGE_KEYS } from "@/lib/storage";
+import { lsGet, lsSet, STORAGE_KEYS } from "@/lib/innovator/storage";
 import { toast } from "sonner";
 
 interface Props {

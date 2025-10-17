@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Input } from "@/components/innovator/ui/input";
+import { Button } from "@/components/innovator/ui/button";
 import { Check, X, Loader2 } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/innovator/utils";
 
 interface EditableFieldProps {
   value: string;

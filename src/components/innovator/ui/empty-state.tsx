@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { Button } from "@/components/innovator/ui/button";
+import { cn } from "@/lib/innovator/utils";
 import { LucideIcon } from "lucide-react";
 
 interface EmptyStateProps {

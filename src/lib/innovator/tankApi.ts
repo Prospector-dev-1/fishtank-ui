@@ -1,6 +1,6 @@
 // Simplified Tank API using Supabase directly
 import { supabase } from '@/integrations/supabase/client';
-import type { Innovation, Pitch } from '@/types';
+import type { Innovation, Pitch } from "@/types";
 
 // View tracking
 export async function recordView(type: 'innovation' | 'pitch', id: string) {

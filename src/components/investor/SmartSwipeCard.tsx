@@ -1,10 +1,10 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
-import { AdvancedVideoPlayer } from '@/components/AdvancedVideoPlayer';
-import { Chip } from '@/components/ui/chip';
+import { AdvancedVideoPlayer } from "@/components/investor/AdvancedVideoPlayer";
+import { Chip } from "@/components/investor/ui/chip";
 import { X, Info, Heart, Clock, Star, Bookmark, Share2, TrendingUp, Users, Calendar } from 'lucide-react';
-import { Startup } from '@/data/mockData';
-import { cn } from '@/lib/utils';
-import { useHapticFeedback } from '@/hooks/useHapticFeedback';
+import { Startup } from "@/data/investor/mockData";
+import { cn } from "@/lib/investor/utils";
+import { useHapticFeedback } from "@/hooks/investor/useHapticFeedback";
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 

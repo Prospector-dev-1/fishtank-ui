@@ -1,8 +1,8 @@
-import { Badge } from "@/components/ui/badge";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/innovator/ui/badge";
+import { Card } from "@/components/innovator/ui/card";
+import { Button } from "@/components/innovator/ui/button";
 import { Eye, MessageCircle, Shield } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/innovator/utils";
 
 interface ProjectCardProps {
   project: {

@@ -1,7 +1,7 @@
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/innovator/ui/dialog";
+import { Button } from "@/components/innovator/ui/button";
+import { Card, CardContent } from "@/components/innovator/ui/card";
+import { Badge } from "@/components/innovator/ui/badge";
 import { Share2, Lock, Star, Building2, MapPin } from "lucide-react";
 import { toast } from "sonner";
 

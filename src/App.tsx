@@ -11,7 +11,7 @@ import { useEffect } from "react";
 import Onboarding from "@/pages/onboarding/Onboarding";
 
 // Creator Pages & Components
-import CreatorLayout from "@/components/creator/Layout";
+import { Layout as CreatorLayout } from "@/components/creator/Layout";
 import { NavigationProvider as CreatorNavigationProvider } from "@/contexts/NavigationContext";
 import { AuthProvider as CreatorAuthProvider } from "@/contexts/AuthContext";
 import { ProtectedRoute as CreatorProtectedRoute } from "@/components/creator/ProtectedRoute";
@@ -59,6 +59,7 @@ import { FishtankNavigation } from "@/components/innovator/layout/FishtankNaviga
 
 // Investor Pages & Components
 import { BottomNav as InvestorBottomNav } from "@/components/investor/BottomNav";
+import InvestorIndex from "@/pages/investor/Index";
 import InvestorDashboard from "@/pages/investor/Dashboard";
 import InvestorDealFlow from "@/pages/investor/DealFlow";
 import InvestorMarketIntel from "@/pages/investor/MarketIntel";
@@ -86,28 +87,28 @@ function InnovatorAppContent() {
   return (
     <div className={`min-h-screen bg-background ${showNavigation ? 'pb-16' : ''}`}>
       <Routes>
-        <Route path="/auth" element={<InnovatorAuth />} />
+        <Route path="auth" element={<InnovatorAuth />} />
         <Route path="/" element={<InnovatorProtectedRoute><InnovatorHome /></InnovatorProtectedRoute>} />
-        <Route path="/tank" element={<InnovatorProtectedRoute><InnovatorTank /></InnovatorProtectedRoute>} />
-        <Route path="/tank/innovation/edit" element={<InnovatorProtectedRoute><InnovatorEditInnovation /></InnovatorProtectedRoute>} />
-        <Route path="/tank/innovation/settings" element={<InnovatorProtectedRoute><InnovatorInnovationSettings /></InnovatorProtectedRoute>} />
-        <Route path="/tank/pitch/new" element={<InnovatorProtectedRoute><InnovatorCreatePitch /></InnovatorProtectedRoute>} />
-        <Route path="/tank/pitch/:pitchId/analytics" element={<InnovatorProtectedRoute><InnovatorPitchAnalytics /></InnovatorProtectedRoute>} />
-        <Route path="/pitch/:pitchId" element={<InnovatorProtectedRoute><InnovatorPitchView /></InnovatorProtectedRoute>} />
-        <Route path="/network" element={<InnovatorProtectedRoute><InnovatorNetwork /></InnovatorProtectedRoute>} />
-        <Route path="/collaborate" element={<InnovatorProtectedRoute><InnovatorCollaborate /></InnovatorProtectedRoute>} />
-        <Route path="/profile" element={<InnovatorProtectedRoute><InnovatorProfile /></InnovatorProtectedRoute>} />
-        <Route path="/profile/edit" element={<InnovatorProtectedRoute><InnovatorEditProfile /></InnovatorProtectedRoute>} />
-        <Route path="/settings" element={<InnovatorProtectedRoute><InnovatorSettings /></InnovatorProtectedRoute>} />
-        <Route path="/profile/:userId" element={<InnovatorProtectedRoute><InnovatorUserProfile /></InnovatorProtectedRoute>} />
-        <Route path="/user/:userId" element={<InnovatorProtectedRoute><InnovatorUserProfile /></InnovatorProtectedRoute>} />
-        <Route path="/search" element={<InnovatorProtectedRoute><InnovatorSearch /></InnovatorProtectedRoute>} />
-        <Route path="/analytics" element={<InnovatorProtectedRoute><InnovatorAnalytics /></InnovatorProtectedRoute>} />
-        <Route path="/nda-request" element={<InnovatorProtectedRoute><InnovatorNDARequest /></InnovatorProtectedRoute>} />
-        <Route path="/project/:id" element={<InnovatorProtectedRoute><InnovatorProjectDetail /></InnovatorProtectedRoute>} />
-        <Route path="/scheduling" element={<InnovatorProtectedRoute><InnovatorScheduling /></InnovatorProtectedRoute>} />
-        <Route path="/team-management" element={<InnovatorProtectedRoute><InnovatorTeamManagement /></InnovatorProtectedRoute>} />
-        <Route path="/messaging" element={<InnovatorProtectedRoute><InnovatorMessagingNew /></InnovatorProtectedRoute>} />
+        <Route path="tank" element={<InnovatorProtectedRoute><InnovatorTank /></InnovatorProtectedRoute>} />
+        <Route path="tank/innovation/edit" element={<InnovatorProtectedRoute><InnovatorEditInnovation /></InnovatorProtectedRoute>} />
+        <Route path="tank/innovation/settings" element={<InnovatorProtectedRoute><InnovatorInnovationSettings /></InnovatorProtectedRoute>} />
+        <Route path="tank/pitch/new" element={<InnovatorProtectedRoute><InnovatorCreatePitch /></InnovatorProtectedRoute>} />
+        <Route path="tank/pitch/:pitchId/analytics" element={<InnovatorProtectedRoute><InnovatorPitchAnalytics /></InnovatorProtectedRoute>} />
+        <Route path="pitch/:pitchId" element={<InnovatorProtectedRoute><InnovatorPitchView /></InnovatorProtectedRoute>} />
+        <Route path="network" element={<InnovatorProtectedRoute><InnovatorNetwork /></InnovatorProtectedRoute>} />
+        <Route path="collaborate" element={<InnovatorProtectedRoute><InnovatorCollaborate /></InnovatorProtectedRoute>} />
+        <Route path="profile" element={<InnovatorProtectedRoute><InnovatorProfile /></InnovatorProtectedRoute>} />
+        <Route path="profile/edit" element={<InnovatorProtectedRoute><InnovatorEditProfile /></InnovatorProtectedRoute>} />
+        <Route path="settings" element={<InnovatorProtectedRoute><InnovatorSettings /></InnovatorProtectedRoute>} />
+        <Route path="profile/:userId" element={<InnovatorProtectedRoute><InnovatorUserProfile /></InnovatorProtectedRoute>} />
+        <Route path="user/:userId" element={<InnovatorProtectedRoute><InnovatorUserProfile /></InnovatorProtectedRoute>} />
+        <Route path="search" element={<InnovatorProtectedRoute><InnovatorSearch /></InnovatorProtectedRoute>} />
+        <Route path="analytics" element={<InnovatorProtectedRoute><InnovatorAnalytics /></InnovatorProtectedRoute>} />
+        <Route path="nda-request" element={<InnovatorProtectedRoute><InnovatorNDARequest /></InnovatorProtectedRoute>} />
+        <Route path="project/:id" element={<InnovatorProtectedRoute><InnovatorProjectDetail /></InnovatorProtectedRoute>} />
+        <Route path="scheduling" element={<InnovatorProtectedRoute><InnovatorScheduling /></InnovatorProtectedRoute>} />
+        <Route path="team-management" element={<InnovatorProtectedRoute><InnovatorTeamManagement /></InnovatorProtectedRoute>} />
+        <Route path="messaging" element={<InnovatorProtectedRoute><InnovatorMessagingNew /></InnovatorProtectedRoute>} />
         <Route path="*" element={<InnovatorNotFound />} />
       </Routes>
 
@@ -176,15 +177,15 @@ function AppContent() {
           <div className="relative">
             <Routes>
               <Route path="/" element={<InvestorDashboard />} />
-              <Route path="/dashboard" element={<InvestorDashboard />} />
-              <Route path="/deal-flow" element={<InvestorDealFlow />} />
-              <Route path="/market-intel" element={<InvestorMarketIntel />} />
-              <Route path="/discover" element={<InvestorDiscover />} />
-              <Route path="/startup/:id/nda" element={<InvestorNDAgreement />} />
-              <Route path="/startup/:id" element={<InvestorStartupDetail />} />
-              <Route path="/startup/:id/team/:memberId" element={<InvestorTeamMemberProfile />} />
-              <Route path="/messages" element={<InvestorMessages />} />
-              <Route path="/profile" element={<InvestorProfile />} />
+              <Route path="dashboard" element={<InvestorDashboard />} />
+              <Route path="deal-flow" element={<InvestorDealFlow />} />
+              <Route path="market-intel" element={<InvestorMarketIntel />} />
+              <Route path="discover" element={<InvestorDiscover />} />
+              <Route path="startup/:id/nda" element={<InvestorNDAgreement />} />
+              <Route path="startup/:id" element={<InvestorStartupDetail />} />
+              <Route path="startup/:id/team/:memberId" element={<InvestorTeamMemberProfile />} />
+              <Route path="messages" element={<InvestorMessages />} />
+              <Route path="profile" element={<InvestorProfile />} />
               <Route path="*" element={<InvestorNotFound />} />
             </Routes>
             <InvestorBottomNav />

@@ -14,7 +14,7 @@ import { Progress } from '@/components/ui/progress';
 import { ArrowLeft, ArrowRight, Upload, CheckCircle, Plus, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
-import type { Innovation } from '@/types';
+import type { Innovation } from "@/types";
 
 const step1Schema = z.object({
   company_name: z.string().min(1, 'Company name is required').max(100, 'Must be 100 characters or less'),

@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { ChevronLeft, Plus, Mail, Crown, Edit, Trash2, Users } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/innovator/ui/button";
+import { Card } from "@/components/innovator/ui/card";
+import { Input } from "@/components/innovator/ui/input";
+import { Badge } from "@/components/innovator/ui/badge";
 import { useNavigate } from "react-router-dom";
-import { toast } from "@/hooks/use-toast";
+import { toast } from "@/components/innovator/ui/use-toast";
 
 interface TeamMember {
   id: string;

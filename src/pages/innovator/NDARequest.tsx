@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { ChevronLeft, Shield, FileText, Send } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/innovator/ui/button";
+import { Card } from "@/components/innovator/ui/card";
+import { Textarea } from "@/components/innovator/ui/textarea";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { toast } from "@/hooks/use-toast";
+import { toast } from "@/components/innovator/ui/use-toast";
 
 export default function NDARequest() {
   const navigate = useNavigate();

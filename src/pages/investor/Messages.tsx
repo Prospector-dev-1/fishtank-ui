@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { ArrowLeft, Send, MoreVertical, Bell } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { mockMessages, mockConversations } from '@/data/mockData';
-import { cn } from '@/lib/utils';
-import { FilterTabs, FilterType } from '@/components/FilterTabs';
+import { Card, CardContent } from '@/components/investor/ui/card';
+import { Button } from '@/components/investor/ui/button';
+import { Input } from '@/components/investor/ui/input';
+import { mockMessages, mockConversations } from "@/data/investor/mockData";
+import { cn } from "@/lib/investor/utils";
+import { FilterTabs, FilterType } from "@/components/investor/FilterTabs";
 export default function Messages() {
   const [selectedChat, setSelectedChat] = useState<string | null>(null);
   const [messageText, setMessageText] = useState('');

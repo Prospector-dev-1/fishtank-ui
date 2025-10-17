@@ -1,6 +1,6 @@
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/creator/utils";
 
 const iosBadgeVariants = cva(
   "inline-flex items-center gap-1 rounded-full font-medium whitespace-nowrap",

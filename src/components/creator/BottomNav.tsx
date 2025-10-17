@@ -1,13 +1,13 @@
 import { Home, Search, MessageCircle, User, Briefcase, Handshake, Users } from "lucide-react";
 import { NavLink } from "react-router-dom";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/creator/utils";
 
 const navItems = [
-  { path: "/", icon: Home, label: "Home" },
-  { path: "/discover", icon: Briefcase, label: "Discover" },
-  { path: "/network", icon: Users, label: "Network" },
-  { path: "/inbox", icon: MessageCircle, label: "Inbox" },
-  { path: "/profile", icon: User, label: "Profile" },
+  { path: "/creator", icon: Home, label: "Home" },
+  { path: "/creator/discover", icon: Briefcase, label: "Discover" },
+  { path: "/creator/network", icon: Users, label: "Network" },
+  { path: "/creator/inbox", icon: MessageCircle, label: "Inbox" },
+  { path: "/creator/profile", icon: User, label: "Profile" },
 ];
 
 export function BottomNav() {
@@ -18,7 +18,7 @@ export function BottomNav() {
           <NavLink
             key={path}
             to={path}
-            end={path === "/"}
+            end={path === "/creator"}
             className={({ isActive }) =>
               cn(
                 "flex flex-col items-center justify-center flex-1",

@@ -3,8 +3,8 @@ import { Heart, MessageCircle, Share, MoreHorizontal, Lock } from "lucide-react"
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
-import type { Brief } from "@/lib/types";
+import { cn } from "@/lib/creator/utils";
+import type { Brief } from "@/lib/creator/types";
 
 interface VideoCardProps {
   item: Brief;

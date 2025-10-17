@@ -1,16 +1,16 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { VideoPlayer, VideoPlayerRef } from '@/components/VideoPlayer';
-import { ActionButton } from '@/components/ActionButton';
-import { SwipeCard } from '@/components/SwipeCard';
-import { ModeSwitch } from '@/components/ModeSwitch';
-import { BottomModal } from '@/components/BottomModal';
-import { TimeReminderModal } from '@/components/TimeReminderModal';
-import { Chip } from '@/components/ui/chip';
+import { VideoPlayer, VideoPlayerRef } from "@/components/investor/VideoPlayer";
+import { ActionButton } from "@/components/investor/ActionButton";
+import { SwipeCard } from "@/components/investor/SwipeCard";
+import { ModeSwitch } from "@/components/investor/ModeSwitch";
+import { BottomModal } from "@/components/investor/BottomModal";
+import { TimeReminderModal } from "@/components/investor/TimeReminderModal";
+import { Chip } from "@/components/investor/ui/chip";
 import { Heart, Bookmark, FileText, MoreHorizontal, Share, Flag, RotateCcw, Info, Clock } from 'lucide-react';
-import { mockStartups } from '@/data/mockData';
-import { useToast } from '@/hooks/use-toast';
+import { mockStartups } from "@/data/investor/mockData";
+import { useToast } from "@/components/investor/ui/use-toast";
 import { useNavigate } from 'react-router-dom';
-import { cn } from '@/lib/utils';
+import { cn } from "@/lib/investor/utils";
 export default function Discover() {
   const [mode, setMode] = useState<'scroll' | 'swipe'>('scroll');
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -176,7 +176,7 @@ export default function Discover() {
     });
   };
   const handleDeepDive = () => {
-    navigate(`/startup/${currentStartup.id}/nda`);
+    navigate(`/investor/startup/${currentStartup.id}/nda`);
   };
   const handlePass = () => {
     if (currentIndex < filteredStartups.length - 1) {
@@ -301,7 +301,7 @@ export default function Discover() {
                     </span>
                   </button>
                   
-                  <ActionButton icon={<FileText size={24} />} onClick={() => navigate(`/startup/${startup.id}/nda`)} />
+                  <ActionButton icon={<FileText size={24} />} onClick={() => navigate(`/investor/startup/${startup.id}/nda`)} />
                 </div>
                 
                 {/* Bottom Content Overlay */}

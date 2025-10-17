@@ -1,10 +1,10 @@
 import { useState, useRef } from 'react';
-import { VideoPlayer } from '@/components/VideoPlayer';
-import { Chip } from '@/components/ui/chip';
+import { VideoPlayer } from "@/components/investor/VideoPlayer";
+import { Chip } from "@/components/investor/ui/chip";
 import { X, Info, Heart, Clock } from 'lucide-react';
-import { Startup } from '@/data/mockData';
-import { cn } from '@/lib/utils';
-import { TimeReminderModal } from '@/components/TimeReminderModal';
+import { Startup } from "@/data/investor/mockData";
+import { cn } from "@/lib/investor/utils";
+import { TimeReminderModal } from "@/components/investor/TimeReminderModal";
 interface SwipeCardProps {
   startup: Startup;
   onPass: () => void;

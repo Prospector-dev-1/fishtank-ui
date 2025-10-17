@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, forwardRef, useImperativeHandle } from 'react';
 import { Play, Pause } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from "@/lib/investor/utils";
 
 export interface VideoPlayerRef {
   play: () => Promise<void>;

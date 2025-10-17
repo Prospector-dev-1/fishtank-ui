@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { FishtankHeader } from "@/components/layout/FishtankHeader";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/innovator/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/innovator/ui/avatar";
+import { Button } from "@/components/innovator/ui/button";
+import { Badge } from "@/components/innovator/ui/badge";
+import { Separator } from "@/components/innovator/ui/separator";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/innovator/ui/tabs";
+import { FishtankHeader } from "@/components/innovator/layout/FishtankHeader";
 import { User, Mail, MapPin, Briefcase, MessageCircle, UserCheck, UserPlus, Clock } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { toast } from "@/hooks/use-toast";
+import { toast } from "@/components/innovator/ui/use-toast";
 
 interface Profile {
   id: string;

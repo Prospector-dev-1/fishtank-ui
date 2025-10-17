@@ -4,10 +4,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { MetricDisplay } from '@/components/MetricDisplay';
-import { EnhancedCard } from '@/components/EnhancedCard';
-import { useAIRecommendations } from '@/hooks/useAIRecommendations';
-import { mockStartups } from '@/data/mockData';
+import { MetricDisplay } from "@/components/investor/MetricDisplay";
+import { EnhancedCard } from "@/components/investor/EnhancedCard";
+import { useAIRecommendations } from '@/hooks/investor/useAIRecommendations';
+import { mockStartups } from "@/data/investor/mockData";
 import { 
   TrendingUp, 
   TrendingDown, 
@@ -28,7 +28,7 @@ import {
   Share2
 } from 'lucide-react';
 import { PieChart as RechartsPieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, LineChart, Line, Area, AreaChart } from 'recharts';
-import { cn } from '@/lib/utils';
+import { cn } from "@/lib/investor/utils";
 
 const COLORS = {
   primary: 'hsl(var(--primary))',

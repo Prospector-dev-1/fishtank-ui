@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/investor/ui/button';
+import { Card } from '@/components/investor/ui/card';
+import { Badge } from '@/components/investor/ui/badge';
 import { TrendingUp, AlertCircle, Clock, DollarSign, Users, Target, Calendar, FileText, ExternalLink, ChevronRight, BarChart3, TrendingDown, AlertTriangle, Activity, Building2, ArrowUpRight, ArrowDownRight, Zap } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/investor/ui/tabs';
 interface Deal {
   id: string;
   company: string;
@@ -295,7 +295,7 @@ export default function Dashboard() {
   }: {
     deal: Deal;
     isUrgent?: boolean;
-  }) => <Card className={`p-4 border-l-4 cursor-pointer hover:shadow-md transition-shadow ${getPriorityColor(deal.priority)}`} onClick={() => navigate(`/startup/${deal.id}`)}>
+  }) => <Card className={`p-4 border-l-4 cursor-pointer hover:shadow-md transition-shadow ${getPriorityColor(deal.priority)}`} onClick={() => navigate(`/investor/startup/${deal.id}`)}>
       <div className="space-y-3">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0 flex-1">
@@ -424,7 +424,7 @@ export default function Dashboard() {
       {/* Sticky Headers */}
       {isButtonSticky && !isTabsSticky && <div className="fixed top-0 left-0 right-0 z-30 bg-background/95 backdrop-blur-md border-b border-border p-4">
           <div className="flex justify-center">
-            <Button onClick={() => navigate('/discover')} className="w-full max-w-sm h-12 text-base font-semibold">
+            <Button onClick={() => navigate('/investor/discover')} className="w-full max-w-sm h-12 text-base font-semibold">
               Enter Tank
             </Button>
           </div>
@@ -450,7 +450,7 @@ export default function Dashboard() {
             <p className="text-muted-foreground text-sm md:text-base">Real-time deal flow and portfolio management</p>
           </div>
           <div ref={buttonRef}>
-            <Button onClick={() => navigate('/discover')} className="shrink-0">
+            <Button onClick={() => navigate('/investor/discover')} className="shrink-0">
               Enter Tank
             </Button>
           </div>
@@ -477,7 +477,7 @@ export default function Dashboard() {
         <Card className="p-6">
           <h3 className="text-lg font-semibold mb-4">Quick Actions</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Button variant="outline" className="justify-start h-auto p-4" onClick={() => navigate('/portfolio')}>
+            <Button variant="outline" className="justify-start h-auto p-4" onClick={() => navigate('/investor/portfolio')}>
               <div className="flex items-center w-full">
                 <Target className="w-5 h-5 mr-3" />
                 <div className="text-left">
@@ -488,7 +488,7 @@ export default function Dashboard() {
               </div>
             </Button>
             
-            <Button variant="outline" className="justify-start h-auto p-4" onClick={() => navigate('/messages')}>
+            <Button variant="outline" className="justify-start h-auto p-4" onClick={() => navigate('/investor/messages')}>
               <div className="flex items-center w-full">
                 <Users className="w-5 h-5 mr-3" />
                 <div className="text-left">
@@ -516,7 +516,7 @@ export default function Dashboard() {
         <Card className="p-6">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-lg font-semibold">Market Intelligence</h3>
-            <Button variant="outline" onClick={() => navigate('/market-intel')}>
+            <Button variant="outline" onClick={() => navigate('/investor/market-intel')}>
               <BarChart3 className="w-4 h-4 mr-2" />
               View Full Report
             </Button>
@@ -553,7 +553,7 @@ export default function Dashboard() {
                           <h3 className="text-xl font-semibold text-green-700">{trend.title}</h3>
                           <p className="text-green-600">{trend.sector} • {trend.confidence}% confidence</p>
                         </div>
-                        <Button className="bg-green-600 hover:bg-green-700" onClick={() => navigate('/discover')}>
+                        <Button className="bg-green-600 hover:bg-green-700" onClick={() => navigate('/investor/discover')}>
                           <Target className="w-4 h-4 mr-2" />
                           Explore Deals
                         </Button>

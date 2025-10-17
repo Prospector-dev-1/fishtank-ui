@@ -8,7 +8,7 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Heart, MessageCircle, Trash2, Search } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "@/hooks/use-toast";
+import { toast } from "@/components/creator/ui/use-toast";
 import { formatDistanceToNow } from "date-fns";
 
 interface Thought {

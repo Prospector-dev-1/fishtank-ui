@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
-import { FishtankHeader } from "@/components/layout/FishtankHeader";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
-import { CreateOpportunityModal } from "@/components/modals/CreateOpportunityModal";
-import { Storage, STORAGE_KEYS } from "@/lib/storage";
+import { FishtankHeader } from "@/components/innovator/layout/FishtankHeader";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/innovator/ui/card";
+import { Button } from "@/components/innovator/ui/button";
+import { Badge } from "@/components/innovator/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/innovator/ui/tabs";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/innovator/ui/select";
+import { Input } from "@/components/innovator/ui/input";
+import { CreateOpportunityModal } from "@/components/innovator/modals/CreateOpportunityModal";
+import { Storage, STORAGE_KEYS } from "@/lib/innovator/storage";
 import { Briefcase, MapPin, Clock, DollarSign, Users, Plus, Eye, Edit, X, Filter, Search, BarChart3, TrendingUp, MessageSquare, CheckCircle, ChevronDown, ChevronUp } from "lucide-react";
-import { Command, CommandInput, CommandList, CommandItem } from "@/components/ui/command";
+import { Command, CommandInput, CommandList, CommandItem } from "@/components/innovator/ui/command";
 import { toast } from "sonner";
 import type { Opportunity } from "@/types";
 export default function Collaborate() {

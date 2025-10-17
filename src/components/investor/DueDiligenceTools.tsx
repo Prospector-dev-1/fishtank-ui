@@ -11,7 +11,7 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { useToast } from '@/hooks/use-toast';
+import { useToast } from "@/components/investor/ui/use-toast";
 import { 
   CheckCircle, 
   AlertTriangle, 
@@ -36,7 +36,7 @@ import {
   Target,
   BarChart3
 } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from "@/lib/investor/utils";
 
 interface DDItem {
   id: string;

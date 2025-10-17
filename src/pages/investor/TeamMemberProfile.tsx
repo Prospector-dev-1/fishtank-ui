@@ -1,10 +1,10 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Mail, Linkedin, Twitter, GraduationCap, Briefcase, Award, Users } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
-import { mockTeamProfiles, mockStartups } from '@/data/mockData';
+import { Button } from '@/components/investor/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/investor/ui/card';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/investor/ui/avatar';
+import { Badge } from '@/components/investor/ui/badge';
+import { mockTeamProfiles, mockStartups } from "@/data/investor/mockData";
 
 export default function TeamMemberProfile() {
   const { id, memberId } = useParams();
@@ -18,7 +18,7 @@ export default function TeamMemberProfile() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-h1 font-bold mb-2">Profile not found</h1>
-          <Button onClick={() => navigate(`/startup/${id}`)}>Back to Startup</Button>
+          <Button onClick={() => navigate(`/investor/startup/${id}`)}>Back to Startup</Button>
         </div>
       </div>
     );
@@ -29,7 +29,7 @@ export default function TeamMemberProfile() {
       {/* Header */}
       <div className="sticky top-0 z-40 glass-effect border-b border-border">
         <div className="flex items-center justify-between p-4">
-          <Button variant="ghost" size="sm" onClick={() => navigate(`/startup/${id}`)}>
+          <Button variant="ghost" size="sm" onClick={() => navigate(`/investor/startup/${id}`)}>
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to {startup.name}
           </Button>

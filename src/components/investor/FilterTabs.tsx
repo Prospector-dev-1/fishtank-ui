@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from "@/lib/investor/utils";
 
 export type FilterType = 'all' | 'messages' | 'teams' | 'system';
 

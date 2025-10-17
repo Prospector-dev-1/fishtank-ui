@@ -4,17 +4,17 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
-import { IOSHeader } from "@/components/ui/ios-header";
-import { IOSButton } from "@/components/ui/ios-button";
-import { IOSCard, IOSCardContent, IOSCardHeader, IOSCardTitle, IOSCardDescription } from "@/components/ui/ios-card";
-import { IOSList, IOSListItem, IOSListSection } from "@/components/ui/ios-list";
-import { IOSBadge } from "@/components/ui/ios-badge";
-import { IOSEmptyState } from "@/components/ui/ios-empty-state";
-import { IOSSkeleton } from "@/components/ui/ios-skeleton";
-import { IOSChip } from "@/components/ui/ios-chip";
-import ProfileSettings from "@/components/ProfileSettings";
-import { ServiceModal } from "@/components/ServiceModal";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { IOSHeader } from "@/components/creator/ui/ios-header";
+import { IOSButton } from "@/components/creator/ui/ios-button";
+import { IOSCard, IOSCardContent, IOSCardHeader, IOSCardTitle, IOSCardDescription } from "@/components/creator/ui/ios-card";
+import { IOSList, IOSListItem, IOSListSection } from "@/components/creator/ui/ios-list";
+import { IOSBadge } from "@/components/creator/ui/ios-badge";
+import { IOSEmptyState } from "@/components/creator/ui/ios-empty-state";
+import { IOSSkeleton } from "@/components/creator/ui/ios-skeleton";
+import { IOSChip } from "@/components/creator/ui/ios-chip";
+import ProfileSettings from "@/components/creator/ProfileSettings";
+import { ServiceModal } from "@/components/creator/ServiceModal";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/creator/ui/tabs";
 
 export default function Profile() {
   const { user } = useAuth();
@@ -124,7 +124,7 @@ export default function Profile() {
         rightAction={
           <div className="flex items-center gap-2">
             <button
-              onClick={() => navigate('/edit-profile')}
+              onClick={() => navigate('/creator/edit-profile')}
               className="touch-target flex items-center justify-center text-primary active:opacity-60 transition-opacity duration-120"
             >
               <Edit className="h-5 w-5" strokeWidth={2} />
@@ -301,7 +301,7 @@ export default function Profile() {
                 description="Showcase your work by adding portfolio items"
                 action={{
                   label: "Add Portfolio Item",
-                  onClick: () => navigate('/edit-profile'),
+                  onClick: () => navigate('/creator/edit-profile'),
                 }}
               />
             ) : (

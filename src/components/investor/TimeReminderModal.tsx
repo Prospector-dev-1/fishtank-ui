@@ -3,7 +3,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Calendar, Clock } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
+import { useToast } from "@/components/investor/ui/use-toast";
 
 interface TimeReminderModalProps {
   isOpen: boolean;

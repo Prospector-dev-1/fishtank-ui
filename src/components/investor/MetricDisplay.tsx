@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from "@/lib/investor/utils";
 import { TrendingUp, TrendingDown } from 'lucide-react';
 
 interface MetricDisplayProps {

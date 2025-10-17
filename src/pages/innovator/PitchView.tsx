@@ -1,12 +1,12 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { ArrowLeft, Heart, MessageCircle, Share2, Eye, MoreVertical } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/innovator/ui/button';
+import { Badge } from '@/components/innovator/ui/badge';
 import { supabase } from '@/integrations/supabase/client';
-import { recordView } from '@/lib/tankApi';
+import { recordView } from "@/lib/innovator/tankApi";
 import { toast } from 'sonner';
-import type { Pitch } from '@/types';
+import type { Pitch } from "@/types";
 export default function PitchView() {
   const {
     pitchId
@@ -57,7 +57,7 @@ export default function PitchView() {
         <div className="text-center">
           <h1 className="text-2xl font-bold mb-2">Pitch Not Found</h1>
           <p className="text-muted-foreground mb-4">The requested pitch could not be found.</p>
-          <Button onClick={() => navigate('/tank')}>Back to Tank</Button>
+          <Button onClick={() => navigate('/innovator/tank')}>Back to Tank</Button>
         </div>
       </div>;
   }

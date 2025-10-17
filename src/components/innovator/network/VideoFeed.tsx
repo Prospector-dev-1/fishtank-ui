@@ -1,10 +1,10 @@
 import { VideoCard } from "./VideoCard";
-import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
-import { PullToRefresh } from "@/components/ui/pull-to-refresh";
+import { Carousel, CarouselContent, CarouselItem } from "@/components/innovator/ui/carousel";
+import { PullToRefresh } from "@/components/innovator/ui/pull-to-refresh";
 import { EmblaOptionsType } from "embla-carousel";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { useIsMobile } from "@/hooks/innovator/use-mobile";
 interface VideoFeedProps {
   posts: Array<{
     id: string;

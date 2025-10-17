@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ChevronLeft, Eye, Users, MessageCircle, TrendingUp, Calendar } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { Button } from "@/components/innovator/ui/button";
+import { Card } from "@/components/innovator/ui/card";
 import { useNavigate } from "react-router-dom";
 
 export default function Analytics() {
@@ -40,7 +40,7 @@ export default function Analytics() {
       <div className="sticky top-0 z-40 bg-background border-b border-border">
         <div className="container-mobile px-4 py-4">
           <div className="flex items-center justify-between">
-            <Button variant="ghost" size="icon" onClick={() => navigate("/")}>
+            <Button variant="ghost" size="icon" onClick={() => navigate("/innovator")}>
               <ChevronLeft className="w-5 h-5" />
             </Button>
             <h1 className="font-semibold">Analytics</h1>

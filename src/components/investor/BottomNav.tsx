@@ -1,12 +1,12 @@
 import { Home, TrendingUp, MessageCircle, User } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
-import { cn } from '@/lib/utils';
+import { cn } from "@/lib/investor/utils";
 
 const navItems = [
-  { icon: Home, label: 'Home', path: '/dashboard' },
-  { icon: TrendingUp, label: 'Tank', path: '/discover' },
-  { icon: MessageCircle, label: 'Messages', path: '/messages' },
-  { icon: User, label: 'Profile', path: '/profile' },
+  { icon: Home, label: 'Home', path: '/investor/dashboard' },
+  { icon: TrendingUp, label: 'Tank', path: '/investor/discover' },
+  { icon: MessageCircle, label: 'Messages', path: '/investor/messages' },
+  { icon: User, label: 'Profile', path: '/investor/profile' },
 ];
 
 export function BottomNav() {

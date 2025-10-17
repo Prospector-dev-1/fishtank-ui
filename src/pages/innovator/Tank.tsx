@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { FishtankHeader } from "@/components/layout/FishtankHeader";
-import { InnovationSetupWizard } from "@/components/tank/InnovationSetupWizard";
-import { TankDashboard } from "@/components/tank/TankDashboard";
-import { innovationAPI } from "@/lib/tankApi";
+import { FishtankHeader } from "@/components/innovator/layout/FishtankHeader";
+import { InnovationSetupWizard } from "@/components/innovator/tank/InnovationSetupWizard";
+import { TankDashboard } from "@/components/innovator/tank/TankDashboard";
+import { innovationAPI } from "@/lib/innovator/tankApi";
 import { supabase } from "@/integrations/supabase/client";
 import type { Innovation } from "@/types";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/innovator/ui/select";
 
 export default function Tank() {
   const [innovations, setInnovations] = useState<Innovation[]>([]);

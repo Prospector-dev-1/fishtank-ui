@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { FishtankHeader } from "@/components/layout/FishtankHeader";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Textarea } from "@/components/ui/textarea";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
-import { innovationAPI } from "@/lib/tankApi";
-import { useTeamPermissions } from "@/hooks/useTeamPermissions";
+import { FishtankHeader } from "@/components/innovator/layout/FishtankHeader";
+import { Button } from "@/components/innovator/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/innovator/ui/card";
+import { Label } from "@/components/innovator/ui/label";
+import { Switch } from "@/components/innovator/ui/switch";
+import { RadioGroup, RadioGroupItem } from "@/components/innovator/ui/radio-group";
+import { Textarea } from "@/components/innovator/ui/textarea";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/innovator/ui/alert-dialog";
+import { innovationAPI } from "@/lib/innovator/tankApi";
+import { useTeamPermissions } from "@/hooks/innovator/useTeamPermissions";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import type { Innovation } from "@/types";
@@ -34,7 +34,7 @@ export default function InnovationSettings() {
   useEffect(() => {
     if (!permissionsLoading && innovation && !canEditInnovation) {
       toast.error('You do not have permission to access settings');
-      navigate('/tank');
+      navigate('/innovator/tank');
     }
   }, [canEditInnovation, permissionsLoading, innovation, navigate]);
   const loadInnovation = async () => {
@@ -45,7 +45,7 @@ export default function InnovationSettings() {
     } catch (error) {
       console.error('Error loading innovation:', error);
       toast.error('Failed to load innovation');
-      navigate('/tank');
+      navigate('/innovator/tank');
     } finally {
       setIsLoading(false);
     }
@@ -78,7 +78,7 @@ export default function InnovationSettings() {
       } = await supabase.from('innovations').delete().eq('id', innovation.id);
       if (error) throw error;
       toast.success('Innovation deleted successfully');
-      navigate('/tank');
+      navigate('/innovator/tank');
     } catch (error) {
       console.error('Error deleting innovation:', error);
       toast.error('Failed to delete innovation');

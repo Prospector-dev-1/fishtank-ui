@@ -7,9 +7,9 @@ import { Switch } from '@/components/ui/switch';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Plus, Trash2 } from 'lucide-react';
-import { Creator, Milestone } from '@/lib/creatorTypes';
+import { Creator, Milestone } from "@/lib/creator/creatorTypes";
 import { NDAModal } from './NDAModal';
-import { useToast } from '@/hooks/use-toast';
+import { useToast } from "@/components/creator/ui/use-toast";
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 

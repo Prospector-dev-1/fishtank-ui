@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, forwardRef, useImperativeHandle, useCallback } from 'react';
 import { Play, Pause, Volume2, VolumeX, Maximize, Settings, Bookmark, Share2, SkipBack, SkipForward } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { useHapticFeedback } from '@/hooks/useHapticFeedback';
+import { cn } from "@/lib/investor/utils";
+import { useHapticFeedback } from "@/hooks/investor/useHapticFeedback";
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';

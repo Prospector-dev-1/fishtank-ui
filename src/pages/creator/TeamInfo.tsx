@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { Switch } from "@/components/ui/switch";
-import { Input } from "@/components/ui/input";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Button } from "@/components/creator/ui/button";
+import { Card } from "@/components/creator/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/creator/ui/avatar";
+import { Badge } from "@/components/creator/ui/badge";
+import { Separator } from "@/components/creator/ui/separator";
+import { Switch } from "@/components/creator/ui/switch";
+import { Input } from "@/components/creator/ui/input";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/creator/ui/dialog";
 import { useNavigation } from "@/contexts/NavigationContext";
 import {
   ArrowLeft,

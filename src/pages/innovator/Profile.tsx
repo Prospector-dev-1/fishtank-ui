@@ -1,17 +1,17 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { FishtankHeader } from "@/components/layout/FishtankHeader";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/innovator/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/innovator/ui/avatar";
+import { Button } from "@/components/innovator/ui/button";
+import { Badge } from "@/components/innovator/ui/badge";
+import { Separator } from "@/components/innovator/ui/separator";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/innovator/ui/tabs";
+import { FishtankHeader } from "@/components/innovator/layout/FishtankHeader";
 import { User, Mail, MapPin, Briefcase, Edit, Settings, Rocket, Video, Users, Lightbulb } from "lucide-react";
-import { toast } from "@/hooks/use-toast";
-import { EmptyState } from "@/components/ui/empty-state";
-import { Skeleton } from "@/components/ui/skeleton";
+import { toast } from "@/components/innovator/ui/use-toast";
+import { EmptyState } from "@/components/innovator/ui/empty-state";
+import { Skeleton } from "@/components/innovator/ui/skeleton";
 export default function Profile() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);

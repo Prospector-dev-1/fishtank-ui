@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/innovator/ui/card";
+import { Button } from "@/components/innovator/ui/button";
+import { Textarea } from "@/components/innovator/ui/textarea";
+import { Badge } from "@/components/innovator/ui/badge";
 import { 
   Lightbulb, 
   Mic, 
@@ -11,7 +11,7 @@ import {
   Clock,
   Hash
 } from "lucide-react";
-import { toast } from "@/hooks/use-toast";
+import { toast } from "@/components/innovator/ui/use-toast";
 
 interface QuickNote {
   id: string;

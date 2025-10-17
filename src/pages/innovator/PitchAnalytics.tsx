@@ -1,14 +1,14 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { ArrowLeft, TrendingUp, Eye, Users, Clock, Activity, MessageCircle, Calendar } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/innovator/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/innovator/ui/card';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
-import { useTeamPermissions } from '@/hooks/useTeamPermissions';
-import type { Pitch } from '@/types';
+import { useTeamPermissions } from "@/hooks/innovator/useTeamPermissions";
+import type { Pitch } from "@/types";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/innovator/ui/chart";
 
 interface AnalyticsData {
   date: string;
@@ -35,7 +35,7 @@ export default function PitchAnalytics() {
   useEffect(() => {
     if (!permissionsLoading && pitch && !canViewAnalytics) {
       toast.error('You do not have permission to view analytics');
-      navigate('/tank');
+      navigate('/innovator/tank');
     }
   }, [canViewAnalytics, permissionsLoading, pitch, navigate]);
 
@@ -84,7 +84,7 @@ export default function PitchAnalytics() {
       <div className="min-h-screen bg-background p-4">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-4 mb-6">
-            <Button variant="ghost" size="sm" onClick={() => navigate('/tank')}>
+            <Button variant="ghost" size="sm" onClick={() => navigate('/innovator/tank')}>
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Tank
             </Button>
@@ -134,7 +134,7 @@ export default function PitchAnalytics() {
       <div className="border-b">
         <div className="p-4 max-w-6xl mx-auto">
           <div className="flex items-center gap-4 mb-4">
-            <Button variant="ghost" size="sm" onClick={() => navigate('/tank')}>
+            <Button variant="ghost" size="sm" onClick={() => navigate('/innovator/tank')}>
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Tank
             </Button>

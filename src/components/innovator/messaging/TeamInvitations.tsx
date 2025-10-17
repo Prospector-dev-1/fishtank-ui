@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/innovator/ui/card";
+import { Button } from "@/components/innovator/ui/button";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/innovator/ui/avatar";
+import { Badge } from "@/components/innovator/ui/badge";
 import { Check, X, Users } from "lucide-react";
 import { toast } from "sonner";
 
@@ -55,7 +55,7 @@ export function TeamInvitations() {
       .subscribe();
 
     return () => {
-      supabase.removeChannel(channel);
+      channel.unsubscribe();
     };
   }, []);
 

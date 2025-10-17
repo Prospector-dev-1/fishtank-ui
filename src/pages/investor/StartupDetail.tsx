@@ -1,16 +1,16 @@
 import { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Heart, Bookmark, Users, TrendingUp, HelpCircle, FileText, MessageCircle } from 'lucide-react';
-import { VideoPlayer } from '@/components/VideoPlayer';
-import { Chip } from '@/components/ui/chip';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { Textarea } from '@/components/ui/textarea';
-import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
-import { MessageModal } from '@/components/MessageModal';
-import { mockStartups } from '@/data/mockData';
-import { useToast } from '@/hooks/use-toast';
+import { VideoPlayer } from "@/components/investor/VideoPlayer";
+import { Chip } from "@/components/investor/ui/chip";
+import { Button } from '@/components/investor/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/investor/ui/card';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/investor/ui/accordion';
+import { Textarea } from '@/components/investor/ui/textarea';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/investor/ui/avatar';
+import { MessageModal } from "@/components/investor/MessageModal";
+import { mockStartups } from "@/data/investor/mockData";
+import { useToast } from "@/components/investor/ui/use-toast";
 export default function StartupDetail() {
   const {
     id
@@ -28,7 +28,7 @@ export default function StartupDetail() {
     return <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-h1 font-bold mb-2">Startup not found</h1>
-          <Button onClick={() => navigate('/discover')}>Back to The Tank</Button>
+          <Button onClick={() => navigate('/investor/discover')}>Back to The Tank</Button>
         </div>
       </div>;
   }
@@ -148,7 +148,7 @@ We project reaching profitability within 18 months, with conservative revenue es
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 gap-4">
-              {startup.team.map((member, index) => <div key={index} className="flex items-center space-x-3 p-3 glass-subtle rounded-lg cursor-pointer hover:glass-intense transition-all duration-300 group" onClick={() => navigate(`/startup/${startup.id}/team/${member.id}`)}>
+              {startup.team.map((member, index) => <div key={index} className="flex items-center space-x-3 p-3 glass-subtle rounded-lg cursor-pointer hover:glass-intense transition-all duration-300 group" onClick={() => navigate(`/investor/startup/${startup.id}/team/${member.id}`)}>
                   <Avatar className="w-12 h-12">
                     <AvatarImage src={member.avatar} alt={member.name} />
                     <AvatarFallback>

@@ -3,9 +3,9 @@ import type {
   Creator, ServicePackage, PortfolioItem, Brief, NDARecord, Proposal, 
   Contract, ChatThread, Message, Payout, Review, Dispute, Invitation, SavedItem
 } from './types';
-import creatorAvatar from '@/assets/creator-avatar.jpg';
-import innovatorSarah from '@/assets/innovator-sarah.jpg';
-import innovatorMarcus from '@/assets/innovator-marcus.jpg';
+import creatorAvatar from "@/assets/creator-avatar.jpg";
+import innovatorSarah from "@/assets/innovator-sarah.jpg";
+import innovatorMarcus from "@/assets/innovator-marcus.jpg";
 import fintechProject from '@/assets/fintech-project.jpg';
 import fashionProject from '@/assets/fashion-project.jpg';
 import portfolioPitchDecks from '@/assets/portfolio-pitchdecks.jpg';

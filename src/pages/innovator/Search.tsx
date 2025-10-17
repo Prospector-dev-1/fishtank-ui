@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { FishtankHeader } from "@/components/layout/FishtankHeader";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card, CardContent } from "@/components/ui/card";
+import { FishtankHeader } from "@/components/innovator/layout/FishtankHeader";
+import { Input } from "@/components/innovator/ui/input";
+import { Button } from "@/components/innovator/ui/button";
+import { Badge } from "@/components/innovator/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/innovator/ui/tabs";
+import { Card, CardContent } from "@/components/innovator/ui/card";
 import { 
   Search as SearchIcon, Filter, Play, Users, 
   Briefcase, User, TrendingUp 

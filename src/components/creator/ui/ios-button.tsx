@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/creator/utils";
 
 const iosButtonVariants = cva(
   "inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold transition-all duration-180 disabled:pointer-events-none disabled:opacity-45 active:scale-[0.98] touch-target",

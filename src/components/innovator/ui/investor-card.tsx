@@ -1,9 +1,9 @@
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { ScorePill } from "@/components/ui/score-pill";
+import { Badge } from "@/components/innovator/ui/badge";
+import { Button } from "@/components/innovator/ui/button";
+import { Card } from "@/components/innovator/ui/card";
+import { ScorePill } from "@/components/innovator/ui/score-pill";
 import { MessageSquare, Calendar, Shield, ExternalLink } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/innovator/utils";
 
 interface InvestorCardProps {
   investor: {

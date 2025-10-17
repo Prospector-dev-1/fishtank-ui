@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Button } from '@/components/investor/ui/button';
+import { Card } from '@/components/investor/ui/card';
+import { Badge } from '@/components/investor/ui/badge';
+import { Input } from '@/components/investor/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/investor/ui/select';
 import { 
   Search, 
   Filter, 
@@ -163,7 +163,7 @@ export default function DealFlow() {
 
   const DealCard = ({ deal }: { deal: Deal }) => (
     <Card className="p-4 hover:shadow-lg transition-all cursor-pointer border-l-4 border-l-primary"
-          onClick={() => navigate(`/startup/${deal.id}`)}>
+          onClick={() => navigate(`/investor/startup/${deal.id}`)}>
       <div className="space-y-3">
         {/* Header - Simplified */}
         <div className="flex items-start justify-between gap-3">
@@ -227,7 +227,7 @@ export default function DealFlow() {
             <h1 className="text-2xl md:text-3xl font-bold tracking-tight">Deal Flow</h1>
             <p className="text-muted-foreground text-sm md:text-base">Source, review, and manage investment opportunities</p>
           </div>
-          <Button onClick={() => navigate('/discover')} className="shrink-0">
+          <Button onClick={() => navigate('/investor/discover')} className="shrink-0">
             <Building2 className="w-4 h-4 mr-2" />
             <span className="hidden sm:inline">Enter Tank</span>
             <span className="sm:hidden">Tank</span>

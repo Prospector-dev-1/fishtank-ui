@@ -1,15 +1,15 @@
 import { useState, useMemo } from "react";
-import { SwipeDeck } from "@/components/SwipeDeck";
+import { SwipeDeck } from "@/components/creator/SwipeDeck";
 import { mockStartups } from "@/data/startups";
 import { useNavigate } from "react-router-dom";
-import { IOSHeader } from "@/components/ui/ios-header";
-import { IOSInput } from "@/components/ui/ios-input";
-import { IOSChip } from "@/components/ui/ios-chip";
-import { IOSButton } from "@/components/ui/ios-button";
-import { IOSBadge } from "@/components/ui/ios-badge";
+import { IOSHeader } from "@/components/creator/ui/ios-header";
+import { IOSInput } from "@/components/creator/ui/ios-input";
+import { IOSChip } from "@/components/creator/ui/ios-chip";
+import { IOSButton } from "@/components/creator/ui/ios-button";
+import { IOSBadge } from "@/components/creator/ui/ios-badge";
 import { Search, SlidersHorizontal, X } from "lucide-react";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/creator/ui/sheet";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/creator/ui/select";
 
 export default function Discover() {
   const navigate = useNavigate();

@@ -4,17 +4,17 @@ import { Search, ArrowLeft, Send, Users, Plus } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { useNavigation } from "@/contexts/NavigationContext";
-import type { ChatThread } from "@/lib/types";
-import { IOSHeader } from "@/components/ui/ios-header";
-import { IOSInput } from "@/components/ui/ios-input";
-import { IOSButton } from "@/components/ui/ios-button";
-import { IOSList, IOSListItem, IOSListSection } from "@/components/ui/ios-list";
-import { IOSCard } from "@/components/ui/ios-card";
-import { IOSBadge } from "@/components/ui/ios-badge";
-import { IOSEmptyState } from "@/components/ui/ios-empty-state";
-import { IOSSkeleton } from "@/components/ui/ios-skeleton";
-import CreateTeamModal from "@/components/CreateTeamModal";
-import { cn } from "@/lib/utils";
+import type { ChatThread } from "@/lib/creator/types";
+import { IOSHeader } from "@/components/creator/ui/ios-header";
+import { IOSInput } from "@/components/creator/ui/ios-input";
+import { IOSButton } from "@/components/creator/ui/ios-button";
+import { IOSList, IOSListItem, IOSListSection } from "@/components/creator/ui/ios-list";
+import { IOSCard } from "@/components/creator/ui/ios-card";
+import { IOSBadge } from "@/components/creator/ui/ios-badge";
+import { IOSEmptyState } from "@/components/creator/ui/ios-empty-state";
+import { IOSSkeleton } from "@/components/creator/ui/ios-skeleton";
+import CreateTeamModal from "@/components/creator/CreateTeamModal";
+import { cn } from "@/lib/creator/utils";
 
 export default function Inbox() {
   const location = useLocation();
@@ -411,7 +411,7 @@ export default function Inbox() {
                   !searchQuery
                     ? {
                         label: "Discover Creators",
-                        onClick: () => navigate("/network"),
+                        onClick: () => navigate("/creator/network"),
                       }
                     : undefined
                 }

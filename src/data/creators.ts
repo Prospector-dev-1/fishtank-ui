@@ -1,4 +1,4 @@
-import { Creator } from '@/lib/creatorTypes';
+import { Creator } from '@/lib/creator/creatorTypes';
 
 export const creators: Creator[] = [
   {

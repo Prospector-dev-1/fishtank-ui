@@ -1,9 +1,9 @@
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Avatar } from "@/components/ui/avatar";
-import { Progress } from "@/components/ui/progress";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card } from "@/components/innovator/ui/card";
+import { Badge } from "@/components/innovator/ui/badge";
+import { Button } from "@/components/innovator/ui/button";
+import { Avatar } from "@/components/innovator/ui/avatar";
+import { Progress } from "@/components/innovator/ui/progress";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/innovator/ui/tabs";
 import { 
   Trophy, 
   TrendingUp, 

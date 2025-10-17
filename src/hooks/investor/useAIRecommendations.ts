@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Startup } from '@/data/mockData';
+import { Startup } from "@/data/investor/mockData";
 
 interface UserProfile {
   sectors: string[];

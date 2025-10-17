@@ -1,7 +1,7 @@
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
+import { Card } from "@/components/innovator/ui/card";
+import { Badge } from "@/components/innovator/ui/badge";
+import { Button } from "@/components/innovator/ui/button";
+import { Progress } from "@/components/innovator/ui/progress";
 import { 
   TrendingUp, 
   Target, 

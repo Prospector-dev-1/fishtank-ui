@@ -1,5 +1,5 @@
 import { useState, useCallback, useMemo } from 'react';
-import { Startup } from '@/data/mockData';
+import { Startup } from "@/data/investor/mockData";
 
 interface SearchFilters {
   sectors: string[];

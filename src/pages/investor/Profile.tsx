@@ -1,16 +1,16 @@
 import { useState } from 'react';
 import { Camera, Moon, Sun, Bell, Shield, LogOut, Settings, Globe, Mail, HardDrive, User, Lock, Smartphone } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Switch } from '@/components/ui/switch';
-import { Chip } from '@/components/ui/chip';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Separator } from '@/components/ui/separator';
-import { mockUser } from '@/data/mockData';
-import { useToast } from '@/hooks/use-toast';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/investor/ui/card';
+import { Button } from '@/components/investor/ui/button';
+import { Input } from '@/components/investor/ui/input';
+import { Label } from '@/components/investor/ui/label';
+import { Switch } from '@/components/investor/ui/switch';
+import { Chip } from "@/components/investor/ui/chip";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/investor/ui/sheet';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/investor/ui/select';
+import { Separator } from '@/components/investor/ui/separator';
+import { mockUser } from "@/data/investor/mockData";
+import { useToast } from "@/components/investor/ui/use-toast";
 
 export default function Profile() {
   const [user, setUser] = useState(mockUser);

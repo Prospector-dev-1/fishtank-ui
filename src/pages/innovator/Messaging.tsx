@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import { ChevronLeft, Send, Paperclip, MoreVertical, Search, Check, CheckCheck } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { FishtankHeader } from "@/components/layout/FishtankHeader";
+import { Button } from "@/components/innovator/ui/button";
+import { Card } from "@/components/innovator/ui/card";
+import { Input } from "@/components/innovator/ui/input";
+import { Avatar, AvatarFallback } from "@/components/innovator/ui/avatar";
+import { FishtankHeader } from "@/components/innovator/layout/FishtankHeader";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { toast } from "@/hooks/use-toast";
-import { cn } from "@/lib/utils";
+import { toast } from "@/components/innovator/ui/use-toast";
+import { cn } from "@/lib/innovator/utils";
 
 interface Message {
   id: string;

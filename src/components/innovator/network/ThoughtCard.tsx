@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Card, CardContent } from "@/components/innovator/ui/card";
+import { Button } from "@/components/innovator/ui/button";
+import { Avatar, AvatarFallback } from "@/components/innovator/ui/avatar";
 import { Heart, MessageCircle, Trash2, ChevronDown, ChevronUp } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { supabase } from "@/integrations/supabase/client";

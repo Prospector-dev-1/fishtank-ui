@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { ChevronLeft, Calendar, Clock, Check } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { Button } from "@/components/innovator/ui/button";
+import { Card } from "@/components/innovator/ui/card";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { toast } from "@/hooks/use-toast";
+import { toast } from "@/components/innovator/ui/use-toast";
 
 interface TimeSlot {
   id: string;

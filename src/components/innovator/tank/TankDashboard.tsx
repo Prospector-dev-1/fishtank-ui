@@ -7,9 +7,9 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Plus, MoreVertical, Edit, Share, Video, Eye, TrendingUp, Play, Users, Settings } from 'lucide-react';
 import { toast } from 'sonner';
-import { recordView } from '@/lib/tankApi';
-import { useTeamPermissions } from '@/hooks/useTeamPermissions';
-import type { Innovation, Pitch } from '@/types';
+import { recordView } from "@/lib/innovator/tankApi";
+import { useTeamPermissions } from "@/hooks/innovator/useTeamPermissions";
+import type { Innovation, Pitch } from "@/types";
 import { supabase } from '@/integrations/supabase/client';
 import { TankAnalyticsSummary } from './TankAnalyticsSummary';
 import { TeamManagement } from './TeamManagement';
@@ -81,13 +81,13 @@ export function TankDashboard({
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
                   {canEditInnovation && (
-                    <DropdownMenuItem onClick={() => navigate('/tank/innovation/edit')}>
+                    <DropdownMenuItem onClick={() => navigate('/innovator/tank/innovation/edit')}>
                       <Edit className="w-4 h-4 mr-2" />
                       Edit Innovation
                     </DropdownMenuItem>
                   )}
                   {canEditInnovation && (
-                    <DropdownMenuItem onClick={() => navigate('/tank/innovation/settings')}>
+                    <DropdownMenuItem onClick={() => navigate('/innovator/tank/innovation/settings')}>
                       <Settings className="w-4 h-4 mr-2" />
                       Settings
                     </DropdownMenuItem>
@@ -151,7 +151,7 @@ export function TankDashboard({
               </p>
             </div>
             {canCreatePitch && (
-              <Button size="sm" onClick={() => navigate('/tank/pitch/new')} className="rounded-full shadow-sm">
+              <Button size="sm" onClick={() => navigate('/innovator/tank/pitch/new')} className="rounded-full shadow-sm">
                 <Plus className="w-4 h-4 mr-1" />
                 New
               </Button>
@@ -186,7 +186,7 @@ export function TankDashboard({
               <p className="text-sm text-muted-foreground text-center max-w-xs mb-6">
                 Create your first pitch video to share your innovation
               </p>
-              <Button onClick={() => navigate('/tank/pitch/new')} className="rounded-full shadow-sm">
+              <Button onClick={() => navigate('/innovator/tank/pitch/new')} className="rounded-full shadow-sm">
                 <Plus className="w-4 h-4 mr-2" />
                 Create First Pitch
               </Button>

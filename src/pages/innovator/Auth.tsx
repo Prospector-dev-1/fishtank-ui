@@ -3,10 +3,10 @@
  * Now just navigates to home without actual authentication
  */
 import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/innovator/ui/button";
+import { Input } from "@/components/innovator/ui/input";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/innovator/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/innovator/ui/tabs";
 import { Fish } from "lucide-react";
 
 export default function Auth() {
@@ -15,7 +15,7 @@ export default function Auth() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // No authentication - just navigate to home
-    navigate("/");
+    navigate("/innovator");
   };
 
   return (

@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { ChevronLeft, Filter, Check, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Label } from "@/components/ui/label";
-import { Slider } from "@/components/ui/slider";
+import { Button } from "@/components/innovator/ui/button";
+import { Card } from "@/components/innovator/ui/card";
+import { Badge } from "@/components/innovator/ui/badge";
+import { Label } from "@/components/innovator/ui/label";
+import { Slider } from "@/components/innovator/ui/slider";
 import { useNavigate } from "react-router-dom";
 
 interface FilterState {

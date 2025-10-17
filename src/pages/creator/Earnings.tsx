@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { DollarSign, TrendingUp, Clock, CreditCard, Download } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { payouts, currentCreator } from "@/lib/creatorData";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/creator/ui/card";
+import { Button } from "@/components/creator/ui/button";
+import { Badge } from "@/components/creator/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/creator/ui/tabs";
+import { payouts, currentCreator } from "@/lib/creator/creatorData";
 
 export default function Earnings() {
   const [selectedPeriod, setSelectedPeriod] = useState<'week' | 'month' | 'year'>('month');

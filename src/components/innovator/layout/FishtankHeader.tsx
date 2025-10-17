@@ -159,7 +159,7 @@ export function FishtankHeader({
 
           {showProfile && (
             <button
-              onClick={() => navigate('/profile')}
+              onClick={() => navigate('/innovator/profile')}
               className="flex items-center gap-2 hover:opacity-80 transition-opacity"
             >
               <Avatar className="h-8 w-8 border-2 border-primary/20">

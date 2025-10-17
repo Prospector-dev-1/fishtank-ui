@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Plus, MessageCircle, Bookmark, TrendingUp, X } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from "@/lib/investor/utils";
 
 interface FloatingActionMenuProps {
   onAction?: (action: string) => void;

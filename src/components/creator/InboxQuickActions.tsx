@@ -4,8 +4,8 @@ import { Handshake, Image, Shield, Users } from 'lucide-react';
 import { CollaborateInviteModal } from './CollaborateInviteModal';
 import { ReferralModal } from './ReferralModal';
 import { NDAModal } from './NDAModal';
-import { creators } from '@/data/creators';
-import { useToast } from '@/hooks/use-toast';
+import { creators } from "@/data/creators";
+import { useToast } from "@/components/creator/ui/use-toast";
 
 interface InboxQuickActionsProps {
   recipientId?: string;

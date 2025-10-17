@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { FishtankHeader } from "@/components/layout/FishtankHeader";
+import { Button } from "@/components/innovator/ui/button";
+import { Card } from "@/components/innovator/ui/card";
+import { Badge } from "@/components/innovator/ui/badge";
+import { FishtankHeader } from "@/components/innovator/layout/FishtankHeader";
 import { Rocket, TrendingUp, Zap, Users, Lightbulb, Play, ArrowRight, Sparkles, Target, Award, Clock } from "lucide-react";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
@@ -46,19 +46,19 @@ export default function Home() {
     title: "Create Pitch",
     description: "Share your innovation",
     color: "bg-gradient-primary",
-    action: () => navigate('/tank/pitch/new')
+    action: () => navigate('/innovator/tank/pitch/new')
   }, {
     icon: Users,
     title: "Explore Network",
     description: "Find collaborators",
     color: "bg-gradient-to-br from-purple-500 to-pink-500",
-    action: () => navigate('/network')
+    action: () => navigate('/innovator/network')
   }, {
     icon: Target,
     title: "Find Opportunities",
     description: "Discover projects",
     color: "bg-gradient-to-br from-orange-500 to-red-500",
-    action: () => navigate('/collaborate')
+    action: () => navigate('/innovator/collaborate')
   }];
   const recentActivity = [{
     icon: Play,
@@ -190,13 +190,13 @@ export default function Home() {
       <div className="section-padding">
         <h2 className="section-title">Explore</h2>
         <div className="grid grid-cols-2 gap-3">
-          <Card className="ios-card p-6 cursor-pointer hover-lift text-center" onClick={() => navigate('/tank')}>
+          <Card className="ios-card p-6 cursor-pointer hover-lift text-center" onClick={() => navigate('/innovator/tank')}>
             <div className="w-12 h-12 rounded-2xl bg-gradient-primary flex items-center justify-center mx-auto mb-3">
               <Rocket className="w-6 h-6 text-white" />
             </div>
             <h3 className="font-semibold text-sm">My Tank</h3>
           </Card>
-          <Card className="ios-card p-6 cursor-pointer hover-lift text-center" onClick={() => navigate('/collaborate')}>
+          <Card className="ios-card p-6 cursor-pointer hover-lift text-center" onClick={() => navigate('/innovator/collaborate')}>
             <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center mx-auto mb-3">
               <Lightbulb className="w-6 h-6 text-white" />
             </div>

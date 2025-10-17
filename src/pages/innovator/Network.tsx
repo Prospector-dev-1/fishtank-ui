@@ -1,19 +1,19 @@
 import { useState, useCallback, useEffect } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { EmptyState } from "@/components/ui/empty-state";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { VideoFeed } from "@/components/network/VideoFeed";
-import { FishtankHeader } from "@/components/layout/FishtankHeader";
-import { connectionsAPI } from "@/lib/fishtankApiExtended";
+import { Card, CardContent } from "@/components/innovator/ui/card";
+import { Button } from "@/components/innovator/ui/button";
+import { Badge } from "@/components/innovator/ui/badge";
+import { Input } from "@/components/innovator/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/innovator/ui/select";
+import { EmptyState } from "@/components/innovator/ui/empty-state";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/innovator/ui/tabs";
+import { VideoFeed } from "@/components/innovator/network/VideoFeed";
+import { FishtankHeader } from "@/components/innovator/layout/FishtankHeader";
+import { connectionsAPI } from "@/lib/innovator/fishtankApiExtended";
 import { Users, Video, Heart, MessageCircle, Plus, Filter, Search, Award, MapPin, Calendar, TrendingUp, Zap, Compass, UserPlus, Sparkles, Play, Globe, Lightbulb } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
-import { CreateThought } from "@/components/network/CreateThought";
-import { ThoughtCard } from "@/components/network/ThoughtCard";
+import { CreateThought } from "@/components/innovator/network/CreateThought";
+import { ThoughtCard } from "@/components/innovator/network/ThoughtCard";
 
 export default function Network() {
   const [activeTab, setActiveTab] = useState('discover');

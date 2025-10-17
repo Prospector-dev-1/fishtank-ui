@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Bookmark, Filter, Search, Trash2 } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { savedItems, categories } from "@/lib/creatorData";
-import type { SavedItem } from "@/lib/types";
+import { Card, CardContent } from "@/components/creator/ui/card";
+import { Button } from "@/components/creator/ui/button";
+import { Input } from "@/components/creator/ui/input";
+import { Badge } from "@/components/creator/ui/badge";
+import { savedItems, categories } from "@/lib/creator/creatorData";
+import type { SavedItem } from "@/lib/creator/types";
 
 export default function Saved() {
   const [items, setItems] = useState(savedItems);

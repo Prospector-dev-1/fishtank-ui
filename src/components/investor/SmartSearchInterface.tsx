@@ -7,8 +7,8 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Slider } from '@/components/ui/slider';
 import { Checkbox } from '@/components/ui/checkbox';
-import { useSmartSearch } from '@/hooks/useSmartSearch';
-import { mockStartups } from '@/data/mockData';
+import { useSmartSearch } from '@/hooks/investor/useSmartSearch';
+import { mockStartups } from "@/data/investor/mockData";
 import { 
   Search, 
   Filter, 
@@ -24,7 +24,7 @@ import {
   Sparkles,
   History
 } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from "@/lib/investor/utils";
 
 interface SmartSearchInterfaceProps {
   onStartupSelect?: (startup: any) => void;

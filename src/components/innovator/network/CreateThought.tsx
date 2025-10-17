@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Card, CardContent } from "@/components/innovator/ui/card";
+import { Button } from "@/components/innovator/ui/button";
+import { Textarea } from "@/components/innovator/ui/textarea";
+import { Avatar, AvatarFallback } from "@/components/innovator/ui/avatar";
 import { Sparkles } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";

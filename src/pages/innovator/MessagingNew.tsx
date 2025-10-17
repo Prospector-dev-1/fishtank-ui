@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
 import { ChevronLeft, Send, Search, Check, CheckCheck } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Skeleton } from "@/components/ui/skeleton";
-import { FishtankHeader } from "@/components/layout/FishtankHeader";
-import { FriendRequests } from "@/components/messaging/FriendRequests";
-import { TeamInvitations } from "@/components/messaging/TeamInvitations";
+import { Button } from "@/components/innovator/ui/button";
+import { Input } from "@/components/innovator/ui/input";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/innovator/ui/avatar";
+import { Skeleton } from "@/components/innovator/ui/skeleton";
+import { FishtankHeader } from "@/components/innovator/layout/FishtankHeader";
+import { FriendRequests } from "@/components/innovator/messaging/FriendRequests";
+import { TeamInvitations } from "@/components/innovator/messaging/TeamInvitations";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { toast } from "@/hooks/use-toast";
-import { cn } from "@/lib/utils";
+import { toast } from "@/components/innovator/ui/use-toast";
+import { cn } from "@/lib/innovator/utils";
 import { supabase } from "@/integrations/supabase/client";
 import { formatDistanceToNow } from "date-fns";
 interface Message {
@@ -71,7 +71,7 @@ export default function MessagingNew() {
         setMessages(prev => [...prev, payload.new as Message]);
       }).subscribe();
       return () => {
-        supabase.removeChannel(channel);
+        channel.unsubscribe();
       };
     }
   }, [activeThread]);
@@ -186,7 +186,7 @@ export default function MessagingNew() {
               <div className="text-center">
                 <h2 className="text-xl font-semibold mb-2">No Conversations</h2>
                 <p className="text-muted-foreground mb-4">Connect with people to start messaging</p>
-                <Button onClick={() => navigate("/network")}>Explore Network</Button>
+                <Button onClick={() => navigate("/innovator/network")}>Explore Network</Button>
               </div>
             </div> : filteredThreads.map(thread => <button key={thread.id} onClick={() => {
           setActiveThread(thread);
@@ -233,7 +233,7 @@ export default function MessagingNew() {
               <ChevronLeft className="w-5 h-5" />
             </Button>
             
-            <button onClick={() => navigate(`/user/${activeThread.otherUser.id}`)} className="flex items-center gap-3 flex-1 min-w-0 hover:opacity-80 transition-opacity">
+            <button onClick={() => navigate(`/innovator/user/${activeThread.otherUser.id}`)} className="flex items-center gap-3 flex-1 min-w-0 hover:opacity-80 transition-opacity">
               <Avatar className="h-10 w-10 flex-shrink-0">
                 <AvatarImage src={activeThread.otherUser.avatar_url} />
                 <AvatarFallback className="bg-primary/10 text-primary font-medium">

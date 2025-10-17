@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { BottomNav } from "./BottomNav";
 import { useNavigation } from "@/contexts/NavigationContext";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/creator/utils";
 
 export function Layout() {
   const { isNavVisible } = useNavigation();

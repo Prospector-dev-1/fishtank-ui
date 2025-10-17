@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/innovator/ui/badge";
+import { Button } from "@/components/innovator/ui/button";
+import { Input } from "@/components/innovator/ui/input";
 import { Plus, X, Loader2, Check } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/innovator/utils";
 
 interface EditableSkillsProps {
   skills: string[];

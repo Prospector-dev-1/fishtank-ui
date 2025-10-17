@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Button } from '@/components/investor/ui/button';
+import { Card } from '@/components/investor/ui/card';
+import { Badge } from '@/components/investor/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/investor/ui/tabs';
 import { 
   TrendingUp, 
   TrendingDown, 

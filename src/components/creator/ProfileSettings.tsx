@@ -9,7 +9,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { useTheme } from "next-themes";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from "@/components/creator/ui/use-toast";
 
 export default function ProfileSettings() {
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ export default function ProfileSettings() {
         title: "Signed out",
         description: "You've been successfully signed out.",
       });
-      navigate("/auth");
+      navigate("/creator/auth");
     } catch (error: any) {
       toast({
         variant: "destructive",
@@ -83,7 +83,7 @@ export default function ProfileSettings() {
       items: [
         { label: 'Payout Methods', description: 'Manage how you receive payments', action: () => console.log('Payout methods') },
         { label: 'Tax Information', description: 'Update tax forms and documentation', action: () => console.log('Tax info') },
-        { label: 'Transaction History', description: 'View all your earnings and fees', action: () => navigate('/earnings') },
+        { label: 'Transaction History', description: 'View all your earnings and fees', action: () => navigate('/creator/earnings') },
         { label: 'Subscription Plans', description: 'Upgrade for premium features', action: () => console.log('Plans'), badge: 'Free Plan' }
       ]
     }

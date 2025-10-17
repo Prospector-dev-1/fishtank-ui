@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { AlertTriangle, Upload, MessageCircle, Clock, CheckCircle2 } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Textarea } from "@/components/ui/textarea";
-import { Input } from "@/components/ui/input";
-import { disputes } from "@/lib/creatorData";
-import type { Dispute } from "@/lib/types";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/creator/ui/card";
+import { Button } from "@/components/creator/ui/button";
+import { Badge } from "@/components/creator/ui/badge";
+import { Textarea } from "@/components/creator/ui/textarea";
+import { Input } from "@/components/creator/ui/input";
+import { disputes } from "@/lib/creator/creatorData";
+import type { Dispute } from "@/lib/creator/types";
 
 export default function Disputes() {
   const [selectedDispute, setSelectedDispute] = useState<Dispute | null>(null);

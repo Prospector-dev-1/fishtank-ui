@@ -7,7 +7,7 @@ import { Avatar } from "@/components/ui/avatar";
 import { Search, ArrowRight, Users } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from "@/components/creator/ui/use-toast";
 
 interface CreateTeamModalProps {
   open: boolean;

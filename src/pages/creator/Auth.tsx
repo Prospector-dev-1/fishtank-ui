@@ -3,10 +3,10 @@
  * Now just navigates to home without actual authentication
  */
 import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/creator/ui/button";
+import { Input } from "@/components/creator/ui/input";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/creator/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/creator/ui/tabs";
 
 export default function Auth() {
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ export default function Auth() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // No authentication - just navigate to home
-    navigate("/");
+    navigate("/creator");
   };
 
   return (

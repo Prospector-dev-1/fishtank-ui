@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
+import { Card } from "@/components/innovator/ui/card";
+import { Button } from "@/components/innovator/ui/button";
+import { Badge } from "@/components/innovator/ui/badge";
+import { Progress } from "@/components/innovator/ui/progress";
 import { 
   CheckCircle2, 
   Flame, 
@@ -13,7 +13,7 @@ import {
   TrendingUp,
   Zap
 } from "lucide-react";
-import { toast } from "@/hooks/use-toast";
+import { toast } from "@/components/innovator/ui/use-toast";
 
 interface Achievement {
   id: string;

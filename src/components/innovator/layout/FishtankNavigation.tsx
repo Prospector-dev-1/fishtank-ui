@@ -1,6 +1,6 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { Home, Rocket, Users, Lightbulb, MessageCircle } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/innovator/utils";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Badge } from "@/components/ui/badge";
@@ -32,7 +32,7 @@ export function FishtankNavigation() {
       .subscribe();
 
     return () => {
-      supabase.removeChannel(channel);
+      channel.unsubscribe();
     };
   }, []);
 
@@ -62,11 +62,11 @@ export function FishtankNavigation() {
   };
 
   const navItems = [
-    { path: "/", icon: Home, label: "Home" },
-    { path: "/tank", icon: Rocket, label: "Tank" },
-    { path: "/network", icon: Users, label: "Network" },
-    { path: "/collaborate", icon: Lightbulb, label: "Collaborate" },
-    { path: "/messaging", icon: MessageCircle, label: "Messages", badge: pendingRequestsCount },
+    { path: "/innovator", icon: Home, label: "Home" },
+    { path: "/innovator/tank", icon: Rocket, label: "Tank" },
+    { path: "/innovator/network", icon: Users, label: "Network" },
+    { path: "/innovator/collaborate", icon: Lightbulb, label: "Collaborate" },
+    { path: "/innovator/messaging", icon: MessageCircle, label: "Messages", badge: pendingRequestsCount },
   ];
 
   return (

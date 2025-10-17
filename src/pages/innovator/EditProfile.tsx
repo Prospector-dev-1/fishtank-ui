@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { FishtankHeader } from "@/components/layout/FishtankHeader";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { FishtankHeader } from "@/components/innovator/layout/FishtankHeader";
+import { Button } from "@/components/innovator/ui/button";
+import { Input } from "@/components/innovator/ui/input";
+import { Label } from "@/components/innovator/ui/label";
+import { Textarea } from "@/components/innovator/ui/textarea";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/innovator/ui/card";
+import { Badge } from "@/components/innovator/ui/badge";
 import { X, Plus } from "lucide-react";
 import { toast } from "sonner";
 

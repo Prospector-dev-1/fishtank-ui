@@ -1,7 +1,7 @@
-import { IOSHeader } from "@/components/ui/ios-header";
-import { IOSCard, IOSCardContent, IOSCardDescription, IOSCardHeader, IOSCardTitle } from "@/components/ui/ios-card";
-import { IOSButton } from "@/components/ui/ios-button";
-import { IOSBadge } from "@/components/ui/ios-badge";
+import { IOSHeader } from "@/components/creator/ui/ios-header";
+import { IOSCard, IOSCardContent, IOSCardDescription, IOSCardHeader, IOSCardTitle } from "@/components/creator/ui/ios-card";
+import { IOSButton } from "@/components/creator/ui/ios-button";
+import { IOSBadge } from "@/components/creator/ui/ios-badge";
 import { Briefcase, Users, MessageCircle, TrendingUp, Star } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 

@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Star, Clock, MessageCircle, Handshake, ExternalLink, MoreVertical, Users, Globe, Calendar } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { Separator } from '@/components/ui/separator';
-import { creators } from '@/data/creators';
-import { CollaborateInviteModal } from '@/components/CollaborateInviteModal';
-import { ReferralModal } from '@/components/ReferralModal';
+import { Button } from '@/components/creator/ui/button';
+import { Badge } from '@/components/creator/ui/badge';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/creator/ui/card';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/creator/ui/dropdown-menu';
+import { Separator } from '@/components/creator/ui/separator';
+import { creators } from "@/data/creators";
+import { CollaborateInviteModal } from "@/components/creator/CollaborateInviteModal";
+import { ReferralModal } from "@/components/creator/ReferralModal";
 import { supabase } from '@/integrations/supabase/client';
-import { Creator } from '@/lib/creatorTypes';
+import { Creator } from "@/lib/creator/creatorTypes";
 
 export function CreatorProfile() {
   const { id } = useParams();
@@ -159,7 +159,7 @@ export function CreatorProfile() {
   }
 
   const handleMessage = () => {
-    navigate('/inbox');
+    navigate('/creator/inbox');
   };
 
   const handleAddFriend = async () => {

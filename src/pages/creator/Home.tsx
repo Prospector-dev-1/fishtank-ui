@@ -12,11 +12,11 @@ import {
   X,
   Check,
 } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/creator/ui/card";
+import { Button } from "@/components/creator/ui/button";
+import { Badge } from "@/components/creator/ui/badge";
 import { useNavigate } from "react-router-dom";
-import ProfileHeader from "@/components/ProfileHeader";
+import ProfileHeader from "@/components/creator/ProfileHeader";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 export default function Home() {
@@ -292,7 +292,7 @@ export default function Home() {
       {/* Earnings Overview Widget */}
       <Card 
         className="bg-gradient-primary text-white shadow-elegant animate-scale-in cursor-pointer hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]"
-        onClick={() => navigate('/earnings')}
+        onClick={() => navigate('/creator/earnings')}
       >
         <CardContent className="p-6">
           <div className="flex items-center justify-between mb-4">
@@ -327,7 +327,7 @@ export default function Home() {
             className="w-full bg-white/20 hover:bg-white/30 text-white border-white/30"
             onClick={(e) => {
               e.stopPropagation();
-              navigate('/earnings');
+              navigate('/creator/earnings');
             }}
           >
             View Full Details
@@ -358,12 +358,12 @@ export default function Home() {
                     src={request.avatar}
                     alt={request.name}
                     className="w-12 h-12 rounded-full border-2 border-accent/20 cursor-pointer"
-                    onClick={() => navigate(`/creators/${request.from_user_id}`)}
+                    onClick={() => navigate(`/creator/creators/${request.from_user_id}`)}
                   />
                   <div className="flex-1 min-w-0">
                     <h4
                       className="font-semibold text-base cursor-pointer hover:text-primary transition-colors"
-                      onClick={() => navigate(`/creators/${request.from_user_id}`)}
+                      onClick={() => navigate(`/creator/creators/${request.from_user_id}`)}
                     >
                       {request.name}
                     </h4>

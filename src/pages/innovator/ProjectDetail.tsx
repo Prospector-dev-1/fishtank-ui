@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ChevronLeft, Eye, MessageCircle, Shield, Edit3, Share2, BarChart3 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { toast } from "@/hooks/use-toast";
+import { Button } from "@/components/innovator/ui/button";
+import { Card } from "@/components/innovator/ui/card";
+import { Badge } from "@/components/innovator/ui/badge";
+import { toast } from "@/components/innovator/ui/use-toast";
 
 interface Project {
   id: string;
@@ -79,7 +79,7 @@ export default function ProjectDetail() {
         <div className="text-center">
           <h1 className="text-2xl font-bold mb-2">Project Not Found</h1>
           <p className="text-muted-foreground mb-4">The project you're looking for doesn't exist.</p>
-          <Button onClick={() => navigate("/")}>Go Home</Button>
+          <Button onClick={() => navigate("/innovator")}>Go Home</Button>
         </div>
       </div>
     );
@@ -111,7 +111,7 @@ export default function ProjectDetail() {
       <div className="sticky top-0 z-40 bg-background border-b border-border">
         <div className="container-mobile px-4 py-4">
           <div className="flex items-center justify-between">
-            <Button variant="ghost" size="icon" onClick={() => navigate("/")}>
+            <Button variant="ghost" size="icon" onClick={() => navigate("/innovator")}>
               <ChevronLeft className="w-5 h-5" />
             </Button>
             <h1 className="font-semibold">Project Details</h1>

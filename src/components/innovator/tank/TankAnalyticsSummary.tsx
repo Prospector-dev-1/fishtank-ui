@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { TrendingUp, TrendingDown, Eye, Clock, Users, Target } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { Progress } from "@/components/ui/progress";
+import { Progress } from "@/components/innovator/ui/progress";
 import { format } from "date-fns";
 import type { Pitch } from "@/types";
 

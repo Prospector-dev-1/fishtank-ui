@@ -3,20 +3,20 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { useTeamPermissions } from '@/hooks/useTeamPermissions';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useTeamPermissions } from "@/hooks/innovator/useTeamPermissions";
+import { Button } from '@/components/innovator/ui/button';
+import { Input } from '@/components/innovator/ui/input';
+import { Textarea } from '@/components/innovator/ui/textarea';
+import { Label } from '@/components/innovator/ui/label';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/innovator/ui/card';
+import { Badge } from '@/components/innovator/ui/badge';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/innovator/ui/select';
 import { ArrowLeft, Upload, CheckCircle } from 'lucide-react';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
-import { FishtankHeader } from '@/components/layout/FishtankHeader';
-import { innovationAPI } from '@/lib/tankApi';
-import type { Innovation } from '@/types';
+import { FishtankHeader } from "@/components/innovator/layout/FishtankHeader";
+import { innovationAPI } from "@/lib/innovator/tankApi";
+import type { Innovation } from "@/types";
 const pitchSchema = z.object({
   title: z.string().min(1, 'Title is required').max(100, 'Title must be 100 characters or less'),
   caption: z.string().min(1, 'Caption is required').max(500, 'Caption must be 500 characters or less'),
@@ -64,7 +64,7 @@ export default function CreatePitch() {
           innovationId: innovation?.id
         });
         toast.error('You do not have permission to create pitches');
-        navigate('/tank');
+        navigate('/innovator/tank');
       } else {
         console.log('✅ Permission granted - can create pitch', {
           canCreatePitch,
@@ -78,7 +78,7 @@ export default function CreatePitch() {
     const primaryInnovation = await innovationAPI.getPrimaryInnovation();
     if (!primaryInnovation) {
       toast.error('Please create an innovation first');
-      navigate('/tank');
+      navigate('/innovator/tank');
       return;
     }
     setInnovation(primaryInnovation);
@@ -123,7 +123,7 @@ export default function CreatePitch() {
       } = await supabase.from('pitches').insert([pitchData]);
       if (error) throw error;
       toast.success('Pitch created successfully!');
-      navigate('/tank');
+      navigate('/innovator/tank');
     } catch (error) {
       console.error('Error creating pitch:', error);
       toast.error('Failed to create pitch');
@@ -143,7 +143,7 @@ export default function CreatePitch() {
       <FishtankHeader title="Create Pitch" showLogo={false} />
       
       <div className="max-w-3xl mx-auto p-6">
-        <Button variant="ghost" size="sm" onClick={() => navigate('/tank')} className="mb-4">
+        <Button variant="ghost" size="sm" onClick={() => navigate('/innovator/tank')} className="mb-4">
           <ArrowLeft className="w-4 h-4 mr-2" />
           Back to Tank
         </Button>
@@ -234,7 +234,7 @@ export default function CreatePitch() {
           </Card>
 
           <div className="flex gap-3">
-            <Button type="button" variant="outline" onClick={() => navigate('/tank')} className="flex-1">
+            <Button type="button" variant="outline" onClick={() => navigate('/innovator/tank')} className="flex-1">
               Cancel
             </Button>
             <Button type="submit" disabled={isSubmitting} className="flex-1">

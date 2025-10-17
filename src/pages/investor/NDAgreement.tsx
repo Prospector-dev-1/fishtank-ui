@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { Checkbox } from '@/components/ui/checkbox';
+import { Button } from '@/components/investor/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/investor/ui/card';
+import { ScrollArea } from '@/components/investor/ui/scroll-area';
+import { Checkbox } from '@/components/investor/ui/checkbox';
 const NDAgreement = () => {
   const {
     id
@@ -16,7 +16,7 @@ const NDAgreement = () => {
   };
   const handleAgree = () => {
     if (isAgreed) {
-      navigate(`/startup/${id}`);
+      navigate(`/investor/startup/${id}`);
     }
   };
   const ndaText = `
