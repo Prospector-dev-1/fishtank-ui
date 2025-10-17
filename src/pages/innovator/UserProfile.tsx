@@ -178,7 +178,7 @@ export default function UserProfile() {
           
           if (otherParticipant) {
             // Found existing thread with this user
-            navigate(`/messaging?thread=${thread.thread_id}`);
+            navigate(`/innovator/messaging?thread=${thread.thread_id}`);
             return;
           }
         }
@@ -194,7 +194,7 @@ export default function UserProfile() {
 
       if (threadError) throw threadError;
 
-      navigate(`/messaging?thread=${threadId}`);
+      navigate(`/innovator/messaging?thread=${threadId}`);
     } catch (error) {
       console.error('Error starting conversation:', error);
       toast({
@@ -280,7 +280,7 @@ export default function UserProfile() {
               )}
               
               {isOwnProfile && (
-                <Button onClick={() => navigate('/profile')} size="sm" variant="outline">
+                <Button onClick={() => navigate('/innovator/profile/edit')} size="sm" variant="outline">
                   Edit Profile
                 </Button>
               )}

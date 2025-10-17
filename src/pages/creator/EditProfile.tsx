@@ -85,7 +85,7 @@ export default function EditProfile() {
       if (error) throw error;
 
       toast.success("Profile updated successfully!");
-      navigate('/profile');
+      navigate('/creator/profile');
     } catch (error: any) {
       console.error('Error updating profile:', error);
       toast.error(error.message || "Failed to update profile");
@@ -101,7 +101,7 @@ export default function EditProfile() {
   return (
     <div className="pb-20 pt-6 max-w-2xl mx-auto px-4">
       <div className="flex items-center gap-4 mb-6">
-        <Button variant="ghost" size="icon" onClick={() => navigate('/profile')}>
+        <Button variant="ghost" size="icon" onClick={() => navigate('/creator/profile')}>
           <ArrowLeft className="h-5 w-5" />
         </Button>
         <h1 className="text-2xl font-bold">Edit Profile</h1>
@@ -231,7 +231,7 @@ export default function EditProfile() {
             type="button"
             variant="outline"
             className="flex-1"
-            onClick={() => navigate('/profile')}
+            onClick={() => navigate('/creator/profile')}
           >
             Cancel
           </Button>

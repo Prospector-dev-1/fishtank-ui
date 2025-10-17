@@ -481,7 +481,7 @@ export default function TeamInfo() {
                 key={member.user_id}
                 variant="ghost"
                 className="w-full justify-between px-4 py-3 h-auto hover:bg-accent rounded-none last:rounded-b-lg"
-                onClick={() => navigate(`/creators/${member.user_id}`)}
+                onClick={() => navigate(`/creator/creators/${member.user_id}`)}
               >
                 <div className="flex items-center gap-3">
                   <Avatar className="h-10 w-10">

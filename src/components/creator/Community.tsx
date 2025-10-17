@@ -262,7 +262,7 @@ export function Community() {
               <div className="flex gap-3">
                 <Avatar
                   className="cursor-pointer"
-                  onClick={() => navigate(`/creators/${thought.creator_id}`)}
+                  onClick={() => navigate(`/creator/creators/${thought.creator_id}`)}
                 >
                   <AvatarImage src={thought.profiles.avatar_url || undefined} />
                   <AvatarFallback>{thought.profiles.full_name[0]}</AvatarFallback>
@@ -272,7 +272,7 @@ export function Community() {
                     <div>
                       <p
                         className="font-semibold cursor-pointer hover:underline"
-                        onClick={() => navigate(`/creators/${thought.creator_id}`)}
+                        onClick={() => navigate(`/creator/creators/${thought.creator_id}`)}
                       >
                         {thought.profiles.full_name}
                       </p>

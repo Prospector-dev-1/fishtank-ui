@@ -201,7 +201,7 @@ export default function Onboarding() {
       }
 
       toast.success("Profile created successfully!");
-      navigate('/profile');
+      navigate('/creator/profile');
     } catch (error) {
       console.error('Error saving profile:', error);
       toast.error("Failed to save profile. Please try again.");

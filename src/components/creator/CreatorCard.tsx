@@ -16,7 +16,7 @@ export function CreatorCard({ creator, onMessage, onCollaborate }: CreatorCardPr
 
   const handleViewProfile = (e: React.MouseEvent) => {
     e.stopPropagation();
-    navigate(`/creators/${creator.id}`);
+    navigate(`/creator/creators/${creator.id}`);
   };
 
   const handleMessage = (e: React.MouseEvent) => {

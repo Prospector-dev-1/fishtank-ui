@@ -71,7 +71,7 @@ export function ThoughtCard({ thought, currentUserId, isLiked, onDelete, onLikeT
       <CardContent className="p-4">
         <div className="flex gap-3">
           <button 
-            onClick={() => navigate(`/profile/${thought.user_id}`)}
+            onClick={() => navigate(`/innovator/user/${thought.user_id}`)}
             className="hover:opacity-80 transition-opacity"
           >
             <Avatar className="h-10 w-10 flex-shrink-0">
@@ -84,7 +84,7 @@ export function ThoughtCard({ thought, currentUserId, isLiked, onDelete, onLikeT
           <div className="flex-1 min-w-0">
             <div className="flex items-start justify-between gap-2 mb-1">
               <button 
-                onClick={() => navigate(`/profile/${thought.user_id}`)}
+                onClick={() => navigate(`/innovator/user/${thought.user_id}`)}
                 className="hover:opacity-80 transition-opacity text-left"
               >
                 <p className="font-medium text-sm">

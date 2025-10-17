@@ -269,9 +269,9 @@ export default function Profile() {
               <CardContent>
                 {innovations.length === 0 ? <EmptyState icon={Lightbulb} title="No innovations yet" description="Start creating your first innovation to showcase your ideas" action={{
                 label: "Create Innovation",
-                onClick: () => navigate("/tank")
+                onClick: () => navigate("/innovator/tank")
               }} /> : <div className="grid gap-4 md:grid-cols-2">
-                    {innovations.map(innovation => <Card key={innovation.id} className="hover:shadow-md transition-shadow cursor-pointer" onClick={() => navigate(`/tank`)}>
+                    {innovations.map(innovation => <Card key={innovation.id} className="hover:shadow-md transition-shadow cursor-pointer" onClick={() => navigate(`/innovator/tank`)}>
                         <CardHeader>
                           <CardTitle className="text-lg">{innovation.title}</CardTitle>
                           <CardDescription className="line-clamp-2">{innovation.tagline}</CardDescription>

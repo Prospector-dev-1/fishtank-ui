@@ -128,7 +128,7 @@ export default function Network() {
   };
 
   const handleMessage = (creatorId: string) => {
-    navigate('/inbox', { state: { selectedUserId: creatorId } });
+    navigate('/creator/inbox', { state: { selectedUserId: creatorId } });
   };
 
   const handleCollaborate = (creatorId: string) => {

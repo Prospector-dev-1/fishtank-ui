@@ -197,7 +197,7 @@ export function TankDashboard({
         }}>
                 <div className="p-4">
                   {/* Video Thumbnail */}
-                  <div className="aspect-video bg-muted/50 rounded-2xl mb-3 flex items-center justify-center relative overflow-hidden group cursor-pointer" onClick={() => navigate(`/pitch/${pitch.id}`)}>
+                  <div className="aspect-video bg-muted/50 rounded-2xl mb-3 flex items-center justify-center relative overflow-hidden group cursor-pointer" onClick={() => navigate(`/innovator/pitch/${pitch.id}`)}>
                     {pitch.thumbnail_url ? <img src={pitch.thumbnail_url} alt={pitch.caption || 'Pitch'} className="w-full h-full object-cover" /> : <Video className="w-8 h-8 text-muted-foreground" />}
                     <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                       <div className="w-14 h-14 rounded-full bg-white/90 flex items-center justify-center">
@@ -241,11 +241,11 @@ export function TankDashboard({
 
                   {/* Actions */}
                   <div className="flex gap-2">
-                    <Button size="sm" variant="outline" className="flex-1 rounded-full" onClick={() => navigate(`/pitch/${pitch.id}`)}>
+                    <Button size="sm" variant="outline" className="flex-1 rounded-full" onClick={() => navigate(`/innovator/pitch/${pitch.id}`)}>
                       <Eye className="w-4 h-4 mr-1" />
                       View
                     </Button>
-                    <Button size="sm" variant="outline" className="flex-1 rounded-full" onClick={() => navigate(`/tank/pitch/${pitch.id}/analytics`)}>
+                    <Button size="sm" variant="outline" className="flex-1 rounded-full" onClick={() => navigate(`/innovator/tank/pitch/${pitch.id}/analytics`)}>
                       <TrendingUp className="w-4 h-4 mr-1" />
                       Analytics
                     </Button>

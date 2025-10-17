@@ -131,7 +131,7 @@ export default function Home() {
       <div className="section-padding">
         <div className="flex items-center justify-between mb-4">
           <h2 className="section-title mb-0">Recent Activity</h2>
-          <Button variant="ghost" size="sm" onClick={() => navigate('/analytics')}>
+          <Button variant="ghost" size="sm" onClick={() => navigate('/innovator/analytics')}>
             View All
           </Button>
         </div>
@@ -174,7 +174,7 @@ export default function Home() {
           title: "FinTech",
           tag: "Rising",
           color: "bg-blue-500"
-        }].map((trend, idx) => <Card key={idx} className="swipe-item ios-card p-4 w-40 cursor-pointer hover-lift" onClick={() => navigate('/network')}>
+        }].map((trend, idx) => <Card key={idx} className="swipe-item ios-card p-4 w-40 cursor-pointer hover-lift" onClick={() => navigate('/innovator/network')}>
               <Badge className={`${trend.color} text-white border-0 mb-2`}>
                 {trend.tag}
               </Badge>
