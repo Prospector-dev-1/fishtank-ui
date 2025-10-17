@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/investor/ui/button';
 import { Card } from '@/components/investor/ui/card';
 import { Badge } from '@/components/investor/ui/badge';
-import { TrendingUp, AlertCircle, Clock, DollarSign, Users, Target, Calendar, FileText, ExternalLink, ChevronRight, BarChart3, TrendingDown, AlertTriangle, Activity, Building2, ArrowUpRight, ArrowDownRight, Zap } from 'lucide-react';
+import { TrendingUp, AlertCircle, Clock, DollarSign, Users, Target, Calendar, FileText, ExternalLink, ChevronRight, BarChart3, TrendingDown, AlertTriangle, Activity, Building2, ArrowUpRight, ArrowDownRight, Zap, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/investor/ui/tabs';
 interface Deal {
@@ -512,73 +512,150 @@ export default function Dashboard() {
           </div>
         </Card>
 
-        {/* Market Intelligence Section */}
-        <Card className="p-6">
-          <div className="flex items-center justify-between mb-6">
-            <h3 className="text-lg font-semibold">Market Intelligence</h3>
-            <Button variant="outline" onClick={() => navigate('/investor/market-intel')}>
-              <BarChart3 className="w-4 h-4 mr-2" />
-              View Full Report
-            </Button>
-          </div>
-
-          {/* Market Overview */}
+        {/* Industry Categories Section */}
+        <div className="space-y-4">
+          <h2 className="text-2xl font-bold">What would you like to see</h2>
           
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Software Card */}
+            <Card className="p-6 bg-card border-border hover:shadow-lg transition-shadow">
+              <h3 className="text-xl font-bold mb-4">Software</h3>
+              <ul className="space-y-2 mb-6 text-muted-foreground">
+                <li className="flex items-start">
+                  <span className="mr-2">•</span>
+                  <span>B2B SaaS platforms</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="mr-2">•</span>
+                  <span>AI automation tools</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="mr-2">•</span>
+                  <span>Enterprise workflow systems</span>
+                </li>
+              </ul>
+              <Button variant="ghost" className="group p-0 h-auto font-semibold" onClick={() => navigate('/investor/discover')}>
+                View
+                <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </Card>
 
-          <Tabs value={marketTab} onValueChange={value => setMarketTab(value as 'trends' | 'sectors' | 'opportunities')}>
-            <div ref={tabsRef}>
-              <TabsList className="grid w-full grid-cols-3 h-12">
-                <TabsTrigger value="trends" className="text-xs sm:text-sm px-2 sm:px-4">Trends</TabsTrigger>
-                <TabsTrigger value="sectors" className="text-xs sm:text-sm px-2 sm:px-4">Sectors</TabsTrigger>
-                <TabsTrigger value="opportunities" className="text-xs sm:text-sm px-2 sm:px-4">Opportunities</TabsTrigger>
-              </TabsList>
-            </div>
-            
-            <TabsContent value="trends" className="space-y-4">
-              {marketTrends.map(trend => <TrendCard key={trend.id} trend={trend} />)}
-            </TabsContent>
+            {/* Hardware Card */}
+            <Card className="p-6 bg-card border-border hover:shadow-lg transition-shadow">
+              <h3 className="text-xl font-bold mb-4">Hardware</h3>
+              <ul className="space-y-2 mb-6 text-muted-foreground">
+                <li className="flex items-start">
+                  <span className="mr-2">•</span>
+                  <span>Robotics and IoT devices</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="mr-2">•</span>
+                  <span>Wearables and sensors</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="mr-2">•</span>
+                  <span>Smart manufacturing tech</span>
+                </li>
+              </ul>
+              <Button variant="ghost" className="group p-0 h-auto font-semibold" onClick={() => navigate('/investor/discover')}>
+                View
+                <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </Card>
 
-            <TabsContent value="sectors" className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {sectorData.map(sector => <SectorCard key={sector.name} sector={sector} />)}
-              </div>
-            </TabsContent>
+            {/* Biotech Card */}
+            <Card className="p-6 bg-card border-border hover:shadow-lg transition-shadow">
+              <h3 className="text-xl font-bold mb-4">Biotech</h3>
+              <ul className="space-y-2 mb-6 text-muted-foreground">
+                <li className="flex items-start">
+                  <span className="mr-2">•</span>
+                  <span>Genetic engineering</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="mr-2">•</span>
+                  <span>Medical diagnostics</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="mr-2">•</span>
+                  <span>Bio-based materials</span>
+                </li>
+              </ul>
+              <Button variant="ghost" className="group p-0 h-auto font-semibold" onClick={() => navigate('/investor/discover')}>
+                View
+                <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </Card>
 
-            <TabsContent value="opportunities" className="space-y-4">
-              <div className="space-y-4">
-                {marketTrends.filter(trend => trend.type === 'opportunity' && trend.actionable).map(trend => <Card key={trend.id} className="p-6 border-l-4 border-l-green-500">
-                    <div className="space-y-4">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <h3 className="text-xl font-semibold text-green-700">{trend.title}</h3>
-                          <p className="text-green-600">{trend.sector} • {trend.confidence}% confidence</p>
-                        </div>
-                        <Button className="bg-green-600 hover:bg-green-700" onClick={() => navigate('/investor/discover')}>
-                          <Target className="w-4 h-4 mr-2" />
-                          Explore Deals
-                        </Button>
-                      </div>
-                      <p className="text-muted-foreground">{trend.description}</p>
-                      <div className="grid grid-cols-3 gap-4 bg-green-50 p-4 rounded-lg">
-                        <div className="text-center">
-                          <div className="text-lg font-bold text-green-700">{trend.metrics.dealVolume}</div>
-                          <div className="text-xs text-green-600">Active Deals</div>
-                        </div>
-                        <div className="text-center">
-                          <div className="text-lg font-bold text-green-700">{trend.metrics.avgValuation}</div>
-                          <div className="text-xs text-green-600">Target Valuation</div>
-                        </div>
-                        <div className="text-center">
-                          <div className="text-lg font-bold text-green-700">{trend.metrics.trend}</div>
-                          <div className="text-xs text-green-600">Market Growth</div>
-                        </div>
-                      </div>
-                    </div>
-                  </Card>)}
-              </div>
-            </TabsContent>
-          </Tabs>
-        </Card>
+            {/* Consumer Goods Card */}
+            <Card className="p-6 bg-card border-border hover:shadow-lg transition-shadow">
+              <h3 className="text-xl font-bold mb-4">Consumer Goods</h3>
+              <ul className="space-y-2 mb-6 text-muted-foreground">
+                <li className="flex items-start">
+                  <span className="mr-2">•</span>
+                  <span>Lifestyle and retail products</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="mr-2">•</span>
+                  <span>Food and beverage innovation</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="mr-2">•</span>
+                  <span>Smart home essentials</span>
+                </li>
+              </ul>
+              <Button variant="ghost" className="group p-0 h-auto font-semibold" onClick={() => navigate('/investor/discover')}>
+                View
+                <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </Card>
+
+            {/* Fintech Card */}
+            <Card className="p-6 bg-card border-border hover:shadow-lg transition-shadow">
+              <h3 className="text-xl font-bold mb-4">Fintech</h3>
+              <ul className="space-y-2 mb-6 text-muted-foreground">
+                <li className="flex items-start">
+                  <span className="mr-2">•</span>
+                  <span>Blockchain solutions</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="mr-2">•</span>
+                  <span>Digital payments</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="mr-2">•</span>
+                  <span>Investment platforms</span>
+                </li>
+              </ul>
+              <Button variant="ghost" className="group p-0 h-auto font-semibold" onClick={() => navigate('/investor/discover')}>
+                View
+                <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </Card>
+
+            {/* Climate Card */}
+            <Card className="p-6 bg-card border-border hover:shadow-lg transition-shadow">
+              <h3 className="text-xl font-bold mb-4">Climate</h3>
+              <ul className="space-y-2 mb-6 text-muted-foreground">
+                <li className="flex items-start">
+                  <span className="mr-2">•</span>
+                  <span>Renewable energy tech</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="mr-2">•</span>
+                  <span>Carbon capture solutions</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="mr-2">•</span>
+                  <span>Sustainable materials</span>
+                </li>
+              </ul>
+              <Button variant="ghost" className="group p-0 h-auto font-semibold" onClick={() => navigate('/investor/discover')}>
+                View
+                <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </Card>
+          </div>
+        </div>
       </div>
     </div>;
 }
