@@ -6,8 +6,7 @@ import { z } from 'zod';
 import { useTeamPermissions } from "@/hooks/innovator/useTeamPermissions";
 import { Input } from '@/components/innovator/ui/input';
 import { Textarea } from '@/components/innovator/ui/textarea';
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/innovator/ui/sheet';
-import { X, ChevronRight, Hash, Globe, Video, Image as ImageIcon } from 'lucide-react';
+import { X, Hash, Globe, Video, Image as ImageIcon } from 'lucide-react';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
 import { innovationAPI } from "@/lib/innovator/tankApi";
@@ -28,7 +27,6 @@ export default function CreatePitch() {
   const [innovation, setInnovation] = useState<Innovation | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [permissionsChecked, setPermissionsChecked] = useState(false);
-  const [showDetailsSheet, setShowDetailsSheet] = useState(false);
   const [videoPreview, setVideoPreview] = useState<string | null>(null);
   const [thumbnailPreview, setThumbnailPreview] = useState<string | null>(null);
   const videoInputRef = useRef<HTMLInputElement>(null);
@@ -200,9 +198,9 @@ export default function CreatePitch() {
         )}
       </div>
 
-      {/* Bottom Action Bar */}
-      <div className="safe-bottom bg-black border-t border-white/10">
-        <div className="px-4 py-3 space-y-3">
+      {/* Bottom Details Form */}
+      <div className="safe-bottom bg-black border-t border-white/10 overflow-y-auto max-h-[60vh]">
+        <div className="px-4 py-4 space-y-4">
           {/* Quick Actions */}
           <div className="flex gap-2">
             <button
@@ -221,19 +219,81 @@ export default function CreatePitch() {
             </button>
           </div>
 
-          {/* Caption Input */}
-          <button
-            onClick={() => setShowDetailsSheet(true)}
-            className="w-full flex items-center gap-3 px-4 py-3 bg-white/5 rounded-xl text-left active:bg-white/10 transition-colors"
-          >
-            <div className="flex-1">
-              <p className="text-white/50 text-xs mb-1">Caption</p>
-              <p className="text-white text-sm line-clamp-1">
-                {form.watch('caption') || 'Add a caption for your pitch...'}
+          {/* Title */}
+          <div>
+            <label className="text-white/70 text-xs mb-1.5 block">Title *</label>
+            <Input
+              placeholder="Give your pitch a title"
+              {...form.register('title')}
+              className="bg-white/5 border-white/10 text-white placeholder:text-white/40"
+            />
+            {form.formState.errors.title && (
+              <p className="text-sm text-red-400 mt-1">
+                {form.formState.errors.title.message}
               </p>
-            </div>
-            <ChevronRight className="w-5 h-5 text-white/50" />
-          </button>
+            )}
+          </div>
+
+          {/* Caption */}
+          <div>
+            <label className="text-white/70 text-xs mb-1.5 flex items-center justify-between">
+              <span>Caption *</span>
+              <span className="text-white/50">
+                {form.watch('caption')?.length || 0}/500
+              </span>
+            </label>
+            <Textarea
+              placeholder="Write a compelling caption..."
+              {...form.register('caption')}
+              maxLength={500}
+              rows={3}
+              className="bg-white/5 border-white/10 text-white placeholder:text-white/40 resize-none"
+            />
+            {form.formState.errors.caption && (
+              <p className="text-sm text-red-400 mt-1">
+                {form.formState.errors.caption.message}
+              </p>
+            )}
+          </div>
+
+          {/* Hashtags */}
+          <div>
+            <label className="text-white/70 text-xs mb-1.5 flex items-center gap-2">
+              <Hash className="w-3.5 h-3.5" />
+              Hashtags
+            </label>
+            <Input
+              placeholder="ai, innovation, startup"
+              {...form.register('hashtags')}
+              className="bg-white/5 border-white/10 text-white placeholder:text-white/40"
+            />
+            <p className="text-xs text-white/50 mt-1">
+              Separate with commas
+            </p>
+          </div>
+
+          {/* Visibility */}
+          <div>
+            <label className="text-white/70 text-xs mb-1.5 flex items-center gap-2">
+              <Globe className="w-3.5 h-3.5" />
+              Visibility
+            </label>
+            <select
+              {...form.register('visibility')}
+              className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-lg text-white text-sm"
+            >
+              <option value="public">Public</option>
+              <option value="unlisted">Unlisted</option>
+              <option value="private">Private</option>
+            </select>
+          </div>
+
+          {/* Innovation Info */}
+          <div className="pt-3 border-t border-white/10">
+            <p className="text-xs text-white/50 mb-1">Pitching for</p>
+            <p className="text-white font-semibold text-sm">{innovation.company_name}</p>
+            <p className="text-white/60 text-xs">{innovation.tagline}</p>
+          </div>
 
           {/* Post Button */}
           <button
@@ -261,93 +321,6 @@ export default function CreatePitch() {
         onChange={handleThumbnailUpload}
         className="hidden"
       />
-
-      {/* Details Sheet */}
-      <Sheet open={showDetailsSheet} onOpenChange={setShowDetailsSheet}>
-        <SheetContent side="bottom" className="h-[85vh] rounded-t-3xl">
-          <SheetHeader className="mb-6">
-            <SheetTitle>Pitch Details</SheetTitle>
-          </SheetHeader>
-          
-          <div className="space-y-6 overflow-y-auto max-h-[calc(85vh-8rem)] pb-6">
-            {/* Title */}
-            <div>
-              <label className="text-sm font-medium mb-2 block">Title *</label>
-              <Input
-                placeholder="Give your pitch a title"
-                {...form.register('title')}
-                className="bg-secondary/50 border-0"
-              />
-              {form.formState.errors.title && (
-                <p className="text-sm text-destructive mt-1">
-                  {form.formState.errors.title.message}
-                </p>
-              )}
-            </div>
-
-            {/* Caption */}
-            <div>
-              <label className="text-sm font-medium mb-2 block">
-                Caption *
-                <span className="text-muted-foreground ml-2">
-                  {form.watch('caption')?.length || 0}/500
-                </span>
-              </label>
-              <Textarea
-                placeholder="Write a compelling caption..."
-                {...form.register('caption')}
-                maxLength={500}
-                rows={4}
-                className="bg-secondary/50 border-0 resize-none"
-              />
-              {form.formState.errors.caption && (
-                <p className="text-sm text-destructive mt-1">
-                  {form.formState.errors.caption.message}
-                </p>
-              )}
-            </div>
-
-            {/* Hashtags */}
-            <div>
-              <label className="text-sm font-medium mb-2 flex items-center gap-2">
-                <Hash className="w-4 h-4" />
-                Hashtags
-              </label>
-              <Input
-                placeholder="ai, innovation, startup"
-                {...form.register('hashtags')}
-                className="bg-secondary/50 border-0"
-              />
-              <p className="text-xs text-muted-foreground mt-1">
-                Separate with commas
-              </p>
-            </div>
-
-            {/* Visibility */}
-            <div>
-              <label className="text-sm font-medium mb-2 flex items-center gap-2">
-                <Globe className="w-4 h-4" />
-                Visibility
-              </label>
-              <select
-                {...form.register('visibility')}
-                className="w-full px-4 py-3 bg-secondary/50 rounded-lg border-0"
-              >
-                <option value="public">Public</option>
-                <option value="unlisted">Unlisted</option>
-                <option value="private">Private</option>
-              </select>
-            </div>
-
-            {/* Innovation Info */}
-            <div className="pt-4 border-t">
-              <p className="text-sm text-muted-foreground mb-1">Pitching for</p>
-              <p className="font-semibold">{innovation.company_name}</p>
-              <p className="text-sm text-muted-foreground">{innovation.tagline}</p>
-            </div>
-          </div>
-        </SheetContent>
-      </Sheet>
     </div>
   );
 }
