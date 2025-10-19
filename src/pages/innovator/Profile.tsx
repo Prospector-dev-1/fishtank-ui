@@ -27,11 +27,9 @@ export default function Profile() {
     connections: 0,
     teams: 0
   });
-  
   useEffect(() => {
     loadProfile();
   }, [useMockData]);
-
   const toggleMockData = (enabled: boolean) => {
     setUseMockData(enabled);
     // Update URL parameter
@@ -43,7 +41,6 @@ export default function Profile() {
     }
     window.history.pushState({}, '', url);
   };
-
   const loadProfile = async () => {
     try {
       // Load mock data if enabled
@@ -54,7 +51,6 @@ export default function Profile() {
         setIsLoading(false);
         return;
       }
-
       const {
         data: {
           user
@@ -91,107 +87,114 @@ export default function Profile() {
       setIsLoading(false);
     }
   };
-
   const handleEditOverview = () => {
-    setEditedProfile({ ...profile });
+    setEditedProfile({
+      ...profile
+    });
     setIsEditingOverview(true);
   };
-
   const handleCancelEdit = () => {
     setEditedProfile(null);
     setIsEditingOverview(false);
   };
-
   const handleSaveOverview = async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: {
+          user
+        }
+      } = await supabase.auth.getUser();
       if (!user) return;
-
-      const { error } = await supabase
-        .from("profiles")
-        .update({
-          location: editedProfile.location,
-          company: editedProfile.company,
-          bio: editedProfile.bio,
-          website: editedProfile.website,
-          skills: editedProfile.skills,
-          interests: editedProfile.interests,
-          seeking: editedProfile.seeking,
-        })
-        .eq("id", user.id);
-
+      const {
+        error
+      } = await supabase.from("profiles").update({
+        location: editedProfile.location,
+        company: editedProfile.company,
+        bio: editedProfile.bio,
+        website: editedProfile.website,
+        skills: editedProfile.skills,
+        interests: editedProfile.interests,
+        seeking: editedProfile.seeking
+      }).eq("id", user.id);
       if (error) throw error;
-
       setProfile(editedProfile);
       setIsEditingOverview(false);
       toast({
         title: "Success",
-        description: "Profile updated successfully",
+        description: "Profile updated successfully"
       });
     } catch (error) {
       console.error("Error saving profile:", error);
       toast({
         title: "Error",
         description: "Failed to save profile changes",
-        variant: "destructive",
+        variant: "destructive"
       });
     }
   };
-
   const handleSkillChange = (index: number, value: string) => {
     const newSkills = [...(editedProfile.skills || [])];
     newSkills[index] = value;
-    setEditedProfile({ ...editedProfile, skills: newSkills });
+    setEditedProfile({
+      ...editedProfile,
+      skills: newSkills
+    });
   };
-
   const handleAddSkill = () => {
     setEditedProfile({
       ...editedProfile,
-      skills: [...(editedProfile.skills || []), ""],
+      skills: [...(editedProfile.skills || []), ""]
     });
   };
-
   const handleRemoveSkill = (index: number) => {
     const newSkills = (editedProfile.skills || []).filter((_: any, i: number) => i !== index);
-    setEditedProfile({ ...editedProfile, skills: newSkills });
+    setEditedProfile({
+      ...editedProfile,
+      skills: newSkills
+    });
   };
-
   const handleInterestChange = (index: number, value: string) => {
     const newInterests = [...(editedProfile.interests || [])];
     newInterests[index] = value;
-    setEditedProfile({ ...editedProfile, interests: newInterests });
+    setEditedProfile({
+      ...editedProfile,
+      interests: newInterests
+    });
   };
-
   const handleAddInterest = () => {
     setEditedProfile({
       ...editedProfile,
-      interests: [...(editedProfile.interests || []), ""],
+      interests: [...(editedProfile.interests || []), ""]
     });
   };
-
   const handleRemoveInterest = (index: number) => {
     const newInterests = (editedProfile.interests || []).filter((_: any, i: number) => i !== index);
-    setEditedProfile({ ...editedProfile, interests: newInterests });
+    setEditedProfile({
+      ...editedProfile,
+      interests: newInterests
+    });
   };
-
   const handleSeekingChange = (index: number, value: string) => {
     const newSeeking = [...(editedProfile.seeking || [])];
     newSeeking[index] = value;
-    setEditedProfile({ ...editedProfile, seeking: newSeeking });
+    setEditedProfile({
+      ...editedProfile,
+      seeking: newSeeking
+    });
   };
-
   const handleAddSeeking = () => {
     setEditedProfile({
       ...editedProfile,
-      seeking: [...(editedProfile.seeking || []), ""],
+      seeking: [...(editedProfile.seeking || []), ""]
     });
   };
-
   const handleRemoveSeeking = (index: number) => {
     const newSeeking = (editedProfile.seeking || []).filter((_: any, i: number) => i !== index);
-    setEditedProfile({ ...editedProfile, seeking: newSeeking });
+    setEditedProfile({
+      ...editedProfile,
+      seeking: newSeeking
+    });
   };
-
   if (isLoading) {
     return <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
@@ -215,8 +218,7 @@ export default function Profile() {
       <FishtankHeader title="Profile" showLogo={false} showProfile={false} />
       <div className="container mx-auto px-4 py-8 max-w-6xl">
         {/* Mock Data Indicator */}
-        {useMockData && (
-          <div className="mb-4 p-4 bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-lg flex items-center justify-between">
+        {useMockData && <div className="mb-4 p-4 bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-lg flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Eye className="h-5 w-5 text-blue-600 dark:text-blue-400" />
               <div>
@@ -227,8 +229,7 @@ export default function Profile() {
             <Button onClick={() => toggleMockData(false)} variant="outline" size="sm">
               Exit Preview
             </Button>
-          </div>
-        )}
+          </div>}
         
         {/* Header Card */}
         <Card className="mb-6">
@@ -245,12 +246,10 @@ export default function Profile() {
                 </div>
               </div>
               <div className="flex gap-2">
-                {!useMockData && (
-                  <Button variant="outline" size="sm" onClick={() => toggleMockData(true)}>
+                {!useMockData && <Button variant="outline" size="sm" onClick={() => toggleMockData(true)}>
                     <Eye className="h-4 w-4 mr-2" />
                     Preview Mode
-                  </Button>
-                )}
+                  </Button>}
                 <Button variant="outline" size="sm" onClick={() => navigate("edit")} title="Account & Privacy Settings">
                   <Settings className="h-4 w-4 mr-2" />
                   Account
@@ -263,17 +262,7 @@ export default function Profile() {
         {/* Stats Cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
           <Card>
-            <CardContent className="pt-6">
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-primary/10">
-                  <Lightbulb className="h-5 w-5 text-primary" />
-                </div>
-                <div>
-                  <p className="text-2xl font-bold">{stats.innovations}</p>
-                  <p className="text-xs text-muted-foreground">Innovations</p>
-                </div>
-              </div>
-            </CardContent>
+            
           </Card>
           
           <Card>
@@ -342,13 +331,10 @@ export default function Profile() {
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <CardTitle>About</CardTitle>
-                  {!isEditingOverview ? (
-                    <Button variant="outline" size="sm" onClick={handleEditOverview}>
+                  {!isEditingOverview ? <Button variant="outline" size="sm" onClick={handleEditOverview}>
                       <Edit className="h-4 w-4 mr-2" />
                       Edit
-                    </Button>
-                  ) : (
-                    <div className="flex gap-2">
+                    </Button> : <div className="flex gap-2">
                       <Button variant="outline" size="sm" onClick={handleCancelEdit}>
                         <X className="h-4 w-4 mr-2" />
                         Cancel
@@ -357,8 +343,7 @@ export default function Profile() {
                         <Save className="h-4 w-4 mr-2" />
                         Save
                       </Button>
-                    </div>
-                  )}
+                    </div>}
                 </div>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -369,215 +354,124 @@ export default function Profile() {
                   </div>
                   
                   {/* Location */}
-                  {!isEditingOverview ? (
-                    profile.location && (
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  {!isEditingOverview ? profile.location && <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <MapPin className="h-4 w-4" />
                         <span>{profile.location}</span>
-                      </div>
-                    )
-                  ) : (
-                    <div className="flex items-center gap-2">
+                      </div> : <div className="flex items-center gap-2">
                       <MapPin className="h-4 w-4 text-muted-foreground" />
-                      <Input
-                        value={editedProfile.location || ""}
-                        onChange={(e) => setEditedProfile({ ...editedProfile, location: e.target.value })}
-                        placeholder="Location"
-                        className="flex-1"
-                      />
-                    </div>
-                  )}
+                      <Input value={editedProfile.location || ""} onChange={e => setEditedProfile({
+                    ...editedProfile,
+                    location: e.target.value
+                  })} placeholder="Location" className="flex-1" />
+                    </div>}
                   
                   {/* Company */}
-                  {!isEditingOverview ? (
-                    profile.company && (
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  {!isEditingOverview ? profile.company && <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <Briefcase className="h-4 w-4" />
                         <span>{profile.company}</span>
-                      </div>
-                    )
-                  ) : (
-                    <div className="flex items-center gap-2">
+                      </div> : <div className="flex items-center gap-2">
                       <Briefcase className="h-4 w-4 text-muted-foreground" />
-                      <Input
-                        value={editedProfile.company || ""}
-                        onChange={(e) => setEditedProfile({ ...editedProfile, company: e.target.value })}
-                        placeholder="Company"
-                        className="flex-1"
-                      />
-                    </div>
-                  )}
+                      <Input value={editedProfile.company || ""} onChange={e => setEditedProfile({
+                    ...editedProfile,
+                    company: e.target.value
+                  })} placeholder="Company" className="flex-1" />
+                    </div>}
                 </div>
 
                 {/* Bio */}
-                {(!isEditingOverview && profile.bio) || isEditingOverview ? (
-                  <>
+                {!isEditingOverview && profile.bio || isEditingOverview ? <>
                     <Separator />
                     <div>
                       <h3 className="font-semibold mb-2">Bio</h3>
-                      {!isEditingOverview ? (
-                        <p className="text-sm text-muted-foreground">{profile.bio}</p>
-                      ) : (
-                        <Textarea
-                          value={editedProfile.bio || ""}
-                          onChange={(e) => setEditedProfile({ ...editedProfile, bio: e.target.value })}
-                          placeholder="Tell us about yourself..."
-                          rows={4}
-                        />
-                      )}
+                      {!isEditingOverview ? <p className="text-sm text-muted-foreground">{profile.bio}</p> : <Textarea value={editedProfile.bio || ""} onChange={e => setEditedProfile({
+                    ...editedProfile,
+                    bio: e.target.value
+                  })} placeholder="Tell us about yourself..." rows={4} />}
                     </div>
-                  </>
-                ) : null}
+                  </> : null}
 
                 {/* Website */}
-                {(!isEditingOverview && profile.website) || isEditingOverview ? (
-                  <>
+                {!isEditingOverview && profile.website || isEditingOverview ? <>
                     <Separator />
                     <div>
                       <h3 className="font-semibold mb-2">Website</h3>
-                      {!isEditingOverview ? (
-                        <a href={profile.website} target="_blank" rel="noopener noreferrer" className="text-sm text-primary hover:underline">
+                      {!isEditingOverview ? <a href={profile.website} target="_blank" rel="noopener noreferrer" className="text-sm text-primary hover:underline">
                           {profile.website}
-                        </a>
-                      ) : (
-                        <Input
-                          value={editedProfile.website || ""}
-                          onChange={(e) => setEditedProfile({ ...editedProfile, website: e.target.value })}
-                          placeholder="https://yourwebsite.com"
-                        />
-                      )}
+                        </a> : <Input value={editedProfile.website || ""} onChange={e => setEditedProfile({
+                    ...editedProfile,
+                    website: e.target.value
+                  })} placeholder="https://yourwebsite.com" />}
                     </div>
-                  </>
-                ) : null}
+                  </> : null}
 
                 {/* Skills */}
-                {(!isEditingOverview && profile.skills && profile.skills.length > 0) || isEditingOverview ? (
-                  <>
+                {!isEditingOverview && profile.skills && profile.skills.length > 0 || isEditingOverview ? <>
                     <Separator />
                     <div>
                       <div className="flex items-center justify-between mb-2">
                         <h3 className="font-semibold">Skills</h3>
-                        {isEditingOverview && (
-                          <Button variant="outline" size="sm" onClick={handleAddSkill}>
+                        {isEditingOverview && <Button variant="outline" size="sm" onClick={handleAddSkill}>
                             Add Skill
-                          </Button>
-                        )}
+                          </Button>}
                       </div>
-                      {!isEditingOverview ? (
-                        <div className="flex flex-wrap gap-2">
-                          {profile.skills.map((skill: string, idx: number) => (
-                            <Badge key={idx} variant="secondary">{skill}</Badge>
-                          ))}
-                        </div>
-                      ) : (
-                        <div className="space-y-2">
-                          {(editedProfile.skills || []).map((skill: string, idx: number) => (
-                            <div key={idx} className="flex gap-2">
-                              <Input
-                                value={skill}
-                                onChange={(e) => handleSkillChange(idx, e.target.value)}
-                                placeholder="Enter a skill"
-                              />
-                              <Button
-                                variant="outline"
-                                size="icon"
-                                onClick={() => handleRemoveSkill(idx)}
-                              >
+                      {!isEditingOverview ? <div className="flex flex-wrap gap-2">
+                          {profile.skills.map((skill: string, idx: number) => <Badge key={idx} variant="secondary">{skill}</Badge>)}
+                        </div> : <div className="space-y-2">
+                          {(editedProfile.skills || []).map((skill: string, idx: number) => <div key={idx} className="flex gap-2">
+                              <Input value={skill} onChange={e => handleSkillChange(idx, e.target.value)} placeholder="Enter a skill" />
+                              <Button variant="outline" size="icon" onClick={() => handleRemoveSkill(idx)}>
                                 <X className="h-4 w-4" />
                               </Button>
-                            </div>
-                          ))}
-                        </div>
-                      )}
+                            </div>)}
+                        </div>}
                     </div>
-                  </>
-                ) : null}
+                  </> : null}
 
                 {/* Interests */}
-                {(!isEditingOverview && profile.interests && profile.interests.length > 0) || isEditingOverview ? (
-                  <>
+                {!isEditingOverview && profile.interests && profile.interests.length > 0 || isEditingOverview ? <>
                     <Separator />
                     <div>
                       <div className="flex items-center justify-between mb-2">
                         <h3 className="font-semibold">Interests</h3>
-                        {isEditingOverview && (
-                          <Button variant="outline" size="sm" onClick={handleAddInterest}>
+                        {isEditingOverview && <Button variant="outline" size="sm" onClick={handleAddInterest}>
                             Add Interest
-                          </Button>
-                        )}
+                          </Button>}
                       </div>
-                      {!isEditingOverview ? (
-                        <div className="flex flex-wrap gap-2">
-                          {profile.interests.map((interest: string, idx: number) => (
-                            <Badge key={idx} variant="outline">{interest}</Badge>
-                          ))}
-                        </div>
-                      ) : (
-                        <div className="space-y-2">
-                          {(editedProfile.interests || []).map((interest: string, idx: number) => (
-                            <div key={idx} className="flex gap-2">
-                              <Input
-                                value={interest}
-                                onChange={(e) => handleInterestChange(idx, e.target.value)}
-                                placeholder="Enter an interest"
-                              />
-                              <Button
-                                variant="outline"
-                                size="icon"
-                                onClick={() => handleRemoveInterest(idx)}
-                              >
+                      {!isEditingOverview ? <div className="flex flex-wrap gap-2">
+                          {profile.interests.map((interest: string, idx: number) => <Badge key={idx} variant="outline">{interest}</Badge>)}
+                        </div> : <div className="space-y-2">
+                          {(editedProfile.interests || []).map((interest: string, idx: number) => <div key={idx} className="flex gap-2">
+                              <Input value={interest} onChange={e => handleInterestChange(idx, e.target.value)} placeholder="Enter an interest" />
+                              <Button variant="outline" size="icon" onClick={() => handleRemoveInterest(idx)}>
                                 <X className="h-4 w-4" />
                               </Button>
-                            </div>
-                          ))}
-                        </div>
-                      )}
+                            </div>)}
+                        </div>}
                     </div>
-                  </>
-                ) : null}
+                  </> : null}
 
                 {/* Looking For */}
-                {(!isEditingOverview && profile.seeking && profile.seeking.length > 0) || isEditingOverview ? (
-                  <>
+                {!isEditingOverview && profile.seeking && profile.seeking.length > 0 || isEditingOverview ? <>
                     <Separator />
                     <div>
                       <div className="flex items-center justify-between mb-2">
                         <h3 className="font-semibold">Looking For</h3>
-                        {isEditingOverview && (
-                          <Button variant="outline" size="sm" onClick={handleAddSeeking}>
+                        {isEditingOverview && <Button variant="outline" size="sm" onClick={handleAddSeeking}>
                             Add Item
-                          </Button>
-                        )}
+                          </Button>}
                       </div>
-                      {!isEditingOverview ? (
-                        <div className="flex flex-wrap gap-2">
-                          {profile.seeking.map((seek: string, idx: number) => (
-                            <Badge key={idx} variant="default">{seek}</Badge>
-                          ))}
-                        </div>
-                      ) : (
-                        <div className="space-y-2">
-                          {(editedProfile.seeking || []).map((seek: string, idx: number) => (
-                            <div key={idx} className="flex gap-2">
-                              <Input
-                                value={seek}
-                                onChange={(e) => handleSeekingChange(idx, e.target.value)}
-                                placeholder="What are you looking for?"
-                              />
-                              <Button
-                                variant="outline"
-                                size="icon"
-                                onClick={() => handleRemoveSeeking(idx)}
-                              >
+                      {!isEditingOverview ? <div className="flex flex-wrap gap-2">
+                          {profile.seeking.map((seek: string, idx: number) => <Badge key={idx} variant="default">{seek}</Badge>)}
+                        </div> : <div className="space-y-2">
+                          {(editedProfile.seeking || []).map((seek: string, idx: number) => <div key={idx} className="flex gap-2">
+                              <Input value={seek} onChange={e => handleSeekingChange(idx, e.target.value)} placeholder="What are you looking for?" />
+                              <Button variant="outline" size="icon" onClick={() => handleRemoveSeeking(idx)}>
                                 <X className="h-4 w-4" />
                               </Button>
-                            </div>
-                          ))}
-                        </div>
-                      )}
+                            </div>)}
+                        </div>}
                     </div>
-                  </>
-                ) : null}
+                  </> : null}
               </CardContent>
             </Card>
           </TabsContent>
