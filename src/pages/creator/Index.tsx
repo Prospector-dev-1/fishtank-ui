@@ -347,12 +347,6 @@ const Index = () => {
       color: "bg-gray-100",
     },
     {
-      name: "AI & Data",
-      description: "ML, automations",
-      icon: Brain,
-      color: "bg-gray-100",
-    },
-    {
       name: "Content",
       description: "Video, copy, socials",
       icon: Film,
