@@ -469,8 +469,8 @@ export default function Dashboard() {
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="min-w-0">
-            <h1 className="text-2xl md:text-3xl font-bold tracking-tight">Investment Dashboard</h1>
-            <p className="text-muted-foreground text-sm md:text-base">Real-time deal flow and portfolio management</p>
+            <h1 className="text-2xl md:text-3xl font-bold tracking-tight">Discover Your Next Investment</h1>
+            <p className="text-muted-foreground text-sm md:text-base">Explore top pitches and emerging opportunities</p>
           </div>
           <div ref={buttonRef}>
             <Button onClick={() => navigate("/investor/discover")} className="shrink-0">
