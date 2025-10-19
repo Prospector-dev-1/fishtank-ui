@@ -25,24 +25,6 @@ interface Project {
   createdAt: string;
 }
 
-const mockProject: Project = {
-  id: "p1",
-  title: "NovaPay",
-  tagline: "Instant cross-border B2B payouts with AI-powered fraud detection",
-  category: "Fintech",
-  stage: "MVP",
-  fundingAsk: { amount: 750000, equity: 10 },
-  visibility: "under_nda",
-  status: "published",
-  views: 342,
-  messages: 12,
-  problem: "Cross-border B2B payments take 3-5 days to settle, causing cash flow issues for businesses. Traditional solutions charge high fees (3-8%) and lack real-time fraud detection.",
-  solution: "NovaPay enables instant cross-border B2B payments with our AI-powered fraud detection system. We leverage blockchain rails for settlement while maintaining compliance with local banking regulations.",
-  market: "The global B2B payments market is valued at $1.2T annually, with cross-border transactions representing $150B. Our SAM focuses on SME exporters/importers ($12B market).",
-  traction: "• 87 pilot customers across 12 countries\n• $2.3M in monthly transaction volume\n• 4 enterprise LOIs worth $500K ARR\n• Partnership with 2 major banks in development",
-  tags: ["B2B Payments", "Fraud Detection", "AI/ML", "Blockchain", "Fintech"],
-  createdAt: "2024-01-15"
-};
 
 export default function ProjectDetail() {
   const { id } = useParams<{ id: string }>();
@@ -51,16 +33,20 @@ export default function ProjectDetail() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate API call
-    const timer = setTimeout(() => {
-      if (id === "p1") {
-        setProject(mockProject);
-      }
-      setLoading(false);
-    }, 300);
-
-    return () => clearTimeout(timer);
+    loadProject();
   }, [id]);
+
+  const loadProject = async () => {
+    try {
+      // TODO: Load project from database
+      setProject(null);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error loading project:', error);
+      setProject(null);
+      setLoading(false);
+    }
+  };
 
   if (loading) {
     return (

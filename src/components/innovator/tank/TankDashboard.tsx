@@ -14,66 +14,6 @@ import { supabase } from '@/integrations/supabase/client';
 import { TankAnalyticsSummary } from './TankAnalyticsSummary';
 import { TeamManagement } from './TeamManagement';
 import { InnovationPreview } from './InnovationPreview';
-// Mock pitches for demo purposes
-const MOCK_PITCHES: Pitch[] = [
-  {
-    id: 'pitch_aquasense_1',
-    innovation_id: 'innovation_aquasense',
-    user_id: 'mock_user',
-    title: 'AquaSense - Smart Water Management Demo',
-    description: 'Demonstrating our IoT sensor technology for precision agriculture',
-    caption: '💧 Saving water, one farm at a time. Our IoT sensors help farmers reduce water waste by 40%! #AgriTech #IoT #Sustainability',
-    hashtags: ['AgriTech', 'IoT', 'Sustainability', 'WaterConservation', 'SmartFarming'],
-    video_url: 'https://example.com/video.mp4',
-    thumbnail_url: 'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=400',
-    deck_url: null,
-    status: 'published',
-    visibility: 'public',
-    funding_goal: 500000,
-    funding_raised: 125000,
-    views_count: 234,
-    created_at: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
-    updated_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString()
-  },
-  {
-    id: 'pitch_aquasense_2',
-    innovation_id: 'innovation_aquasense',
-    user_id: 'mock_user',
-    title: 'AquaSense Traction Update',
-    description: 'Quick update on our growth and beta farm results',
-    caption: '🚀 25 beta farms, 32% water reduction, $1,200 annual savings per farm. The numbers speak for themselves! #GrowthUpdate #StartupTraction',
-    hashtags: ['GrowthUpdate', 'StartupTraction', 'AgriTech', 'ROI'],
-    video_url: 'https://example.com/video2.mp4',
-    thumbnail_url: 'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=400',
-    deck_url: null,
-    status: 'published',
-    visibility: 'public',
-    funding_goal: 500000,
-    funding_raised: 125000,
-    views_count: 156,
-    created_at: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
-    updated_at: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString()
-  },
-  {
-    id: 'pitch_healthbridge_1',
-    innovation_id: 'innovation_healthbridge',
-    user_id: 'mock_user',
-    title: 'HealthBridge - Breaking Mental Health Barriers',
-    description: 'AI-powered instant therapist matching',
-    caption: '🧠 Mental health support shouldn\'t take 3 months. HealthBridge connects you with therapists instantly using AI. #MentalHealth #HealthTech #AI',
-    hashtags: ['MentalHealth', 'HealthTech', 'AI', 'Telemedicine', 'WellnessTech'],
-    video_url: 'https://example.com/video3.mp4',
-    thumbnail_url: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=400',
-    deck_url: null,
-    status: 'draft',
-    visibility: 'private',
-    funding_goal: 500000,
-    funding_raised: 0,
-    views_count: 42,
-    created_at: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
-    updated_at: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString()
-  }
-];
 
 interface TankDashboardProps {
   innovation: Innovation;
@@ -108,17 +48,6 @@ export function TankDashboard({
   };
   const loadPitches = async () => {
     try {
-      // Check if this is a mock innovation
-      const isMockInnovation = innovation.id.startsWith('innovation_');
-      
-      if (isMockInnovation) {
-        // Filter mock pitches for this innovation
-        const innovationPitches = MOCK_PITCHES.filter(p => p.innovation_id === innovation.id);
-        setPitches(innovationPitches);
-        setIsLoading(false);
-        return;
-      }
-      
       const {
         data,
         error

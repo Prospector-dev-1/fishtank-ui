@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ChevronLeft, Plus, Mail, Crown, Edit, Trash2, Users } from "lucide-react";
 import { Button } from "@/components/innovator/ui/button";
 import { Card } from "@/components/innovator/ui/card";
@@ -17,41 +17,22 @@ interface TeamMember {
   avatar: string;
 }
 
-const mockTeamMembers: TeamMember[] = [
-  {
-    id: "tm1",
-    name: "Alex Founder",
-    email: "alex@novapay.com",
-    role: "Owner",
-    status: "Active",
-    joinedAt: "2024-01-15",
-    avatar: "AF"
-  },
-  {
-    id: "tm2", 
-    name: "Sarah Chen",
-    email: "sarah@novapay.com",
-    role: "Editor",
-    status: "Active", 
-    joinedAt: "2024-02-01",
-    avatar: "SC"
-  },
-  {
-    id: "tm3",
-    name: "Mike Developer",
-    email: "mike@novapay.com", 
-    role: "Viewer",
-    status: "Pending",
-    joinedAt: "2024-03-10",
-    avatar: "MD"
-  }
-];
 
 export default function TeamManagement() {
   const navigate = useNavigate();
-  const [teamMembers, setTeamMembers] = useState<TeamMember[]>(mockTeamMembers);
+  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
   const [inviteEmail, setInviteEmail] = useState("");
   const [inviteRole, setInviteRole] = useState<"Editor" | "Viewer">("Editor");
+
+  useEffect(() => {
+    // TODO: Load team members from database
+    loadTeamMembers();
+  }, []);
+
+  const loadTeamMembers = async () => {
+    // TODO: Implement loading team members from database
+    setTeamMembers([]);
+  };
 
   const handleInvite = () => {
     if (!inviteEmail) {

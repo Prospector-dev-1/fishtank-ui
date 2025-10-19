@@ -18,42 +18,10 @@ export const GlobalSearchModal = ({
   const [activeTab, setActiveTab] = useState("pitches");
   const [showFilters, setShowFilters] = useState(false);
 
-  // Mock data for search results
-  const mockPitches = [{
-    id: "1",
-    title: "EcoTrack AI",
-    category: "Climate Tech",
-    stage: "Seed",
-    location: "Toronto, ON",
-    duration: "30s",
-    views: 1200,
-    tags: ["AI", "Climate", "B2B"]
-  }, {
-    id: "2",
-    title: "MedFlow Assistant",
-    category: "HealthTech",
-    stage: "MVP",
-    location: "Vancouver, BC",
-    duration: "45s",
-    views: 850,
-    tags: ["Health", "AI", "SaaS"]
-  }];
-  const mockPeople = [{
-    id: "1",
-    name: "Sarah Kim",
-    location: "Vancouver, BC",
-    bio: "AI researcher turned entrepreneur",
-    skills: ["AI/ML", "Product", "Fundraising"],
-    openToCofounder: true
-  }];
-  const mockOpportunities = [{
-    id: "1",
-    role: "Senior React Developer",
-    company: "EcoTrack AI",
-    location: "Remote",
-    compensation: "$80-120K + equity",
-    tags: ["React", "TypeScript", "Climate"]
-  }];
+  // TODO: Load search results from database
+  const pitches: any[] = [];
+  const people: any[] = [];
+  const opportunities: any[] = [];
   const filterOptions = {
     categories: ["AI/ML", "Climate Tech", "FinTech", "HealthTech", "EdTech", "B2B SaaS"],
     stages: ["Idea", "MVP", "Seed", "Series A", "Series B"],
@@ -105,7 +73,11 @@ export const GlobalSearchModal = ({
 
           <div className="overflow-y-auto flex-1 mt-4">
             <TabsContent value="pitches" className="space-y-3">
-              {mockPitches.map(pitch => <Card key={pitch.id} className="cursor-pointer hover:bg-accent">
+              {pitches.length === 0 ? (
+                <div className="text-center py-8">
+                  <p className="text-muted-foreground">No pitches found</p>
+                </div>
+              ) : pitches.map((pitch: any) => <Card key={pitch.id} className="cursor-pointer hover:bg-accent">
                   <CardContent className="p-4">
                     <div className="flex items-center justify-between">
                       <div className="flex-1">
@@ -140,7 +112,11 @@ export const GlobalSearchModal = ({
             </TabsContent>
 
             <TabsContent value="people" className="space-y-3">
-              {mockPeople.map(person => <Card key={person.id} className="cursor-pointer hover:bg-accent">
+              {people.length === 0 ? (
+                <div className="text-center py-8">
+                  <p className="text-muted-foreground">No people found</p>
+                </div>
+              ) : people.map((person: any) => <Card key={person.id} className="cursor-pointer hover:bg-accent">
                   <CardContent className="p-4">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
@@ -166,11 +142,15 @@ export const GlobalSearchModal = ({
                       </div>
                     </div>
                   </CardContent>
-                </Card>)}
+                </Card>))}
             </TabsContent>
 
             <TabsContent value="opportunities" className="space-y-3">
-              {mockOpportunities.map(opp => <Card key={opp.id} className="cursor-pointer hover:bg-accent">
+              {opportunities.length === 0 ? (
+                <div className="text-center py-8">
+                  <p className="text-muted-foreground">No opportunities found</p>
+                </div>
+              ) : opportunities.map((opp: any) => <Card key={opp.id} className="cursor-pointer hover:bg-accent">
                   <CardContent className="p-4">
                     <div className="flex items-center justify-between">
                       <div className="flex-1">
@@ -189,7 +169,7 @@ export const GlobalSearchModal = ({
                       </Button>
                     </div>
                   </CardContent>
-                </Card>)}
+                </Card>))}
             </TabsContent>
 
             <TabsContent value="teams" className="space-y-3">

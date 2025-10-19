@@ -15,67 +15,6 @@ import { toast } from "sonner";
 import type { Innovation } from "@/types";
 import { Shield, FileText, Users, ChevronLeft, Info } from "lucide-react";
 
-// Mock innovations (same as Tank.tsx)
-const MOCK_INNOVATIONS: Innovation[] = [
-  {
-    id: 'innovation_aquasense',
-    user_id: 'mock_user',
-    company_name: 'AquaSense',
-    title: 'Smart Water Management for Agriculture',
-    tagline: 'Smart water monitoring for sustainable agriculture using IoT sensors',
-    full_description: 'AquaSense provides real-time soil moisture monitoring through wireless IoT sensors, delivering precise irrigation timing recommendations, weather-integrated forecasting, mobile dashboard for farm management, and water usage analytics.',
-    category: 'IoT',
-    stage: 'MVP',
-    problem_statement: 'Farmers waste 40% of irrigation water due to lack of real-time soil moisture data.',
-    solution: 'IoT sensors provide real-time soil moisture and weather data with automated irrigation recommendations.',
-    market_size: '$15B precision agriculture market growing 12% annually',
-    business_model: 'Hardware + SaaS subscription model: $299 sensor kit + $29/month per sensor',
-    competitive_advantage: '32% average water reduction with proven ROI',
-    team_description: 'Experienced team with backgrounds in IoT and agriculture',
-    traction: '25 beta farms across 3 states, $1,200 annual savings per farm',
-    current_funding: 50000,
-    funding_goal: 500000,
-    video_url: null,
-    thumbnail_url: 'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=400',
-    pitch_deck_url: null,
-    is_published: true,
-    status: 'published',
-    tags: ['iot', 'agriculture', 'sustainability', 'sensors'],
-    faqs: [],
-    metrics: { views: 156, likes: 23, shares: 8 },
-    created_at: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
-    updated_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString()
-  },
-  {
-    id: 'innovation_healthbridge',
-    user_id: 'mock_user',
-    company_name: 'HealthBridge',
-    title: 'AI-Powered Mental Health Platform',
-    tagline: 'AI-powered mental health support connecting users with therapists instantly',
-    full_description: 'HealthBridge uses AI to match users with licensed therapists based on specialty, availability, and compatibility, offering instant video sessions and 24/7 text support.',
-    category: 'HealthTech',
-    stage: 'Idea',
-    problem_statement: '60% of people seeking mental health support wait over 3 months for their first appointment, leading to worsening conditions.',
-    solution: 'HealthBridge uses AI to match users with therapists based on specialty, availability, and compatibility, offering instant video sessions.',
-    market_size: '$240B global mental health market, growing 9.5% annually with telehealth adoption accelerating',
-    business_model: 'Subscription: $49/month unlimited messaging + $89 per video session. B2B partnerships with employers at $15/employee/month',
-    competitive_advantage: 'AI-powered matching and instant availability',
-    team_description: 'Healthcare and technology experts',
-    traction: 'Partnership discussions with 2 Fortune 500 companies, 50 therapists signed up for beta',
-    current_funding: 0,
-    funding_goal: 500000,
-    video_url: null,
-    thumbnail_url: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=400',
-    pitch_deck_url: null,
-    is_published: false,
-    status: 'draft',
-    tags: ['healthtech', 'mental-health', 'ai', 'telemedicine', 'b2b'],
-    faqs: [],
-    metrics: { views: 42, likes: 7, shares: 2 },
-    created_at: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString(),
-    updated_at: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString()
-  }
-];
 
 export default function NDASettings() {
   const navigate = useNavigate();
@@ -111,14 +50,12 @@ export default function NDASettings() {
       // Try to get innovation from database
       let primaryInnovation = await innovationAPI.getPrimaryInnovation();
       
-      // If no innovation in database, use mock data
+      // If no innovation in database, redirect to create one
       if (!primaryInnovation) {
-        console.log('No innovation in database, using mock data');
-        const mockInnovationsWithUserId = MOCK_INNOVATIONS.map(innovation => ({
-          ...innovation,
-          user_id: user?.id || 'mock_user'
-        }));
-        primaryInnovation = mockInnovationsWithUserId[0];
+        console.log('No innovation in database');
+        toast.error('Please create an innovation first');
+        navigate('/innovator/tank');
+        return;
       }
       
       setInnovation(primaryInnovation);
@@ -163,35 +100,27 @@ export default function NDASettings() {
       // Save to localStorage (works for both mock and real innovations)
       localStorage.setItem(`nda_settings_${innovation.id}`, JSON.stringify(ndaSettings));
       
-      const isMockInnovation = innovation.id.startsWith('innovation_');
-      
-      if (isMockInnovation) {
-        // Simulate save for demo
-        await new Promise(resolve => setTimeout(resolve, 800));
-        toast.success('NDA settings saved successfully');
-      } else {
-        // Also save to database for real innovations
-        // Note: This assumes you have a metadata or settings column in your innovations table
-        // If not, you may need to create a separate nda_settings table
-        try {
-          const { error } = await supabase
-            .from('innovations')
-            .update({
-              // Storing as metadata - adjust based on your schema
-              // If you don't have this column, this will fail gracefully
-            })
-            .eq('id', innovation.id);
+      // Save to database
+      // Note: This assumes you have a metadata or settings column in your innovations table
+      // If not, you may need to create a separate nda_settings table
+      try {
+        const { error } = await supabase
+          .from('innovations')
+          .update({
+            // Storing as metadata - adjust based on your schema
+            // If you don't have this column, this will fail gracefully
+          })
+          .eq('id', innovation.id);
 
-          // Don't throw on error - localStorage save is already done
-          if (error) {
-            console.warn('Could not save to database, but saved to localStorage:', error);
-          }
-        } catch (dbError) {
-          console.warn('Database save failed, but localStorage save succeeded:', dbError);
+        // Don't throw on error - localStorage save is already done
+        if (error) {
+          console.warn('Could not save to database, but saved to localStorage:', error);
         }
-        
-        toast.success('NDA settings saved successfully');
+      } catch (dbError) {
+        console.warn('Database save failed, but localStorage save succeeded:', dbError);
       }
+      
+      toast.success('NDA settings saved successfully');
     } catch (error) {
       console.error('Error saving NDA settings:', error);
       toast.error('Failed to save NDA settings');
@@ -201,8 +130,8 @@ export default function NDASettings() {
   };
 
   const getSignatureCount = () => {
-    if (!innovation) return 0;
-    return innovation.id.startsWith('innovation_') ? 12 : 0;
+    // TODO: Fetch actual NDA signature count from database
+    return 0;
   };
 
   if (isLoading) {
@@ -429,25 +358,7 @@ export default function NDASettings() {
           <CardContent>
             {getSignatureCount() > 0 ? (
               <div className="space-y-3">
-                {/* Mock signature entries for demo */}
-                {[
-                  { name: 'John Investor', date: '2 days ago', status: 'Active' },
-                  { name: 'Sarah Capital', date: '5 days ago', status: 'Active' },
-                  { name: 'Michael Ventures', date: '1 week ago', status: 'Active' },
-                ].map((sig, idx) => (
-                  <div key={idx} className="flex items-center justify-between p-3 border rounded-lg">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                        <Users className="w-5 h-5 text-primary" />
-                      </div>
-                      <div>
-                        <p className="font-medium">{sig.name}</p>
-                        <p className="text-sm text-muted-foreground">{sig.date}</p>
-                      </div>
-                    </div>
-                    <Badge variant="default" className="bg-green-600">{sig.status}</Badge>
-                  </div>
-                ))}
+                {/* TODO: Load actual NDA signatures from database */}
               </div>
             ) : (
               <div className="text-center py-8">

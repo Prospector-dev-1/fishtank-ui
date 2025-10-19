@@ -29,13 +29,8 @@ export const CreateTeamModal = ({ open, onOpenChange, onSuccess }: CreateTeamMod
   const [selectedMembers, setSelectedMembers] = useState<string[]>([]);
   const [memberSearch, setMemberSearch] = useState('');
 
-  // Mock connections/users that can be added to team
-  const mockConnections = [
-    { id: 'user1', name: 'Sarah Kim', avatar: 'SK' },
-    { id: 'user2', name: 'Michael Chen', avatar: 'MC' },
-    { id: 'user3', name: 'Jessica Kumar', avatar: 'JK' },
-    { id: 'user4', name: 'David Park', avatar: 'DP' }
-  ];
+  // TODO: Load real connections from database
+  const connections: any[] = [];
 
   const form = useForm({
     resolver: zodResolver(createTeamSchema),
@@ -60,7 +55,7 @@ export const CreateTeamModal = ({ open, onOpenChange, onSuccess }: CreateTeamMod
     form.setValue('members', updated as any);
   };
 
-  const filteredConnections = mockConnections.filter(conn =>
+  const filteredConnections = connections.filter((conn: any) =>
     conn.name.toLowerCase().includes(memberSearch.toLowerCase()) &&
     !selectedMembers.includes(conn.id)
   );

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ChevronLeft, Calendar, Clock, Check } from "lucide-react";
 import { Button } from "@/components/innovator/ui/button";
 import { Card } from "@/components/innovator/ui/card";
@@ -12,14 +12,6 @@ interface TimeSlot {
   available: boolean;
 }
 
-const mockTimeSlots: TimeSlot[] = [
-  { id: "1", date: "2024-03-20", time: "10:00 AM", available: true },
-  { id: "2", date: "2024-03-20", time: "2:00 PM", available: true },
-  { id: "3", date: "2024-03-21", time: "11:00 AM", available: true },
-  { id: "4", date: "2024-03-21", time: "3:00 PM", available: false },
-  { id: "5", date: "2024-03-22", time: "9:00 AM", available: true },
-  { id: "6", date: "2024-03-22", time: "1:00 PM", available: true },
-];
 
 export default function Scheduling() {
   const navigate = useNavigate();
@@ -29,6 +21,17 @@ export default function Scheduling() {
   
   const [selectedSlots, setSelectedSlots] = useState<string[]>([]);
   const [step, setStep] = useState<"select" | "confirm">("select");
+  const [timeSlots, setTimeSlots] = useState<TimeSlot[]>([]);
+
+  useEffect(() => {
+    // TODO: Load available time slots from database or API
+    loadTimeSlots();
+  }, []);
+
+  const loadTimeSlots = async () => {
+    // TODO: Implement loading time slots
+    setTimeSlots([]);
+  };
 
   const toggleSlot = (slotId: string) => {
     setSelectedSlots(prev => {
@@ -104,7 +107,7 @@ export default function Scheduling() {
             <div className="space-y-3 mb-6">
               <h3 className="font-semibold text-left">Proposed Times:</h3>
               {selectedSlots.map(slotId => {
-                const slot = mockTimeSlots.find(s => s.id === slotId);
+                const slot = timeSlots.find(s => s.id === slotId);
                 return slot ? (
                   <div key={slotId} className="flex items-center justify-between p-3 bg-muted rounded-lg">
                     <div className="flex items-center gap-3">
@@ -152,7 +155,7 @@ export default function Scheduling() {
           </p>
           
           <div className="space-y-4">
-            {Object.entries(mockTimeSlots.reduce((groups: { [key: string]: TimeSlot[] }, slot) => {
+            {Object.entries(timeSlots.reduce((groups: { [key: string]: TimeSlot[] }, slot) => {
               const date = slot.date;
               if (!groups[date]) groups[date] = [];
               groups[date].push(slot);

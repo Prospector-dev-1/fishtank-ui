@@ -12,35 +12,8 @@ interface MatchmakingResultsModalProps {
 }
 
 export const MatchmakingResultsModal = ({ open, onOpenChange, innovationTitle }: MatchmakingResultsModalProps) => {
-  const mockInvestors = [
-    {
-      id: "1",
-      name: "Sarah Williams",
-      firm: "Climate Capital",
-      location: "Toronto, ON",
-      reason: "Focuses on Climate Tech + Seed stage",
-      match: 95,
-      avatar: "SW"
-    },
-    {
-      id: "2",
-      name: "Michael Chen",
-      firm: "AI Ventures",
-      location: "Vancouver, BC", 
-      reason: "AI/ML specialist + MVP stage",
-      match: 88,
-      avatar: "MC"
-    },
-    {
-      id: "3",
-      name: "Jessica Kumar",
-      firm: "GreenTech Partners",
-      location: "Montreal, QC",
-      reason: "Sustainability focus + Canadian startups",
-      match: 82,
-      avatar: "JK"
-    }
-  ];
+  // TODO: Load real investor matches from database
+  const investors: any[] = [];
 
   const handleShareTeaser = (investorName: string) => {
     toast.success(`Teaser shared with ${investorName}!`);
@@ -65,7 +38,11 @@ export const MatchmakingResultsModal = ({ open, onOpenChange, innovationTitle }:
         </DialogHeader>
 
         <div className="flex-1 overflow-y-auto space-y-4">
-          {mockInvestors.map((investor) => (
+          {investors.length === 0 ? (
+            <div className="text-center py-8">
+              <p className="text-muted-foreground">No investor matches found yet</p>
+            </div>
+          ) : investors.map((investor: any) => (
             <Card key={investor.id}>
               <CardContent className="p-4">
                 <div className="flex items-start justify-between mb-3">
@@ -128,7 +105,7 @@ export const MatchmakingResultsModal = ({ open, onOpenChange, innovationTitle }:
                 </div>
               </CardContent>
             </Card>
-          ))}
+          )))}
         </div>
 
         <div className="pt-4 border-t">

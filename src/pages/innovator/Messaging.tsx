@@ -27,114 +27,26 @@ interface Conversation {
   lastActivity: string;
 }
 
-const mockConversations: Conversation[] = [
-  {
-    id: "conv1",
-    investorId: "i1",
-    investorName: "Sarah Chen",
-    investorFirm: "Northbridge Capital",
-    investorAvatar: "SC",
-    messages: [
-      {
-        id: "m1",
-        senderId: "i1", 
-        text: "Hi Alex, I'm very interested in NovaPay. Your solution addresses a real pain point in cross-border payments. Could we schedule a call to discuss further?",
-        timestamp: "2024-03-15T10:30:00Z",
-        read: true
-      },
-      {
-        id: "m2",
-        senderId: "user",
-        text: "Hi Sarah, thank you for your interest! I'd be happy to schedule a call. I'm available Tuesday through Thursday afternoons EST. What works best for you?",
-        timestamp: "2024-03-15T14:15:00Z", 
-        read: true
-      },
-      {
-        id: "m3",
-        senderId: "i1",
-        text: "Perfect! How about Thursday at 2 PM EST? I'd love to dive deeper into your AI fraud detection capabilities.",
-        timestamp: "2024-03-15T16:45:00Z",
-        read: true
-      }
-    ],
-    lastActivity: "2024-03-15T16:45:00Z"
-  },
-  {
-    id: "conv2",
-    investorId: "i2",
-    investorName: "Michael Rodriguez",
-    investorFirm: "Venture Partners",
-    investorAvatar: "MR",
-    messages: [
-      {
-        id: "m1",
-        senderId: "i2",
-        text: "Great pitch! When can we discuss terms?",
-        timestamp: "2024-03-14T09:20:00Z",
-        read: true
-      },
-      {
-        id: "m2",
-        senderId: "user",
-        text: "Thanks! I'm free tomorrow afternoon",
-        timestamp: "2024-03-14T10:15:00Z",
-        read: false
-      }
-    ],
-    lastActivity: "2024-03-14T10:15:00Z"
-  },
-  {
-    id: "conv3",
-    investorId: "i3",
-    investorName: "Emma Thompson",
-    investorFirm: "Growth Capital",
-    investorAvatar: "ET",
-    messages: [
-      {
-        id: "m1",
-        senderId: "i3",
-        text: "Loved your traction metrics! Let's connect next week.",
-        timestamp: "2024-03-13T15:30:00Z",
-        read: true
-      }
-    ],
-    lastActivity: "2024-03-13T15:30:00Z"
-  },
-  {
-    id: "conv4",
-    investorId: "i4",
-    investorName: "James Park",
-    investorFirm: "Seed Ventures",
-    investorAvatar: "JP",
-    messages: [
-      {
-        id: "m1",
-        senderId: "i4",
-        text: "Your product solves a real problem. Can you share your deck?",
-        timestamp: "2024-03-12T11:45:00Z",
-        read: true
-      },
-      {
-        id: "m2",
-        senderId: "user",
-        text: "Absolutely! I'll send it over today.",
-        timestamp: "2024-03-12T12:00:00Z",
-        read: false
-      }
-    ],
-    lastActivity: "2024-03-12T12:00:00Z"
-  }
-];
 
 export default function Messaging() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const investorId = searchParams.get("investor");
-  const [conversations, setConversations] = useState<Conversation[]>(mockConversations);
+  const [conversations, setConversations] = useState<Conversation[]>([]);
   const [activeConversation, setActiveConversation] = useState<Conversation | null>(null);
   const [newMessage, setNewMessage] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState<string>("All");
+
+  useEffect(() => {
+    // TODO: Load conversations from database
+    loadConversations();
+  }, []);
+
+  const loadConversations = async () => {
+    // TODO: Implement loading conversations from database
+    setConversations([]);
+  };
 
   useEffect(() => {
     if (investorId) {

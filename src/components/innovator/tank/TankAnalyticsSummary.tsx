@@ -39,40 +39,6 @@ export const TankAnalyticsSummary = ({ pitches }: TankAnalyticsSummaryProps) => 
     try {
       const pitchIds = pitches.map(p => p.id);
       
-      // Check if any pitch belongs to a mock innovation
-      const hasMockPitches = pitches.some(p => p.innovation_id.startsWith('innovation_'));
-      
-      if (hasMockPitches) {
-        // Generate mock analytics data for demo
-        const totalViews = Math.floor(Math.random() * 300) + 150;
-        const avgEngagement = Math.floor(Math.random() * 40) + 35; // 35-75%
-        const avgWatchTime = Math.floor(Math.random() * 30) + 45; // 45-75 seconds
-        const investorInterest = Math.floor(Math.random() * 20) + 15; // 15-35 unique viewers
-        const weeklyTrend = Math.floor(Math.random() * 60) - 10; // -10% to +50%
-        
-        setMetrics({
-          totalViews,
-          avgEngagement,
-          avgWatchTime,
-          investorInterest,
-          weeklyTrend
-        });
-        
-        // Generate mock views over time (last 7 days)
-        const mockViewsOverTime: ViewData[] = [];
-        for (let i = 6; i >= 0; i--) {
-          const date = new Date();
-          date.setDate(date.getDate() - i);
-          mockViewsOverTime.push({
-            date: date.toISOString().split('T')[0],
-            views: Math.floor(Math.random() * 50) + 10
-          });
-        }
-        setViewsOverTime(mockViewsOverTime);
-        setIsLoading(false);
-        return;
-      }
-      
       const { data: analyticsData, error } = await supabase
         .from('pitch_analytics')
         .select('*')

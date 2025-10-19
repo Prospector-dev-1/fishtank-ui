@@ -15,10 +15,11 @@ export function InvestorAnalytics({
   meetingsScheduled, 
   fundingCommitted 
 }: InvestorAnalyticsProps) {
+  const actualFundingCommitments = fundingCommitted > 0 ? Math.ceil(fundingCommitted / 250000) : 0; // Estimate number of commitments
   const ndaConversionRate = profileViews > 0 ? (ndaSignatures / profileViews * 100).toFixed(1) : '0.0';
   const meetingConversionRate = profileViews > 0 ? (meetingsScheduled / profileViews * 100).toFixed(1) : '0.0';
-  const fundingConversionRate = profileViews > 0 ? (2 / profileViews * 100).toFixed(1) : '0.0'; // Assuming 2 funding commitments from mock data
-  const overallConversionRate = profileViews > 0 ? (2 / profileViews * 100).toFixed(1) : '0.0';
+  const fundingConversionRate = profileViews > 0 ? (actualFundingCommitments / profileViews * 100).toFixed(1) : '0.0';
+  const overallConversionRate = profileViews > 0 ? (actualFundingCommitments / profileViews * 100).toFixed(1) : '0.0';
 
   const metrics = [
     {
@@ -51,7 +52,7 @@ export function InvestorAnalytics({
     { name: 'Profile Views', value: profileViews, percentage: 100, color: 'bg-blue-500' },
     { name: 'NDA Signatures', value: ndaSignatures, percentage: parseFloat(ndaConversionRate), color: 'bg-yellow-500' },
     { name: 'Meetings Scheduled', value: meetingsScheduled, percentage: parseFloat(meetingConversionRate), color: 'bg-purple-500' },
-    { name: 'Funding Commitments', value: 2, percentage: parseFloat(fundingConversionRate), color: 'bg-green-500' }
+    { name: 'Funding Commitments', value: actualFundingCommitments, percentage: parseFloat(fundingConversionRate), color: 'bg-green-500' }
   ];
 
   return (
@@ -116,7 +117,7 @@ export function InvestorAnalytics({
                 </div>
                 <div className="text-right">
                   <p className="text-3xl font-bold text-primary">{overallConversionRate}%</p>
-                  <p className="text-sm text-muted-foreground">2 of {profileViews} investors</p>
+                  <p className="text-sm text-muted-foreground">{actualFundingCommitments} of {profileViews} investors</p>
                 </div>
               </div>
 
@@ -139,7 +140,7 @@ export function InvestorAnalytics({
                 <div className="flex items-center gap-3">
                   <div className="w-3 h-3 rounded-full bg-green-500" />
                   <span className="text-sm">
-                    <span className="font-medium">2 Funding Commitments</span>
+                    <span className="font-medium">{actualFundingCommitments} Funding Commitments</span>
                     <span className="text-muted-foreground ml-2">{fundingConversionRate}% of views</span>
                   </span>
                 </div>

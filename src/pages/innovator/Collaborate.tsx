@@ -31,52 +31,9 @@ export default function Collaborate() {
     loadData();
   }, []);
 
-  // Mock opportunities for dashboard demonstration
-  const mockOpportunities: Opportunity[] = [{
-    id: 'mock-1',
-    ownerId: 'current-user',
-    role: 'Frontend Developer',
-    description: 'Looking for a talented React developer to help build our SaaS dashboard. We need someone who can create beautiful, responsive interfaces and has experience with modern React patterns including hooks and context.',
-    deliverables: ['Dashboard UI components', 'Responsive layouts', 'User authentication flow'],
-    commitment: {
-      hoursPerWeek: 20,
-      durationWeeks: 8,
-      startDate: '2024-02-15'
-    },
-    compensation: {
-      type: 'paid',
-      range: '$50-70/hour'
-    },
-    location: 'remote',
-    tags: ['React', 'JavaScript', 'CSS', 'UI/UX'],
-    status: 'open',
-    createdAt: '2024-01-15T10:00:00Z'
-  }, {
-    id: 'mock-2',
-    ownerId: 'current-user',
-    role: 'Marketing Specialist',
-    description: 'Seeking a digital marketing expert to launch our fintech product. Need someone with experience in growth marketing, content strategy, and social media campaigns.',
-    deliverables: ['Marketing strategy', 'Content calendar', 'Campaign execution'],
-    commitment: {
-      hoursPerWeek: 15,
-      durationWeeks: 12,
-      startDate: '2024-02-01'
-    },
-    compensation: {
-      type: 'equity',
-      range: '0.5-1.0% equity'
-    },
-    location: 'remote',
-    tags: ['Marketing', 'Content', 'Social Media', 'Growth'],
-    status: 'open',
-    createdAt: '2024-01-20T14:30:00Z'
-  }];
   const loadData = async () => {
     const storedOpps = (await Storage.getItem<Opportunity[]>(STORAGE_KEYS.OPPORTUNITIES)) || [];
-    // Merge mock opportunities with stored ones, avoiding duplicates
-    const existingIds = storedOpps.map(opp => opp.id);
-    const newMockOpps = mockOpportunities.filter(opp => !existingIds.includes(opp.id));
-    setOpportunities([...storedOpps, ...newMockOpps]);
+    setOpportunities(storedOpps);
   };
   const handleCreateSuccess = () => {
     loadData();
@@ -94,59 +51,12 @@ export default function Collaborate() {
       toast.error("Failed to close opportunity");
     }
   };
-  const mockCreatorProfiles = [{
-    id: '1',
-    name: 'Emma Thompson',
-    avatar: 'ET',
-    skills: ['React', 'Node.js', 'UI/UX'],
-    portfolio: ['Portfolio Link 1', 'Portfolio Link 2'],
-    availability: 'Available',
-    rates: '$45-65/hour',
-    location: 'Toronto, ON'
-  }, {
-    id: '2',
-    name: 'James Rodriguez',
-    avatar: 'JR',
-    skills: ['Marketing', 'Content', 'SEO'],
-    portfolio: ['Marketing Case Study', 'Growth Report'],
-    availability: 'Part-time',
-    rates: '$35-50/hour',
-    location: 'Vancouver, BC'
-  }];
+  const creatorProfiles: any[] = [];
 
-  // Mock metrics for opportunities
-  const getMockMetrics = (oppId: string) => {
-    const metrics = {
-      'mock-1': {
-        views: 24,
-        applications: 8
-      },
-      'mock-2': {
-        views: 18,
-        applications: 5
-      },
-      'mock-3': {
-        views: 42,
-        applications: 12
-      },
-      'mock-4': {
-        views: 31,
-        applications: 9
-      },
-      'mock-5': {
-        views: 15,
-        applications: 3
-      },
-      'mock-6': {
-        views: 28,
-        applications: 7
-      },
-      'mock-7': {
-        views: 35,
-        applications: 15
-      }
-    };
-    return metrics[oppId as keyof typeof metrics] || {
+  // Get metrics for opportunities
+  const getMetrics = (oppId: string) => {
+    // TODO: Fetch actual metrics from database
+    return {
       views: 0,
       applications: 0
     };
@@ -166,7 +76,7 @@ export default function Collaborate() {
     totalPosts: myOpportunities.length,
     activePosts: myOpportunities.filter(opp => opp.status === 'open').length,
     closedPosts: myOpportunities.filter(opp => opp.status === 'closed').length,
-    totalApplications: myOpportunities.reduce((sum, opp) => sum + getMockMetrics(opp.id).applications, 0)
+    totalApplications: myOpportunities.reduce((sum, opp) => sum + getMetrics(opp.id).applications, 0)
   };
 
   // All available skills and compensation types
@@ -174,7 +84,7 @@ export default function Collaborate() {
   const compensationTypes = ['Hourly', 'Equity', 'Commission', 'Fixed'];
 
   // Filter creators based on search and filters
-  const filteredCreators = mockCreatorProfiles.filter(creator => {
+  const filteredCreators = creatorProfiles.filter((creator: any) => {
     // Text search
     const matchesSearch = !searchTerm || creator.name.toLowerCase().includes(searchTerm.toLowerCase()) || creator.skills.some(skill => skill.toLowerCase().includes(searchTerm.toLowerCase())) || creator.location.toLowerCase().includes(searchTerm.toLowerCase());
 
@@ -351,11 +261,11 @@ export default function Collaborate() {
                             <span>Posted {new Date(opp.createdAt).toLocaleDateString()}</span>
                             <span className="flex items-center gap-1">
                               <Eye className="w-3 h-3" />
-                              {getMockMetrics(opp.id).views} views
+                              {getMetrics(opp.id).views} views
                             </span>
                             <span className="flex items-center gap-1">
                               <MessageSquare className="w-3 h-3" />
-                              {getMockMetrics(opp.id).applications} applications
+                              {getMetrics(opp.id).applications} applications
                             </span>
                           </div>
                         </div>
@@ -371,11 +281,11 @@ export default function Collaborate() {
                       {opp.status === 'open' && <div className="space-y-1">
                           <div className="flex justify-between text-xs text-muted-foreground">
                             <span>Application Progress</span>
-                            <span>{getMockMetrics(opp.id).applications} / 15</span>
+                            <span>{getMetrics(opp.id).applications} / 15</span>
                           </div>
                           <div className="w-full bg-muted rounded-full h-2">
                             <div className="bg-primary rounded-full h-2 transition-all" style={{
-                      width: `${getMockMetrics(opp.id).applications / 15 * 100}%`
+                      width: `${getMetrics(opp.id).applications / 15 * 100}%`
                     }} />
                           </div>
                         </div>}
