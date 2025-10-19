@@ -87,7 +87,7 @@ function InnovatorAppContent() {
     <div className={`min-h-screen bg-background ${showNavigation ? 'pb-16' : ''}`}>
       <Routes>
         <Route path="auth" element={<InnovatorAuth />} />
-        <Route path="/" element={<InnovatorProtectedRoute><InnovatorHome /></InnovatorProtectedRoute>} />
+        <Route index element={<InnovatorProtectedRoute><InnovatorHome /></InnovatorProtectedRoute>} />
         <Route path="tank" element={<InnovatorProtectedRoute><InnovatorTank /></InnovatorProtectedRoute>} />
         <Route path="tank/innovation/edit" element={<InnovatorProtectedRoute><InnovatorEditInnovation /></InnovatorProtectedRoute>} />
         <Route path="tank/innovation/settings" element={<InnovatorProtectedRoute><InnovatorInnovationSettings /></InnovatorProtectedRoute>} />
@@ -116,6 +116,21 @@ function InnovatorAppContent() {
   );
 }
 
+// Smart redirect component based on user role
+function SmartRedirect() {
+  const userRole = localStorage.getItem("userRole");
+  
+  if (userRole === "creator") {
+    return <Navigate to="/creator" replace />;
+  } else if (userRole === "innovator") {
+    return <Navigate to="/innovator" replace />;
+  } else if (userRole === "investor") {
+    return <Navigate to="/investor" replace />;
+  }
+  
+  return <Navigate to="/onboarding" replace />;
+}
+
 // Main App with Global Routing
 function AppContent() {
   const { loadInitialData } = useFishtankStore();
@@ -130,7 +145,7 @@ function AppContent() {
       <Sonner />
       <Routes>
         {/* Onboarding Route */}
-        <Route path="/" element={<Onboarding />} />
+        <Route path="/onboarding" element={<Onboarding />} />
 
         {/* Creator Routes */}
         <Route path="/creator/*" element={
@@ -143,7 +158,7 @@ function AppContent() {
                     <CreatorOnboarding />
                   </CreatorProtectedRoute>
                 } />
-                <Route path="/" element={
+                <Route element={
                   <CreatorProtectedRoute>
                     <CreatorLayout />
                   </CreatorProtectedRoute>
@@ -175,7 +190,7 @@ function AppContent() {
         <Route path="/investor/*" element={
           <div className="relative">
             <Routes>
-              <Route path="/" element={<InvestorDashboard />} />
+              <Route index element={<InvestorDashboard />} />
               <Route path="dashboard" element={<InvestorDashboard />} />
               <Route path="deal-flow" element={<InvestorDealFlow />} />
               <Route path="market-intel" element={<InvestorMarketIntel />} />
@@ -191,8 +206,8 @@ function AppContent() {
           </div>
         } />
 
-        {/* Fallback */}
-        <Route path="*" element={<Navigate to="/" replace />} />
+        {/* Fallback - routes to user's role homepage or onboarding */}
+        <Route path="*" element={<SmartRedirect />} />
       </Routes>
     </>
   );

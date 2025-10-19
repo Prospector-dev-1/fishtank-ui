@@ -12,6 +12,7 @@ import { User, Mail, MapPin, Briefcase, Edit, Settings, Rocket, Video, Users, Li
 import { toast } from "@/components/innovator/ui/use-toast";
 import { EmptyState } from "@/components/innovator/ui/empty-state";
 import { Skeleton } from "@/components/innovator/ui/skeleton";
+import { getMockProfileData, USE_MOCK_PROFILE } from "@/lib/innovator/mockProfileData";
 export default function Profile() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
@@ -29,6 +30,18 @@ export default function Profile() {
   }, []);
   const loadProfile = async () => {
     try {
+      // Use mock data if enabled
+      if (USE_MOCK_PROFILE) {
+        const mockData = getMockProfileData();
+        setProfile(mockData.profile);
+        setInnovations(mockData.innovations);
+        setPitches(mockData.pitches);
+        setStats(mockData.stats);
+        setIsLoading(false);
+        return;
+      }
+
+      // Otherwise, load from backend
       const {
         data: {
           user
@@ -82,6 +95,15 @@ export default function Profile() {
   return <div className="min-h-screen bg-background pb-16">
       <FishtankHeader title="Profile" showLogo={false} showProfile={false} />
       <div className="container mx-auto px-4 py-8 max-w-6xl">
+        {/* Mock Data Indicator */}
+        {USE_MOCK_PROFILE && <div className="mb-4 p-3 bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-lg">
+            <p className="text-sm text-blue-800 dark:text-blue-200">
+              <span className="font-semibold">Mock Data Mode:</span> You're viewing sample profile data. 
+              Set <code className="px-1 py-0.5 bg-blue-100 dark:bg-blue-900 rounded text-xs">USE_MOCK_PROFILE = false</code> in 
+              <code className="px-1 py-0.5 bg-blue-100 dark:bg-blue-900 rounded text-xs ml-1">mockProfileData.ts</code> to use real backend data.
+            </p>
+          </div>}
+        
         {/* Header Card */}
         <Card className="mb-6">
           <CardHeader>
@@ -295,17 +317,36 @@ export default function Profile() {
           <TabsContent value="pitches">
             <Card>
               <CardHeader>
-                <CardTitle>My Profile</CardTitle>
-                
+                <CardTitle>My Pitches</CardTitle>
+                <CardDescription>Video pitches and presentations</CardDescription>
               </CardHeader>
               <CardContent>
                 {pitches.length === 0 ? <EmptyState icon={Video} title="No pitches yet" description="Create your first video pitch to share your innovation with investors" action={{
                 label: "Create Pitch",
                 onClick: () => navigate("/tank")
               }} /> : <div className="grid gap-4 md:grid-cols-2">
-                    {pitches.map(pitch => <Card key={pitch.id} className="hover:shadow-md transition-shadow cursor-pointer">
-                        
-                        
+                    {pitches.map(pitch => <Card key={pitch.id} className="hover:shadow-md transition-shadow cursor-pointer group">
+                        <div className="relative overflow-hidden rounded-t-lg">
+                          {pitch.thumbnail_url && <img src={pitch.thumbnail_url} alt={pitch.title} className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" />}
+                          {pitch.duration && <div className="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
+                              {Math.floor(pitch.duration / 60)}:{(pitch.duration % 60).toString().padStart(2, '0')}
+                            </div>}
+                        </div>
+                        <CardHeader>
+                          <CardTitle className="text-lg line-clamp-1">{pitch.title}</CardTitle>
+                          <CardDescription className="flex items-center gap-4 text-sm">
+                            <span className="flex items-center gap-1">
+                              <Video className="h-3 w-3" />
+                              {pitch.views} views
+                            </span>
+                            <span>{new Date(pitch.created_at).toLocaleDateString()}</span>
+                          </CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                          <Badge variant={pitch.status === 'published' ? 'default' : 'secondary'}>
+                            {pitch.status}
+                          </Badge>
+                        </CardContent>
                       </Card>)}
                   </div>}
               </CardContent>
