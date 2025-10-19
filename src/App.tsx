@@ -16,7 +16,7 @@ import { NavigationProvider as CreatorNavigationProvider } from "@/contexts/Navi
 import { AuthProvider as CreatorAuthProvider } from "@/contexts/AuthContext";
 import { ProtectedRoute as CreatorProtectedRoute } from "@/components/creator/ProtectedRoute";
 import CreatorAuth from "@/pages/creator/Auth";
-import CreatorHome from "@/pages/creator/Home";
+import CreatorIndex from "@/pages/creator/Index";
 import CreatorDiscover from "@/pages/creator/Discover";
 import CreatorInbox from "@/pages/creator/Inbox";
 import CreatorProfile from "@/pages/creator/Profile";
@@ -319,7 +319,7 @@ function AppContent() {
                       </CreatorProtectedRoute>
                     }
                   >
-                    <Route index element={<CreatorHome />} />
+                    <Route index element={<CreatorIndex />} />
                     <Route path="discover" element={<CreatorDiscover />} />
                     <Route path="network" element={<CreatorNetwork />} />
                     <Route path="inbox" element={<CreatorInbox />} />
