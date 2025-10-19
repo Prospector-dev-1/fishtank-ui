@@ -261,9 +261,7 @@ export default function Profile() {
 
         {/* Stats Cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-          <Card>
-            
-          </Card>
+          
           
           <Card>
             <CardContent className="pt-6">
@@ -293,19 +291,7 @@ export default function Profile() {
             </CardContent>
           </Card>
           
-          <Card>
-            <CardContent className="pt-6">
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-primary/10">
-                  <Rocket className="h-5 w-5 text-primary" />
-                </div>
-                <div>
-                  <p className="text-2xl font-bold">{stats.teams}</p>
-                  <p className="text-xs text-muted-foreground">Teams</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+          
         </div>
 
         {/* Quick Actions */}
