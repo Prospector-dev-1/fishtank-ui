@@ -12,6 +12,8 @@
     --popover-foreground: 222.2 84% 4.9%;
     --primary: 221.2 83.2% 53.3%;
     --primary-foreground: 210 40% 98%;
+    --primary-hover: 221.2 83.2% 48%;
+    --primary-pressed: 221.2 83.2% 43%;
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
     --muted: 210 40% 96.1%;
@@ -24,6 +26,11 @@
     --input: 214.3 31.8% 91.4%;
     --ring: 221.2 83.2% 53.3%;
     --radius: 0.5rem;
+    
+    /* Role gradients */
+    --gradient-creator: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+    --gradient-innovator: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+    --gradient-investor: linear-gradient(135deg, #10b981 0%, #14b8a6 100%);
   }
 
   .dark {

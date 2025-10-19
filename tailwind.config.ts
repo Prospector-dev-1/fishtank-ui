@@ -18,6 +18,19 @@ export default {
       },
     },
     extend: {
+      fontSize: {
+        // iOS Typography Scale
+        'hero': ['2.125rem', { lineHeight: '2.5rem', fontWeight: '700', letterSpacing: '-0.025em' }], // 34px
+        'title-1': ['1.75rem', { lineHeight: '2.125rem', fontWeight: '700', letterSpacing: '-0.02em' }], // 28px
+        'title-2': ['1.375rem', { lineHeight: '1.75rem', fontWeight: '600', letterSpacing: '-0.015em' }], // 22px
+        'title-3': ['1.25rem', { lineHeight: '1.5rem', fontWeight: '600', letterSpacing: '-0.01em' }], // 20px
+        'body': ['1.0625rem', { lineHeight: '1.375rem', fontWeight: '400' }], // 17px
+        'callout': ['1rem', { lineHeight: '1.25rem', fontWeight: '400' }], // 16px
+        'subhead': ['0.9375rem', { lineHeight: '1.25rem', fontWeight: '400' }], // 15px
+        'footnote': ['0.8125rem', { lineHeight: '1.125rem', fontWeight: '400' }], // 13px
+        'caption-1': ['0.75rem', { lineHeight: '1rem', fontWeight: '400' }], // 12px
+        'caption-2': ['0.6875rem', { lineHeight: '0.875rem', fontWeight: '400' }], // 11px
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
