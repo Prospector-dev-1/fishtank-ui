@@ -30,7 +30,6 @@ export default function Collaborate() {
   useEffect(() => {
     loadData();
   }, []);
-
   const loadData = async () => {
     const storedOpps = (await Storage.getItem<Opportunity[]>(STORAGE_KEYS.OPPORTUNITIES)) || [];
     setOpportunities(storedOpps);
@@ -308,14 +307,9 @@ export default function Collaborate() {
                   </Card>)}
               </div> : myOpportunities.length === 0 ? <div className="text-center py-12">
                 <Briefcase className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-                <h3 className="font-semibold text-lg mb-2">No Opportunities Posted</h3>
-                <p className="text-muted-foreground mb-6">
-                  Post opportunities for your innovation to connect with talented creators
-                </p>
-                <Button onClick={() => setShowCreateModal(true)}>
-                  <Plus className="w-4 h-4 mr-2" />
-                  Post Opportunity
-                </Button>
+                <h3 className="font-semibold text-lg mb-2">No Gig listings Posted</h3>
+                <p className="text-muted-foreground mb-6">Post gigs for your innovation to connect with talented creators</p>
+                
               </div> : <div className="text-center py-8">
                 <Search className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
                 <h3 className="font-medium mb-2">No posts match your filters</h3>
