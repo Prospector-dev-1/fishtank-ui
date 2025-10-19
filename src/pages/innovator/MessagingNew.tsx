@@ -40,6 +40,7 @@ export default function MessagingNew() {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [activeFilter, setActiveFilter] = useState<string>("All");
   useEffect(() => {
     loadThreads();
     const {
@@ -177,6 +178,24 @@ export default function MessagingNew() {
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <Input placeholder="Search conversations..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} className="pl-10 bg-muted/30 border-none mx-0 px-[41px] py-[4px] my-px" />
+          </div>
+          
+          {/* Filter Pills */}
+          <div className="flex gap-2 overflow-x-auto py-3 scrollbar-hide">
+            {["All", "Requests", "Investors", "Innovators", "Creators", "System"].map((filter) => (
+              <button
+                key={filter}
+                onClick={() => setActiveFilter(filter)}
+                className={cn(
+                  "px-4 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-colors",
+                  activeFilter === filter
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-muted text-muted-foreground hover:bg-muted/80"
+                )}
+              >
+                {filter}
+              </button>
+            ))}
           </div>
         </div>
 
