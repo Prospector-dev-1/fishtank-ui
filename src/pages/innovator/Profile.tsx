@@ -572,36 +572,17 @@ export default function Profile() {
           <TabsContent value="pitches">
             <Card>
               <CardHeader>
-                <CardTitle>My Pitches</CardTitle>
-                <CardDescription>Video pitches and presentations</CardDescription>
+                <CardTitle>My Profile</CardTitle>
+                
               </CardHeader>
               <CardContent>
                 {pitches.length === 0 ? <EmptyState icon={Video} title="No pitches yet" description="Create your first video pitch to share your innovation with investors" action={{
                 label: "Create Pitch",
                 onClick: () => navigate("/tank")
               }} /> : <div className="grid gap-4 md:grid-cols-2">
-                    {pitches.map(pitch => <Card key={pitch.id} className="hover:shadow-md transition-shadow cursor-pointer group">
-                        <div className="relative overflow-hidden rounded-t-lg">
-                          {pitch.thumbnail_url && <img src={pitch.thumbnail_url} alt={pitch.title} className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" />}
-                          {pitch.duration && <div className="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
-                              {Math.floor(pitch.duration / 60)}:{(pitch.duration % 60).toString().padStart(2, '0')}
-                            </div>}
-                        </div>
-                        <CardHeader>
-                          <CardTitle className="text-lg line-clamp-1">{pitch.title}</CardTitle>
-                          <CardDescription className="flex items-center gap-4 text-sm">
-                            <span className="flex items-center gap-1">
-                              <Video className="h-3 w-3" />
-                              {pitch.views} views
-                            </span>
-                            <span>{new Date(pitch.created_at).toLocaleDateString()}</span>
-                          </CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                          <Badge variant={pitch.status === 'published' ? 'default' : 'secondary'}>
-                            {pitch.status}
-                          </Badge>
-                        </CardContent>
+                    {pitches.map(pitch => <Card key={pitch.id} className="hover:shadow-md transition-shadow cursor-pointer">
+                        
+                        
                       </Card>)}
                   </div>}
               </CardContent>

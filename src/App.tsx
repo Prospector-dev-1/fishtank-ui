@@ -79,56 +79,194 @@ function InnovatorProtectedRoute({ children }: { children: React.ReactNode }) {
 
 // Wrapper component to conditionally show Innovator navigation
 function InnovatorAppContent() {
-  const mainPages = ['/innovator', '/innovator/tank', '/innovator/network', '/innovator/collaborate', '/innovator/messaging'];
+  const mainPages = [
+    "/innovator",
+    "/innovator/tank",
+    "/innovator/network",
+    "/innovator/collaborate",
+    "/innovator/messaging",
+  ];
   const pathname = window.location.pathname;
   const showNavigation = mainPages.includes(pathname);
 
   return (
-    <div className={`min-h-screen bg-background ${showNavigation ? 'pb-16' : ''}`}>
+    <div className={`min-h-screen bg-background ${showNavigation ? "pb-16" : ""}`}>
       <Routes>
         <Route path="auth" element={<InnovatorAuth />} />
-        <Route index element={<InnovatorProtectedRoute><InnovatorHome /></InnovatorProtectedRoute>} />
-        <Route path="tank" element={<InnovatorProtectedRoute><InnovatorTank /></InnovatorProtectedRoute>} />
-        <Route path="tank/innovation/edit" element={<InnovatorProtectedRoute><InnovatorEditInnovation /></InnovatorProtectedRoute>} />
-        <Route path="tank/innovation/settings" element={<InnovatorProtectedRoute><InnovatorInnovationSettings /></InnovatorProtectedRoute>} />
-        <Route path="tank/pitch/new" element={<InnovatorProtectedRoute><InnovatorCreatePitch /></InnovatorProtectedRoute>} />
-        <Route path="tank/pitch/:pitchId/analytics" element={<InnovatorProtectedRoute><InnovatorPitchAnalytics /></InnovatorProtectedRoute>} />
-        <Route path="pitch/:pitchId" element={<InnovatorProtectedRoute><InnovatorPitchView /></InnovatorProtectedRoute>} />
-        <Route path="network" element={<InnovatorProtectedRoute><InnovatorNetwork /></InnovatorProtectedRoute>} />
-        <Route path="collaborate" element={<InnovatorProtectedRoute><InnovatorCollaborate /></InnovatorProtectedRoute>} />
-        <Route path="profile" element={<InnovatorProtectedRoute><InnovatorProfile /></InnovatorProtectedRoute>} />
-        <Route path="profile/edit" element={<InnovatorProtectedRoute><InnovatorEditProfile /></InnovatorProtectedRoute>} />
-        <Route path="settings" element={<InnovatorProtectedRoute><InnovatorSettings /></InnovatorProtectedRoute>} />
-        <Route path="profile/:userId" element={<InnovatorProtectedRoute><InnovatorUserProfile /></InnovatorProtectedRoute>} />
-        <Route path="user/:userId" element={<InnovatorProtectedRoute><InnovatorUserProfile /></InnovatorProtectedRoute>} />
-        <Route path="search" element={<InnovatorProtectedRoute><InnovatorSearch /></InnovatorProtectedRoute>} />
-        <Route path="analytics" element={<InnovatorProtectedRoute><InnovatorAnalytics /></InnovatorProtectedRoute>} />
-        <Route path="nda-request" element={<InnovatorProtectedRoute><InnovatorNDARequest /></InnovatorProtectedRoute>} />
-        <Route path="project/:id" element={<InnovatorProtectedRoute><InnovatorProjectDetail /></InnovatorProtectedRoute>} />
-        <Route path="scheduling" element={<InnovatorProtectedRoute><InnovatorScheduling /></InnovatorProtectedRoute>} />
-        <Route path="team-management" element={<InnovatorProtectedRoute><InnovatorTeamManagement /></InnovatorProtectedRoute>} />
-        <Route path="messaging" element={<InnovatorProtectedRoute><InnovatorMessagingNew /></InnovatorProtectedRoute>} />
+        <Route
+          path="/"
+          element={
+            <InnovatorProtectedRoute>
+              <InnovatorHome />
+            </InnovatorProtectedRoute>
+          }
+        />
+        <Route
+          path="tank"
+          element={
+            <InnovatorProtectedRoute>
+              <InnovatorTank />
+            </InnovatorProtectedRoute>
+          }
+        />
+        <Route
+          path="tank/innovation/edit"
+          element={
+            <InnovatorProtectedRoute>
+              <InnovatorEditInnovation />
+            </InnovatorProtectedRoute>
+          }
+        />
+        <Route
+          path="tank/innovation/settings"
+          element={
+            <InnovatorProtectedRoute>
+              <InnovatorInnovationSettings />
+            </InnovatorProtectedRoute>
+          }
+        />
+        <Route
+          path="tank/pitch/new"
+          element={
+            <InnovatorProtectedRoute>
+              <InnovatorCreatePitch />
+            </InnovatorProtectedRoute>
+          }
+        />
+        <Route
+          path="tank/pitch/:pitchId/analytics"
+          element={
+            <InnovatorProtectedRoute>
+              <InnovatorPitchAnalytics />
+            </InnovatorProtectedRoute>
+          }
+        />
+        <Route
+          path="pitch/:pitchId"
+          element={
+            <InnovatorProtectedRoute>
+              <InnovatorPitchView />
+            </InnovatorProtectedRoute>
+          }
+        />
+        <Route
+          path="network"
+          element={
+            <InnovatorProtectedRoute>
+              <InnovatorNetwork />
+            </InnovatorProtectedRoute>
+          }
+        />
+        <Route
+          path="collaborate"
+          element={
+            <InnovatorProtectedRoute>
+              <InnovatorCollaborate />
+            </InnovatorProtectedRoute>
+          }
+        />
+        <Route
+          path="profile"
+          element={
+            <InnovatorProtectedRoute>
+              <InnovatorProfile />
+            </InnovatorProtectedRoute>
+          }
+        />
+        <Route
+          path="profile/edit"
+          element={
+            <InnovatorProtectedRoute>
+              <InnovatorEditProfile />
+            </InnovatorProtectedRoute>
+          }
+        />
+        <Route
+          path="settings"
+          element={
+            <InnovatorProtectedRoute>
+              <InnovatorSettings />
+            </InnovatorProtectedRoute>
+          }
+        />
+        <Route
+          path="profile/:userId"
+          element={
+            <InnovatorProtectedRoute>
+              <InnovatorUserProfile />
+            </InnovatorProtectedRoute>
+          }
+        />
+        <Route
+          path="user/:userId"
+          element={
+            <InnovatorProtectedRoute>
+              <InnovatorUserProfile />
+            </InnovatorProtectedRoute>
+          }
+        />
+        <Route
+          path="search"
+          element={
+            <InnovatorProtectedRoute>
+              <InnovatorSearch />
+            </InnovatorProtectedRoute>
+          }
+        />
+        <Route
+          path="analytics"
+          element={
+            <InnovatorProtectedRoute>
+              <InnovatorAnalytics />
+            </InnovatorProtectedRoute>
+          }
+        />
+        <Route
+          path="nda-request"
+          element={
+            <InnovatorProtectedRoute>
+              <InnovatorNDARequest />
+            </InnovatorProtectedRoute>
+          }
+        />
+        <Route
+          path="project/:id"
+          element={
+            <InnovatorProtectedRoute>
+              <InnovatorProjectDetail />
+            </InnovatorProtectedRoute>
+          }
+        />
+        <Route
+          path="scheduling"
+          element={
+            <InnovatorProtectedRoute>
+              <InnovatorScheduling />
+            </InnovatorProtectedRoute>
+          }
+        />
+        <Route
+          path="team-management"
+          element={
+            <InnovatorProtectedRoute>
+              <InnovatorTeamManagement />
+            </InnovatorProtectedRoute>
+          }
+        />
+        <Route
+          path="messaging"
+          element={
+            <InnovatorProtectedRoute>
+              <InnovatorMessagingNew />
+            </InnovatorProtectedRoute>
+          }
+        />
         <Route path="*" element={<InnovatorNotFound />} />
       </Routes>
 
       {showNavigation && <FishtankNavigation />}
     </div>
   );
-}
-
-// Smart redirect component based on user role
-function SmartRedirect() {
-  const userRole = localStorage.getItem("userRole");
-  
-  if (userRole === "creator") {
-    return <Navigate to="/creator" replace />;
-  } else if (userRole === "innovator") {
-    return <Navigate to="/innovator" replace />;
-  } else if (userRole === "investor") {
-    return <Navigate to="/investor" replace />;
-  }
-  
-  return <Navigate to="/onboarding" replace />;
 }
 
 // Main App with Global Routing
@@ -145,69 +283,81 @@ function AppContent() {
       <Sonner />
       <Routes>
         {/* Onboarding Route */}
-        <Route path="/onboarding" element={<Onboarding />} />
+        <Route path="/" element={<Onboarding />} />
 
         {/* Creator Routes */}
-        <Route path="/creator/*" element={
-          <CreatorAuthProvider>
-            <CreatorNavigationProvider>
-              <Routes>
-                <Route path="auth" element={<CreatorAuth />} />
-                <Route path="onboarding" element={
-                  <CreatorProtectedRoute>
-                    <CreatorOnboarding />
-                  </CreatorProtectedRoute>
-                } />
-                <Route element={
-                  <CreatorProtectedRoute>
-                    <CreatorLayout />
-                  </CreatorProtectedRoute>
-                }>
-                  <Route index element={<CreatorHome />} />
-                  <Route path="discover" element={<CreatorDiscover />} />
-                  <Route path="network" element={<CreatorNetwork />} />
-                  <Route path="inbox" element={<CreatorInbox />} />
-                  <Route path="profile" element={<CreatorProfile />} />
-                  <Route path="edit-profile" element={<CreatorEditProfile />} />
-                  <Route path="creators/:id" element={<CreatorProfileDetail />} />
-                  <Route path="team/:teamId" element={<CreatorTeamInfo />} />
-                  <Route path="earnings" element={<CreatorEarnings />} />
-                  <Route path="proposals" element={<CreatorProposals />} />
-                  <Route path="saved" element={<CreatorSaved />} />
-                  <Route path="disputes" element={<CreatorDisputes />} />
-                  <Route path="settings" element={<CreatorSettings />} />
-                </Route>
-                <Route path="*" element={<CreatorNotFound />} />
-              </Routes>
-            </CreatorNavigationProvider>
-          </CreatorAuthProvider>
-        } />
+        <Route
+          path="/creator/*"
+          element={
+            <CreatorAuthProvider>
+              <CreatorNavigationProvider>
+                <Routes>
+                  <Route path="auth" element={<CreatorAuth />} />
+                  <Route
+                    path="onboarding"
+                    element={
+                      <CreatorProtectedRoute>
+                        <CreatorOnboarding />
+                      </CreatorProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/"
+                    element={
+                      <CreatorProtectedRoute>
+                        <CreatorLayout />
+                      </CreatorProtectedRoute>
+                    }
+                  >
+                    <Route index element={<CreatorHome />} />
+                    <Route path="discover" element={<CreatorDiscover />} />
+                    <Route path="network" element={<CreatorNetwork />} />
+                    <Route path="inbox" element={<CreatorInbox />} />
+                    <Route path="profile" element={<CreatorProfile />} />
+                    <Route path="edit-profile" element={<CreatorEditProfile />} />
+                    <Route path="creators/:id" element={<CreatorProfileDetail />} />
+                    <Route path="team/:teamId" element={<CreatorTeamInfo />} />
+                    <Route path="earnings" element={<CreatorEarnings />} />
+                    <Route path="proposals" element={<CreatorProposals />} />
+                    <Route path="saved" element={<CreatorSaved />} />
+                    <Route path="disputes" element={<CreatorDisputes />} />
+                    <Route path="settings" element={<CreatorSettings />} />
+                  </Route>
+                  <Route path="*" element={<CreatorNotFound />} />
+                </Routes>
+              </CreatorNavigationProvider>
+            </CreatorAuthProvider>
+          }
+        />
 
         {/* Innovator Routes */}
         <Route path="/innovator/*" element={<InnovatorAppContent />} />
 
         {/* Investor Routes */}
-        <Route path="/investor/*" element={
-          <div className="relative">
-            <Routes>
-              <Route index element={<InvestorDashboard />} />
-              <Route path="dashboard" element={<InvestorDashboard />} />
-              <Route path="deal-flow" element={<InvestorDealFlow />} />
-              <Route path="market-intel" element={<InvestorMarketIntel />} />
-              <Route path="discover" element={<InvestorDiscover />} />
-              <Route path="startup/:id/nda" element={<InvestorNDAgreement />} />
-              <Route path="startup/:id" element={<InvestorStartupDetail />} />
-              <Route path="startup/:id/team/:memberId" element={<InvestorTeamMemberProfile />} />
-              <Route path="messages" element={<InvestorMessages />} />
-              <Route path="profile" element={<InvestorProfile />} />
-              <Route path="*" element={<InvestorNotFound />} />
-            </Routes>
-            <InvestorBottomNav />
-          </div>
-        } />
+        <Route
+          path="/investor/*"
+          element={
+            <div className="relative">
+              <Routes>
+                <Route path="/" element={<InvestorDashboard />} />
+                <Route path="dashboard" element={<InvestorDashboard />} />
+                <Route path="deal-flow" element={<InvestorDealFlow />} />
+                <Route path="market-intel" element={<InvestorMarketIntel />} />
+                <Route path="discover" element={<InvestorDiscover />} />
+                <Route path="startup/:id/nda" element={<InvestorNDAgreement />} />
+                <Route path="startup/:id" element={<InvestorStartupDetail />} />
+                <Route path="startup/:id/team/:memberId" element={<InvestorTeamMemberProfile />} />
+                <Route path="messages" element={<InvestorMessages />} />
+                <Route path="profile" element={<InvestorProfile />} />
+                <Route path="*" element={<InvestorNotFound />} />
+              </Routes>
+              <InvestorBottomNav />
+            </div>
+          }
+        />
 
-        {/* Fallback - routes to user's role homepage or onboarding */}
-        <Route path="*" element={<SmartRedirect />} />
+        {/* Fallback */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </>
   );
@@ -215,12 +365,7 @@ function AppContent() {
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <ThemeProvider
-      attribute="class"
-      defaultTheme="system"
-      enableSystem
-      disableTransitionOnChange
-    >
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
       <TooltipProvider>
         <BrowserRouter>
           <AppContent />
@@ -231,4 +376,3 @@ const App = () => (
 );
 
 export default App;
-
