@@ -1,17 +1,19 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronRight, Sparkles } from "lucide-react";
-
-function FishIcon({ className = "h-8 w-8", fill = "currentColor" }: { className?: string; fill?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 64 32" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+function FishIcon({
+  className = "h-8 w-8",
+  fill = "currentColor"
+}: {
+  className?: string;
+  fill?: string;
+}) {
+  return <svg className={className} viewBox="0 0 64 32" xmlns="http://www.w3.org/2000/svg" aria-hidden>
       <path d="M19 16c7-8 20-10 28-6 3 2 5 4 6 6-1 2-3 4-6 6-8 4-21 2-28-6z" fill={fill} />
       <circle cx="50" cy="14" r="2" fill={fill} />
       <path d="M6 8l8 8-8 8c-2-5-2-11 0-16z" fill={fill} />
-    </svg>
-  );
+    </svg>;
 }
-
 const roleData = {
   creator: {
     title: "Creator",
@@ -24,7 +26,7 @@ const roleData = {
     route: "/creator"
   },
   innovator: {
-    title: "Innovator", 
+    title: "Innovator",
     subtitle: "Pitch & Collaborate",
     description: "Innovate, pitch, and collaborate to build smarter together",
     gradient: "bg-gradient-to-br from-blue-500 to-cyan-500",
@@ -35,7 +37,7 @@ const roleData = {
   },
   investor: {
     title: "Investor",
-    subtitle: "Discover & Invest", 
+    subtitle: "Discover & Invest",
     description: "Discover and back the next generation of startups",
     gradient: "bg-gradient-to-br from-emerald-500 to-teal-500",
     gradientBorder: "from-emerald-500 to-teal-500",
@@ -44,11 +46,9 @@ const roleData = {
     route: "/investor"
   }
 };
-
 export default function Onboarding() {
   const [selectedRole, setSelectedRole] = useState<"creator" | "innovator" | "investor" | null>(null);
   const navigate = useNavigate();
-
   const select = (r: "creator" | "innovator" | "investor") => {
     setSelectedRole(r);
     setTimeout(() => {
@@ -56,31 +56,26 @@ export default function Onboarding() {
       navigate(roleData[r].route);
     }, 400);
   };
-
-  return (
-    <div className="min-h-screen bg-gradient-to-b from-background via-primary/5 to-background flex flex-col overflow-hidden">
+  return <div className="min-h-screen bg-gradient-to-b from-background via-primary/5 to-background flex flex-col overflow-hidden">
       
       {/* Hero Section */}
       <div className="relative safe-top pt-8 pb-12">
         {/* Animated background elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-20 left-10 w-32 h-32 bg-primary/10 rounded-full blur-3xl animate-pulse" />
-          <div className="absolute bottom-10 right-10 w-40 h-40 bg-cyan-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+          <div className="absolute bottom-10 right-10 w-40 h-40 bg-cyan-500/10 rounded-full blur-3xl animate-pulse" style={{
+          animationDelay: '1s'
+        }} />
         </div>
 
         <div className="relative px-6 max-w-md mx-auto text-center space-y-6">
           {/* Logo with animation */}
-          <div className="inline-flex items-center justify-center gap-3 animate-fade-in">
-            <div className="relative">
-              <div className="absolute inset-0 bg-primary/20 rounded-2xl blur-xl animate-pulse" />
-              <div className="relative bg-gradient-to-br from-primary to-primary/80 p-4 rounded-2xl shadow-lg">
-                <FishIcon className="h-10 w-10" fill="white" />
-              </div>
-            </div>
-          </div>
+          
 
           {/* Title */}
-          <div className="space-y-2 animate-fade-in" style={{ animationDelay: '0.1s' }}>
+          <div className="space-y-2 animate-fade-in" style={{
+          animationDelay: '0.1s'
+        }}>
             <h1 className="text-hero font-bold bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent">
               Welcome to Fishtank
             </h1>
@@ -90,7 +85,9 @@ export default function Onboarding() {
           </div>
 
           {/* Feature badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/20 rounded-full animate-fade-in" style={{ animationDelay: '0.2s' }}>
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/20 rounded-full animate-fade-in" style={{
+          animationDelay: '0.2s'
+        }}>
             <Sparkles className="h-4 w-4 text-primary" />
             <span className="text-footnote font-semibold text-primary">Where innovation meets opportunity</span>
           </div>
@@ -101,25 +98,17 @@ export default function Onboarding() {
       <div className="flex-1 px-4 pb-8 safe-bottom">
         <div className="max-w-md mx-auto space-y-4">
           {(Object.keys(roleData) as Array<keyof typeof roleData>).map((role, index) => {
-            const data = roleData[role];
-            const isSelected = selectedRole === role;
-            
-            return (
-              <button
-                key={role}
-                onClick={() => select(role)}
-                className={`
+          const data = roleData[role];
+          const isSelected = selectedRole === role;
+          return <button key={role} onClick={() => select(role)} className={`
                   group relative w-full ios-card overflow-hidden
                   transition-all duration-300 ease-out
                   active:scale-[0.97] spring-bounce
                   ${isSelected ? 'ring-2 ring-primary shadow-2xl scale-[1.02]' : 'hover:shadow-xl hover:scale-[1.01]'}
-                `}
-                style={{ 
-                  animationDelay: `${0.3 + index * 0.1}s`,
-                  animation: 'fade-in 0.5s ease-out backwards'
-                }}
-                aria-label={`Choose ${data.title}`}
-              >
+                `} style={{
+            animationDelay: `${0.3 + index * 0.1}s`,
+            animation: 'fade-in 0.5s ease-out backwards'
+          }} aria-label={`Choose ${data.title}`}>
                 {/* Gradient border effect */}
                 <div className={`
                   absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300
@@ -164,14 +153,9 @@ export default function Onboarding() {
 
                       {/* Features pills */}
                       <div className="flex flex-wrap gap-2">
-                        {data.features.map((feature, idx) => (
-                          <span 
-                            key={idx}
-                            className="inline-flex items-center px-2.5 py-1 rounded-full bg-secondary/80 text-caption-1 font-medium text-secondary-foreground border border-border/50"
-                          >
+                        {data.features.map((feature, idx) => <span key={idx} className="inline-flex items-center px-2.5 py-1 rounded-full bg-secondary/80 text-caption-1 font-medium text-secondary-foreground border border-border/50">
                             {feature}
-                          </span>
-                        ))}
+                          </span>)}
                       </div>
                     </div>
                   </div>
@@ -183,9 +167,8 @@ export default function Onboarding() {
                     ${isSelected ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-50'}
                   `} />
                 </div>
-              </button>
-            );
-          })}
+              </button>;
+        })}
         </div>
 
         {/* About section */}
@@ -193,12 +176,7 @@ export default function Onboarding() {
           <details className="group">
             <summary className="flex items-center justify-center gap-2 px-4 py-3 cursor-pointer list-none text-subhead font-medium text-muted-foreground hover:text-foreground transition-colors touch-target">
               <span>About Fishtank</span>
-              <svg 
-                className="w-4 h-4 transition-transform duration-200 group-open:rotate-180" 
-                fill="none" 
-                viewBox="0 0 24 24" 
-                stroke="currentColor"
-              >
+              <svg className="w-4 h-4 transition-transform duration-200 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
               </svg>
             </summary>
@@ -217,6 +195,5 @@ export default function Onboarding() {
           </p>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 }
