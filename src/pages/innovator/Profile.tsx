@@ -119,10 +119,10 @@ export default function Profile() {
                 </div>
               </div>
               <div className="flex gap-2">
-                <Button variant="outline" size="icon" onClick={() => navigate("/profile/edit")}>
+                <Button variant="outline" size="icon" onClick={() => navigate("edit")}>
                   <Edit className="h-4 w-4" />
                 </Button>
-                <Button variant="outline" size="icon" onClick={() => navigate("/settings")}>
+                <Button variant="outline" size="icon" onClick={() => navigate("/innovator/settings")}>
                   <Settings className="h-4 w-4" />
                 </Button>
               </div>
@@ -192,11 +192,11 @@ export default function Profile() {
         {/* Quick Actions */}
         <div className="flex flex-wrap gap-3 mb-6">
           
-          <Button onClick={() => navigate("/tank")} variant="outline">
+          <Button onClick={() => navigate("/innovator/tank")} variant="outline">
             <Video className="h-4 w-4 mr-2" />
             Create Pitch
           </Button>
-          {stats.innovations > 0 && <Button onClick={() => navigate("/analytics")} variant="outline">
+          {stats.innovations > 0 && <Button onClick={() => navigate("/innovator/analytics")} variant="outline">
               View Analytics
             </Button>}
         </div>
