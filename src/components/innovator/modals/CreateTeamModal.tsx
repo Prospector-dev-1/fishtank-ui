@@ -50,14 +50,14 @@ export const CreateTeamModal = ({ open, onOpenChange, onSuccess }: CreateTeamMod
     if (!selectedMembers.includes(userId)) {
       const updated = [...selectedMembers, userId];
       setSelectedMembers(updated);
-      form.setValue('members', updated);
+      form.setValue('members', updated as any);
     }
   };
 
   const removeMember = (userId: string) => {
     const updated = selectedMembers.filter(id => id !== userId);
     setSelectedMembers(updated);
-    form.setValue('members', updated);
+    form.setValue('members', updated as any);
   };
 
   const filteredConnections = mockConnections.filter(conn =>

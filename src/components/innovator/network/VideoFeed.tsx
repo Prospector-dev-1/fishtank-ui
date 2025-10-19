@@ -2,7 +2,7 @@ import { VideoCard } from "./VideoCard";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/innovator/ui/carousel";
 import { PullToRefresh } from "@/components/innovator/ui/pull-to-refresh";
 import { EmblaOptionsType } from "embla-carousel";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { useIsMobile } from "@/hooks/innovator/use-mobile";
 interface VideoFeedProps {
@@ -107,15 +107,15 @@ export function VideoFeed({
     };
     const carousel = document.querySelector('[data-carousel]');
     if (carousel) {
-      carousel.addEventListener('wheel', handleWheel, {
+      carousel.addEventListener('wheel', handleWheel as EventListener, {
         passive: false
       });
-      carousel.addEventListener('touchstart', handleTouchStart, {
+      carousel.addEventListener('touchstart', handleTouchStart as EventListener, {
         passive: true
       });
       return () => {
-        carousel.removeEventListener('wheel', handleWheel);
-        carousel.removeEventListener('touchstart', handleTouchStart);
+        carousel.removeEventListener('wheel', handleWheel as EventListener);
+        carousel.removeEventListener('touchstart', handleTouchStart as EventListener);
       };
     }
   }, [posts.length, isMobile]);

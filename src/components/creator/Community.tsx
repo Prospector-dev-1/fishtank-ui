@@ -60,7 +60,7 @@ export function Community() {
 
       // Load related data for each thought
       const thoughtsWithData = await Promise.all(
-        (thoughtsData || []).map(async (thought) => {
+        (thoughtsData || []).map(async (thought: any) => {
           const [profileRes, likesRes, commentsRes] = await Promise.all([
             supabase.from("profiles").select("full_name, avatar_url").eq("id", thought.creator_id).single(),
             supabase.from("thought_likes").select("user_id").eq("thought_id", thought.id),
@@ -69,7 +69,7 @@ export function Community() {
 
           // Load profiles for comments
           const commentsWithProfiles = await Promise.all(
-            (commentsRes.data || []).map(async (comment) => {
+            (commentsRes.data || []).map(async (comment: any) => {
               const { data: commentProfile } = await supabase
                 .from("profiles")
                 .select("full_name, avatar_url")
@@ -230,8 +230,8 @@ export function Community() {
       <Card className="p-4 shadow-card border-border/50">
         <div className="flex gap-3">
           <Avatar>
-            <AvatarImage src={user?.user_metadata?.avatar_url} />
-            <AvatarFallback>{user?.user_metadata?.full_name?.[0] || "U"}</AvatarFallback>
+            <AvatarImage src={(user as any)?.user_metadata?.avatar_url} />
+            <AvatarFallback>{(user as any)?.user_metadata?.full_name?.[0] || "U"}</AvatarFallback>
           </Avatar>
           <div className="flex-1 space-y-3">
             <Textarea
@@ -350,8 +350,8 @@ export function Community() {
                       {/* Add comment */}
                       <div className="flex gap-2 mt-3">
                         <Avatar className="h-8 w-8">
-                          <AvatarImage src={user?.user_metadata?.avatar_url} />
-                          <AvatarFallback>{user?.user_metadata?.full_name?.[0] || "U"}</AvatarFallback>
+                          <AvatarImage src={(user as any)?.user_metadata?.avatar_url} />
+                          <AvatarFallback>{(user as any)?.user_metadata?.full_name?.[0] || "U"}</AvatarFallback>
                         </Avatar>
                         <div className="flex-1 flex gap-2">
                           <Textarea

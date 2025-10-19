@@ -75,7 +75,7 @@ export const CreateOpportunityModal = ({ open, onOpenChange, onSuccess }: Create
     if (newTag.trim() && !tags.includes(newTag.trim())) {
       const updatedTags = [...tags, newTag.trim()];
       setTags(updatedTags);
-      form.setValue('tags', updatedTags);
+      form.setValue('tags', updatedTags as any);
       setNewTag('');
     }
   };
@@ -83,7 +83,7 @@ export const CreateOpportunityModal = ({ open, onOpenChange, onSuccess }: Create
   const removeTag = (tagToRemove: string) => {
     const updatedTags = tags.filter(tag => tag !== tagToRemove);
     setTags(updatedTags);
-    form.setValue('tags', updatedTags);
+    form.setValue('tags', updatedTags as any);
   };
 
   const onSubmit = async (data: any) => {
