@@ -3,7 +3,12 @@
  * Comprehensive no-op client that supports all Supabase method chaining
  */
 
-const mockUser = { id: "demo-user-1", email: "demo@fishtank.app", name: "Demo User" };
+const mockUser = { 
+  id: "demo-user-1", 
+  email: "demo@fishtank.app", 
+  name: "Demo User",
+  phone: ""
+};
 const mockSession = { access_token: "mock-token", user: mockUser };
 
 const mockAuth = {
@@ -23,6 +28,13 @@ const mockAuth = {
     return { data: { session: mockSession }, error: null };
   },
   async getUser() {
+    return { data: { user: mockUser }, error: null };
+  },
+  async updateUser(attributes: any) {
+    // Update mock user with new attributes
+    if (attributes.email) mockUser.email = attributes.email;
+    if (attributes.phone !== undefined) mockUser.phone = attributes.phone;
+    // Note: password updates are just acknowledged, not stored
     return { data: { user: mockUser }, error: null };
   },
   onAuthStateChange(callback: any) {

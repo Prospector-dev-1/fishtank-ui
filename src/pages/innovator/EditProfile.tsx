@@ -5,30 +5,40 @@ import { FishtankHeader } from "@/components/innovator/layout/FishtankHeader";
 import { Button } from "@/components/innovator/ui/button";
 import { Input } from "@/components/innovator/ui/input";
 import { Label } from "@/components/innovator/ui/label";
-import { Textarea } from "@/components/innovator/ui/textarea";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/innovator/ui/card";
-import { Badge } from "@/components/innovator/ui/badge";
-import { X, Plus } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/innovator/ui/card";
+import { Separator } from "@/components/innovator/ui/separator";
+import { Switch } from "@/components/innovator/ui/switch";
+import { Shield, Mail, Lock, Bell, Eye, UserCog, Smartphone } from "lucide-react";
 import { toast } from "sonner";
 
 export default function EditProfile() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
-  const [profile, setProfile] = useState({
-    full_name: "",
-    bio: "",
-    location: "",
-    company: "",
-    website: "",
-    role: "",
-    skills: [] as string[],
-    interests: [] as string[],
-    seeking: [] as string[],
+  const [userData, setUserData] = useState({
+    email: "",
+    phone: "",
   });
-  const [newSkill, setNewSkill] = useState("");
-  const [newInterest, setNewInterest] = useState("");
-  const [newSeeking, setNewSeeking] = useState("");
+  const [passwordData, setPasswordData] = useState({
+    currentPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
+  const [notificationSettings, setNotificationSettings] = useState({
+    emailNotifications: true,
+    pushNotifications: true,
+    messageNotifications: true,
+    connectionRequests: true,
+    pitchUpdates: true,
+    marketingEmails: false,
+  });
+  const [privacySettings, setPrivacySettings] = useState({
+    profileVisibility: "public" as "public" | "connections" | "private",
+    showEmail: false,
+    showPhone: false,
+    showActivityStatus: true,
+    allowMessages: true,
+  });
 
   useEffect(() => {
     loadProfile();
@@ -38,41 +48,88 @@ export default function EditProfile() {
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
-        navigate("/auth");
+        navigate("/innovator/auth");
         return;
       }
 
+      // Load user data
+      setUserData({
+        email: user.email || "",
+        phone: user.phone || "",
+      });
+
+      // Load settings from profiles table
       const { data, error } = await supabase
         .from("profiles")
-        .select("*")
+        .select("notification_settings, privacy_settings")
         .eq("id", user.id)
         .single();
 
-      if (error) throw error;
+      if (error && error.code !== 'PGRST116') {
+        // PGRST116 is "not found" error - ignore it for new profiles
+        throw error;
+      }
 
       if (data) {
-        setProfile({
-          full_name: data.full_name || "",
-          bio: data.bio || "",
-          location: data.location || "",
-          company: data.company || "",
-          website: data.website || "",
-          role: data.role || "",
-          skills: data.skills || [],
-          interests: data.interests || [],
-          seeking: data.seeking || [],
-        });
+        if (data.notification_settings) {
+          setNotificationSettings({ ...notificationSettings, ...data.notification_settings });
+        }
+        if (data.privacy_settings) {
+          setPrivacySettings({ ...privacySettings, ...data.privacy_settings });
+        }
       }
     } catch (error) {
-      console.error("Error loading profile:", error);
-      toast.error("Failed to load profile");
+      console.error("Error loading settings:", error);
+      toast.error("Failed to load account settings");
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleSave = async (e: React.FormEvent) => {
+  const handleUpdateEmail = async () => {
+    try {
+      const { error } = await supabase.auth.updateUser({
+        email: userData.email,
+      });
+
+      if (error) throw error;
+
+      toast.success("Email update initiated. Please check your new email for verification.");
+    } catch (error: any) {
+      console.error("Error updating email:", error);
+      toast.error(error.message || "Failed to update email");
+    }
+  };
+
+  const handleUpdatePassword = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (passwordData.newPassword !== passwordData.confirmPassword) {
+      toast.error("New passwords don't match");
+      return;
+    }
+
+    if (passwordData.newPassword.length < 6) {
+      toast.error("Password must be at least 6 characters");
+      return;
+    }
+
+    try {
+      const { error } = await supabase.auth.updateUser({
+        password: passwordData.newPassword,
+      });
+
+      if (error) throw error;
+
+      toast.success("Password updated successfully!");
+      setPasswordData({ currentPassword: "", newPassword: "", confirmPassword: "" });
+    } catch (error: any) {
+      console.error("Error updating password:", error);
+      toast.error(error.message || "Failed to update password");
+    }
+  };
+
+  const handleSaveSettings = async () => {
     setIsSaving(true);
 
     try {
@@ -81,18 +138,31 @@ export default function EditProfile() {
 
       const { error } = await supabase
         .from("profiles")
-        .update(profile)
+        .update({
+          notification_settings: notificationSettings,
+          privacy_settings: privacySettings,
+        })
         .eq("id", user.id);
 
       if (error) throw error;
 
-      toast.success("Profile updated successfully!");
-      navigate("/profile");
+      toast.success("Settings updated successfully!");
     } catch (error: any) {
-      console.error("Error saving profile:", error);
-      toast.error(error.message || "Failed to save profile");
+      console.error("Error saving settings:", error);
+      toast.error(error.message || "Failed to save settings");
     } finally {
       setIsSaving(false);
+    }
+  };
+
+  const handleSignOut = async () => {
+    try {
+      await supabase.auth.signOut();
+      toast.success("Signed out successfully");
+      navigate("/innovator/auth");
+    } catch (error) {
+      console.error("Error signing out:", error);
+      toast.error("Failed to sign out");
     }
   };
 
@@ -109,223 +179,355 @@ export default function EditProfile() {
 
   return (
     <div className="min-h-screen bg-background pb-16">
-      <FishtankHeader title="Edit Profile" showLogo={false} />
-      <div className="container mx-auto px-4 py-8 max-w-2xl">
-        <Card>
+      <FishtankHeader title="Account Settings" showLogo={false} />
+      <div className="container mx-auto px-4 py-8 max-w-3xl">
+        
+        {/* Account Information */}
+        <Card className="mb-6">
           <CardHeader>
-            <CardTitle>Edit Your Profile</CardTitle>
+            <div className="flex items-center gap-2">
+              <UserCog className="h-5 w-5 text-primary" />
+              <CardTitle>Account Information</CardTitle>
+            </div>
+            <CardDescription>Manage your private account details</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            {/* Email */}
+            <div className="space-y-2">
+              <Label htmlFor="email" className="flex items-center gap-2">
+                <Mail className="h-4 w-4" />
+                Email Address
+              </Label>
+              <div className="flex gap-2">
+                <Input
+                  id="email"
+                  type="email"
+                  value={userData.email}
+                  onChange={(e) => setUserData({ ...userData, email: e.target.value })}
+                  placeholder="your.email@example.com"
+                  className="flex-1"
+                />
+                <Button 
+                  variant="outline" 
+                  onClick={handleUpdateEmail}
+                  disabled={userData.email === ""}
+                >
+                  Update
+                </Button>
+              </div>
+              <p className="text-xs text-muted-foreground">
+                You'll need to verify any new email address
+              </p>
+            </div>
+
+            {/* Phone */}
+            <div className="space-y-2">
+              <Label htmlFor="phone" className="flex items-center gap-2">
+                <Smartphone className="h-4 w-4" />
+                Phone Number (Optional)
+              </Label>
+              <Input
+                id="phone"
+                type="tel"
+                value={userData.phone}
+                onChange={(e) => setUserData({ ...userData, phone: e.target.value })}
+                placeholder="+1 (555) 000-0000"
+              />
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Password */}
+        <Card className="mb-6">
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <Lock className="h-5 w-5 text-primary" />
+              <CardTitle>Change Password</CardTitle>
+            </div>
+            <CardDescription>Update your account password</CardDescription>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSave} className="space-y-6">
-              <div>
-                <Label htmlFor="full_name">Full Name</Label>
+            <form onSubmit={handleUpdatePassword} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="current_password">Current Password</Label>
                 <Input
-                  id="full_name"
-                  value={profile.full_name}
-                  onChange={(e) => setProfile({ ...profile, full_name: e.target.value })}
-                  placeholder="Your full name"
+                  id="current_password"
+                  type="password"
+                  value={passwordData.currentPassword}
+                  onChange={(e) => setPasswordData({ ...passwordData, currentPassword: e.target.value })}
+                  placeholder="Enter current password"
+                  autoComplete="current-password"
                 />
               </div>
 
-              <div>
-                <Label htmlFor="role">Role</Label>
+              <div className="space-y-2">
+                <Label htmlFor="new_password">New Password</Label>
                 <Input
-                  id="role"
-                  value={profile.role}
-                  onChange={(e) => setProfile({ ...profile, role: e.target.value })}
-                  placeholder="e.g., Innovation Lead, Entrepreneur"
+                  id="new_password"
+                  type="password"
+                  value={passwordData.newPassword}
+                  onChange={(e) => setPasswordData({ ...passwordData, newPassword: e.target.value })}
+                  placeholder="Enter new password"
+                  autoComplete="new-password"
                 />
               </div>
 
-              <div>
-                <Label htmlFor="bio">Bio</Label>
-                <Textarea
-                  id="bio"
-                  value={profile.bio}
-                  onChange={(e) => setProfile({ ...profile, bio: e.target.value })}
-                  placeholder="Tell us about yourself"
-                  rows={4}
-                />
-              </div>
-
-              <div>
-                <Label htmlFor="location">Location</Label>
+              <div className="space-y-2">
+                <Label htmlFor="confirm_password">Confirm New Password</Label>
                 <Input
-                  id="location"
-                  value={profile.location}
-                  onChange={(e) => setProfile({ ...profile, location: e.target.value })}
-                  placeholder="e.g., San Francisco, CA"
+                  id="confirm_password"
+                  type="password"
+                  value={passwordData.confirmPassword}
+                  onChange={(e) => setPasswordData({ ...passwordData, confirmPassword: e.target.value })}
+                  placeholder="Re-enter new password"
+                  autoComplete="new-password"
                 />
               </div>
 
-              <div>
-                <Label htmlFor="company">Company</Label>
-                <Input
-                  id="company"
-                  value={profile.company}
-                  onChange={(e) => setProfile({ ...profile, company: e.target.value })}
-                  placeholder="Your company or organization"
-                />
-              </div>
-
-              <div>
-                <Label htmlFor="website">Website</Label>
-                <Input
-                  id="website"
-                  value={profile.website}
-                  onChange={(e) => setProfile({ ...profile, website: e.target.value })}
-                  placeholder="https://yourwebsite.com"
-                  type="url"
-                />
-              </div>
-
-              <div>
-                <Label>Skills</Label>
-                <div className="flex gap-2 mb-2">
-                  <Input
-                    value={newSkill}
-                    onChange={(e) => setNewSkill(e.target.value)}
-                    placeholder="Add a skill"
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter') {
-                        e.preventDefault();
-                        if (newSkill.trim()) {
-                          setProfile({ ...profile, skills: [...profile.skills, newSkill.trim()] });
-                          setNewSkill("");
-                        }
-                      }
-                    }}
-                  />
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="icon"
-                    onClick={() => {
-                      if (newSkill.trim()) {
-                        setProfile({ ...profile, skills: [...profile.skills, newSkill.trim()] });
-                        setNewSkill("");
-                      }
-                    }}
-                  >
-                    <Plus className="h-4 w-4" />
-                  </Button>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {profile.skills.map((skill, idx) => (
-                    <Badge key={idx} variant="secondary" className="gap-1">
-                      {skill}
-                      <X
-                        className="h-3 w-3 cursor-pointer"
-                        onClick={() => setProfile({ ...profile, skills: profile.skills.filter((_, i) => i !== idx) })}
-                      />
-                    </Badge>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <Label>Interests</Label>
-                <div className="flex gap-2 mb-2">
-                  <Input
-                    value={newInterest}
-                    onChange={(e) => setNewInterest(e.target.value)}
-                    placeholder="Add an interest"
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter') {
-                        e.preventDefault();
-                        if (newInterest.trim()) {
-                          setProfile({ ...profile, interests: [...profile.interests, newInterest.trim()] });
-                          setNewInterest("");
-                        }
-                      }
-                    }}
-                  />
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="icon"
-                    onClick={() => {
-                      if (newInterest.trim()) {
-                        setProfile({ ...profile, interests: [...profile.interests, newInterest.trim()] });
-                        setNewInterest("");
-                      }
-                    }}
-                  >
-                    <Plus className="h-4 w-4" />
-                  </Button>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {profile.interests.map((interest, idx) => (
-                    <Badge key={idx} variant="outline" className="gap-1">
-                      {interest}
-                      <X
-                        className="h-3 w-3 cursor-pointer"
-                        onClick={() => setProfile({ ...profile, interests: profile.interests.filter((_, i) => i !== idx) })}
-                      />
-                    </Badge>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <Label>Looking For</Label>
-                <div className="flex gap-2 mb-2">
-                  <Input
-                    value={newSeeking}
-                    onChange={(e) => setNewSeeking(e.target.value)}
-                    placeholder="e.g., Investors, Co-founders, Team members"
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter') {
-                        e.preventDefault();
-                        if (newSeeking.trim()) {
-                          setProfile({ ...profile, seeking: [...profile.seeking, newSeeking.trim()] });
-                          setNewSeeking("");
-                        }
-                      }
-                    }}
-                  />
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="icon"
-                    onClick={() => {
-                      if (newSeeking.trim()) {
-                        setProfile({ ...profile, seeking: [...profile.seeking, newSeeking.trim()] });
-                        setNewSeeking("");
-                      }
-                    }}
-                  >
-                    <Plus className="h-4 w-4" />
-                  </Button>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {profile.seeking.map((seek, idx) => (
-                    <Badge key={idx} variant="default" className="gap-1">
-                      {seek}
-                      <X
-                        className="h-3 w-3 cursor-pointer"
-                        onClick={() => setProfile({ ...profile, seeking: profile.seeking.filter((_, i) => i !== idx) })}
-                      />
-                    </Badge>
-                  ))}
-                </div>
-              </div>
-
-              <div className="flex gap-4">
-                <Button type="submit" disabled={isSaving}>
-                  {isSaving ? "Saving..." : "Save Changes"}
-                </Button>
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => navigate("/innovator/profile")}
-                >
-                  Cancel
-                </Button>
-              </div>
+              <Button 
+                type="submit"
+                disabled={!passwordData.newPassword || !passwordData.confirmPassword}
+              >
+                Update Password
+              </Button>
             </form>
           </CardContent>
         </Card>
+
+        {/* Privacy Settings */}
+        <Card className="mb-6">
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <Eye className="h-5 w-5 text-primary" />
+              <CardTitle>Privacy Settings</CardTitle>
+            </div>
+            <CardDescription>Control who can see your information</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div className="space-y-0.5">
+                  <Label>Show Email on Profile</Label>
+                  <p className="text-xs text-muted-foreground">
+                    Allow others to see your email address
+                  </p>
+                </div>
+                <Switch
+                  checked={privacySettings.showEmail}
+                  onCheckedChange={(checked) => 
+                    setPrivacySettings({ ...privacySettings, showEmail: checked })
+                  }
+                />
+              </div>
+
+              <Separator />
+
+              <div className="flex items-center justify-between">
+                <div className="space-y-0.5">
+                  <Label>Show Phone Number</Label>
+                  <p className="text-xs text-muted-foreground">
+                    Display your phone number on your profile
+                  </p>
+                </div>
+                <Switch
+                  checked={privacySettings.showPhone}
+                  onCheckedChange={(checked) => 
+                    setPrivacySettings({ ...privacySettings, showPhone: checked })
+                  }
+                />
+              </div>
+
+              <Separator />
+
+              <div className="flex items-center justify-between">
+                <div className="space-y-0.5">
+                  <Label>Show Activity Status</Label>
+                  <p className="text-xs text-muted-foreground">
+                    Display when you're online and active
+                  </p>
+                </div>
+                <Switch
+                  checked={privacySettings.showActivityStatus}
+                  onCheckedChange={(checked) => 
+                    setPrivacySettings({ ...privacySettings, showActivityStatus: checked })
+                  }
+                />
+              </div>
+
+              <Separator />
+
+              <div className="flex items-center justify-between">
+                <div className="space-y-0.5">
+                  <Label>Allow Messages</Label>
+                  <p className="text-xs text-muted-foreground">
+                    Let other users send you direct messages
+                  </p>
+                </div>
+                <Switch
+                  checked={privacySettings.allowMessages}
+                  onCheckedChange={(checked) => 
+                    setPrivacySettings({ ...privacySettings, allowMessages: checked })
+                  }
+                />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Notification Settings */}
+        <Card className="mb-6">
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <Bell className="h-5 w-5 text-primary" />
+              <CardTitle>Notification Preferences</CardTitle>
+            </div>
+            <CardDescription>Choose what notifications you want to receive</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div className="space-y-0.5">
+                  <Label>Email Notifications</Label>
+                  <p className="text-xs text-muted-foreground">
+                    Receive updates via email
+                  </p>
+                </div>
+                <Switch
+                  checked={notificationSettings.emailNotifications}
+                  onCheckedChange={(checked) => 
+                    setNotificationSettings({ ...notificationSettings, emailNotifications: checked })
+                  }
+                />
+              </div>
+
+              <Separator />
+
+              <div className="flex items-center justify-between">
+                <div className="space-y-0.5">
+                  <Label>Push Notifications</Label>
+                  <p className="text-xs text-muted-foreground">
+                    Get real-time alerts on your device
+                  </p>
+                </div>
+                <Switch
+                  checked={notificationSettings.pushNotifications}
+                  onCheckedChange={(checked) => 
+                    setNotificationSettings({ ...notificationSettings, pushNotifications: checked })
+                  }
+                />
+              </div>
+
+              <Separator />
+
+              <div className="flex items-center justify-between">
+                <div className="space-y-0.5">
+                  <Label>Message Notifications</Label>
+                  <p className="text-xs text-muted-foreground">
+                    Alert when you receive new messages
+                  </p>
+                </div>
+                <Switch
+                  checked={notificationSettings.messageNotifications}
+                  onCheckedChange={(checked) => 
+                    setNotificationSettings({ ...notificationSettings, messageNotifications: checked })
+                  }
+                />
+              </div>
+
+              <Separator />
+
+              <div className="flex items-center justify-between">
+                <div className="space-y-0.5">
+                  <Label>Connection Requests</Label>
+                  <p className="text-xs text-muted-foreground">
+                    Notify when someone wants to connect
+                  </p>
+                </div>
+                <Switch
+                  checked={notificationSettings.connectionRequests}
+                  onCheckedChange={(checked) => 
+                    setNotificationSettings({ ...notificationSettings, connectionRequests: checked })
+                  }
+                />
+              </div>
+
+              <Separator />
+
+              <div className="flex items-center justify-between">
+                <div className="space-y-0.5">
+                  <Label>Pitch Updates</Label>
+                  <p className="text-xs text-muted-foreground">
+                    Updates on your pitch views and engagement
+                  </p>
+                </div>
+                <Switch
+                  checked={notificationSettings.pitchUpdates}
+                  onCheckedChange={(checked) => 
+                    setNotificationSettings({ ...notificationSettings, pitchUpdates: checked })
+                  }
+                />
+              </div>
+
+              <Separator />
+
+              <div className="flex items-center justify-between">
+                <div className="space-y-0.5">
+                  <Label>Marketing Emails</Label>
+                  <p className="text-xs text-muted-foreground">
+                    Product updates and news from us
+                  </p>
+                </div>
+                <Switch
+                  checked={notificationSettings.marketingEmails}
+                  onCheckedChange={(checked) => 
+                    setNotificationSettings({ ...notificationSettings, marketingEmails: checked })
+                  }
+                />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Security */}
+        <Card className="mb-6">
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <Shield className="h-5 w-5 text-primary" />
+              <CardTitle>Security & Account Actions</CardTitle>
+            </div>
+            <CardDescription>Security options and account management</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <Button variant="outline" className="w-full justify-start">
+              Enable Two-Factor Authentication
+            </Button>
+            <Separator />
+            <Button 
+              variant="outline" 
+              className="w-full justify-start"
+              onClick={handleSignOut}
+            >
+              Sign Out
+            </Button>
+            <Separator />
+            <Button variant="outline" className="w-full justify-start text-red-600 hover:text-red-700">
+              Delete Account
+            </Button>
+          </CardContent>
+        </Card>
+
+        {/* Action Buttons */}
+        <div className="flex gap-4">
+          <Button onClick={handleSaveSettings} disabled={isSaving}>
+            {isSaving ? "Saving..." : "Save All Settings"}
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() => navigate("/innovator/profile")}
+          >
+            Cancel
+          </Button>
+        </div>
       </div>
     </div>
   );

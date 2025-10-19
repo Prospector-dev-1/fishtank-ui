@@ -44,7 +44,6 @@ import InnovatorNetwork from "@/pages/innovator/Network";
 import InnovatorCollaborate from "@/pages/innovator/Collaborate";
 import InnovatorProfile from "@/pages/innovator/Profile";
 import InnovatorEditProfile from "@/pages/innovator/EditProfile";
-import InnovatorSettings from "@/pages/innovator/Settings";
 import InnovatorUserProfile from "@/pages/innovator/UserProfile";
 import InnovatorAuth from "@/pages/innovator/Auth";
 import InnovatorSearch from "@/pages/innovator/Search";
@@ -178,14 +177,6 @@ function InnovatorAppContent() {
           element={
             <InnovatorProtectedRoute>
               <InnovatorEditProfile />
-            </InnovatorProtectedRoute>
-          }
-        />
-        <Route
-          path="settings"
-          element={
-            <InnovatorProtectedRoute>
-              <InnovatorSettings />
             </InnovatorProtectedRoute>
           }
         />
