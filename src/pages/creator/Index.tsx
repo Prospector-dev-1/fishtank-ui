@@ -399,9 +399,7 @@ const Index = () => {
             </div>
 
             <div className="pt-3 border-t border-border/20">
-              <p className="text-xs text-muted-foreground">
-                Trending: AI • Marketing • App Dev
-              </p>
+              <p className="text-xs text-muted-foreground">Trending: AI • Marketing • App Dev</p>
             </div>
           </CardContent>
         </Card>
@@ -500,10 +498,7 @@ const Index = () => {
             </CardHeader>
             <CardContent className="space-y-3">
               {friendRequests.map((request) => (
-                <div
-                  key={request.id}
-                  className="p-3 rounded-lg bg-gradient-subtle border border-accent/10"
-                >
+                <div key={request.id} className="p-3 rounded-lg bg-gradient-subtle border border-accent/10">
                   <div className="flex items-center gap-3">
                     <img
                       src={request.avatar}
@@ -521,19 +516,28 @@ const Index = () => {
                       <p className="text-xs text-muted-foreground">Wants to connect with you</p>
                     </div>
                     <div className="flex gap-2">
-                      <Button size="sm" className="shadow-sm h-8 w-8 p-0" onClick={() => handleAcceptFriendRequest(request.id)}>
+                      <Button
+                        size="sm"
+                        className="shadow-sm h-8 w-8 p-0"
+                        onClick={() => handleAcceptFriendRequest(request.id)}
+                      >
                         <Check className="h-3 w-3" />
                       </Button>
-                      <Button size="sm" variant="outline" className="h-8 w-8 p-0" onClick={() => handleDeclineFriendRequest(request.id)}>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="h-8 w-8 p-0"
+                        onClick={() => handleDeclineFriendRequest(request.id)}
+                      >
                         <X className="h-3 w-3" />
                       </Button>
                     </div>
                   </div>
                 </div>
               ))}
-          </CardContent>
-        </Card>
-      )}
+            </CardContent>
+          </Card>
+        )}
 
         {/* Invitations - Mobile Optimized */}
         {activeInvitations.length > 0 && (
@@ -548,10 +552,7 @@ const Index = () => {
             </CardHeader>
             <CardContent className="space-y-3">
               {activeInvitations.map((invitation) => (
-                <div
-                  key={invitation.id}
-                  className="p-3 rounded-lg bg-gradient-subtle border border-primary/10"
-                >
+                <div key={invitation.id} className="p-3 rounded-lg bg-gradient-subtle border border-primary/10">
                   <div className="flex items-start gap-3">
                     <img
                       src={invitation.avatar}
@@ -561,8 +562,8 @@ const Index = () => {
                     <div className="flex-1 min-w-0">
                       <h4 className="font-semibold text-sm">{invitation.title}</h4>
                       <p className="text-xs text-muted-foreground mb-2">
-                        From {invitation.from} • <span className="font-semibold text-success">${invitation.budget}</span>{" "}
-                        • {invitation.timeline}
+                        From {invitation.from} •{" "}
+                        <span className="font-semibold text-success">${invitation.budget}</span> • {invitation.timeline}
                       </p>
                       <p className="text-xs text-muted-foreground mb-3 leading-relaxed">{invitation.message}</p>
                       <div className="flex gap-2">
@@ -625,30 +626,6 @@ const Index = () => {
               </Card>
             )}
           </div>
-        </div>
-
-        {/* Quick Actions - Mobile Optimized */}
-        <div className="grid grid-cols-2 gap-3">
-          <Button
-            variant="outline"
-            className="h-auto p-4 flex flex-col gap-2 shadow-card"
-            onClick={() => navigate("/creator/proposals")}
-          >
-            <div className="bg-primary/10 p-2 rounded-full">
-              <Plus className="h-5 w-5 text-primary" />
-            </div>
-            <span className="text-xs font-semibold">Post Service</span>
-          </Button>
-          <Button
-            variant="outline"
-            className="h-auto p-4 flex flex-col gap-2 shadow-card"
-            onClick={() => navigate("/creator/settings")}
-          >
-            <div className="bg-accent/10 p-2 rounded-full">
-              <Calendar className="h-5 w-5 text-accent" />
-            </div>
-            <span className="text-xs font-semibold">Set Availability</span>
-          </Button>
         </div>
 
         {/* Browse by Category - Mobile Optimized */}
