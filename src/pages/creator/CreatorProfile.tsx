@@ -6,7 +6,6 @@ import { Badge } from '@/components/creator/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/creator/ui/card';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/creator/ui/dropdown-menu';
 import { Separator } from '@/components/creator/ui/separator';
-import { creators } from "@/data/creators";
 import { CollaborateInviteModal } from "@/components/creator/CollaborateInviteModal";
 import { ReferralModal } from "@/components/creator/ReferralModal";
 import { supabase } from '@/integrations/supabase/client';
@@ -65,15 +64,7 @@ export function CreatorProfile() {
     try {
       setLoading(true);
       
-      // First check mock data
-      const mockCreator = creators.find(c => c.id === id);
-      if (mockCreator) {
-        setCreator(mockCreator);
-        setLoading(false);
-        return;
-      }
-
-      // If not in mock data, fetch from database
+      // No mock data - fetch directly from database
       const { data: profile, error: profileError } = await supabase
         .from('profiles')
         .select('*')

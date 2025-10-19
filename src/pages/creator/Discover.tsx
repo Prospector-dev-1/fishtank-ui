@@ -1,7 +1,9 @@
 import { useState, useMemo } from "react";
 import { SwipeDeck } from "@/components/creator/SwipeDeck";
-import { mockStartups } from "@/data/startups";
 import { useNavigate } from "react-router-dom";
+
+// No mock data - empty array
+const mockStartups: any[] = [];
 import { IOSHeader } from "@/components/creator/ui/ios-header";
 import { IOSInput } from "@/components/creator/ui/ios-input";
 import { IOSChip } from "@/components/creator/ui/ios-chip";
@@ -248,10 +250,28 @@ export default function Discover() {
         </p>
       </div>
 
+      {/* Empty State */}
+      {filteredStartups.length === 0 && (
+        <div className="px-4 py-12 text-center">
+          <div className="w-20 h-20 bg-muted rounded-full mx-auto flex items-center justify-center mb-6">
+            <Search className="w-10 h-10 text-muted-foreground" />
+          </div>
+          <h3 className="text-title-2 font-bold mb-2">No Startups Available</h3>
+          <p className="text-body text-muted-foreground mb-4">
+            Mock data has been removed. Connect your startup data source to see opportunities here.
+          </p>
+          <code className="block bg-muted px-4 py-2 rounded-lg text-sm mx-auto max-w-md">
+            src/pages/creator/Discover.tsx
+          </code>
+        </div>
+      )}
+
       {/* Swipe Deck */}
-      <div className="px-4">
-        <SwipeDeck startups={filteredStartups} />
-      </div>
+      {filteredStartups.length > 0 && (
+        <div className="px-4">
+          <SwipeDeck startups={filteredStartups} />
+        </div>
+      )}
     </div>
   );
 }

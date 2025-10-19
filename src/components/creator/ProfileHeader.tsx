@@ -1,7 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { currentCreator } from "@/lib/creator/mockData";
+
+// Empty currentCreator object - no mockdata
+const currentCreator = {
+  avatar: "",
+  name: "Creator"
+};
 
 export default function ProfileHeader() {
   const navigate = useNavigate();

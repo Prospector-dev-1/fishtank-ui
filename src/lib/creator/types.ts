@@ -197,5 +197,4 @@ export interface SavedItem {
   savedAt: string;
 }
 
-// Export existing types for compatibility
-export type { Innovation, Gig } from './mockData';
+// Removed mockData type exports - no longer using mockdata

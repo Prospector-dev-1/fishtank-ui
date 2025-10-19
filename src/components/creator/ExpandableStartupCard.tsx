@@ -2,8 +2,28 @@ import React, { useState } from "react";
 import { ChevronDown, Plus, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Startup } from "@/data/startups";
 import { ApplyModal } from "./ApplyModal";
+
+// Startup type - no longer from mockData
+interface Startup {
+  id: string;
+  name: string;
+  blurb: string;
+  category: string;
+  phase: string;
+  website?: string;
+  bannerUrl?: string;
+  creatorName: string;
+  createdAt: string;
+  ndaRequired?: boolean;
+  openPositions: string[];
+  team: Array<{ id: string; name: string; role: string; avatarUrl: string; }>;
+  details: {
+    problemSolution: string;
+    founderNote?: string;
+    currentStatus?: string;
+  };
+}
 
 interface ExpandableStartupCardProps {
   startup: Startup;

@@ -9,10 +9,23 @@ import { Chip } from "@/components/investor/ui/chip";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/investor/ui/sheet';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/investor/ui/select';
 import { Separator } from '@/components/investor/ui/separator';
-import { mockUser } from "@/data/investor/mockData";
 import { useToast } from "@/components/investor/ui/use-toast";
+
+// Default user structure
+const defaultUser = {
+  name: "Investor User",
+  title: "Principal @ Venture Capital",
+  email: "investor@example.com",
+  avatar: "/api/placeholder/80/80",
+  preferences: {
+    darkMode: false,
+    sectors: [] as string[],
+    stages: [] as string[],
+  },
+};
+
 export default function Profile() {
-  const [user, setUser] = useState(mockUser);
+  const [user, setUser] = useState(defaultUser);
   const [isEditing, setIsEditing] = useState(false);
   const [darkMode, setDarkMode] = useState(user.preferences.darkMode);
   const [pushNotifications, setPushNotifications] = useState(true);

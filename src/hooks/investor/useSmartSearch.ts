@@ -1,5 +1,19 @@
 import { useState, useCallback, useMemo } from 'react';
-import { Startup } from "@/data/investor/mockData";
+
+// Startup type - no longer from mockData
+interface Startup {
+  id: string;
+  name: string;
+  founder: string;
+  stage: 'Pre-Seed' | 'Seed' | 'Series A' | 'Series B';
+  sector: string;
+  tagline: string;
+  description: string;
+  tags: string[];
+  team: Array<{ id: string; name: string; role: string; }>;
+  traction: Array<{ metric: string; value: string; date: string; }>;
+  [key: string]: any;
+}
 
 interface SearchFilters {
   sectors: string[];

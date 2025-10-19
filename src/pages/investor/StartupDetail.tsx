@@ -9,8 +9,11 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { Textarea } from '@/components/investor/ui/textarea';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/investor/ui/avatar';
 import { MessageModal } from "@/components/investor/MessageModal";
-import { mockStartups } from "@/data/investor/mockData";
 import { useToast } from "@/components/investor/ui/use-toast";
+
+// No mock data - empty array
+const mockStartups: any[] = [];
+
 export default function StartupDetail() {
   const {
     id

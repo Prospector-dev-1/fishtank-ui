@@ -3,9 +3,13 @@ import { ArrowLeft, Send, MoreVertical, Bell, Search } from 'lucide-react';
 import { Card, CardContent } from '@/components/investor/ui/card';
 import { Button } from '@/components/investor/ui/button';
 import { Input } from '@/components/investor/ui/input';
-import { mockMessages, mockConversations } from "@/data/investor/mockData";
 import { cn } from "@/lib/investor/utils";
 import { FilterTabs, FilterType } from "@/components/investor/FilterTabs";
+
+// No mock data - empty arrays
+const mockMessages: any[] = [];
+const mockConversations: Record<string, any[]> = {};
+
 export default function Messages() {
   const [selectedChat, setSelectedChat] = useState<string | null>(null);
   const [messageText, setMessageText] = useState('');

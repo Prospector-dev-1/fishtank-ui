@@ -2,11 +2,29 @@ import { useState, useRef, useCallback, useEffect } from 'react';
 import { AdvancedVideoPlayer } from "@/components/investor/AdvancedVideoPlayer";
 import { Chip } from "@/components/investor/ui/chip";
 import { X, Info, Heart, Clock, Star, Bookmark, Share2, TrendingUp, Users, Calendar } from 'lucide-react';
-import { Startup } from "@/data/investor/mockData";
 import { cn } from "@/lib/investor/utils";
 import { useHapticFeedback } from "@/hooks/investor/useHapticFeedback";
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+
+// Startup type - no longer from mockData
+interface Startup {
+  id: string;
+  name: string;
+  founder: string;
+  stage: 'Pre-Seed' | 'Seed' | 'Series A' | 'Series B';
+  sector: string;
+  tagline: string;
+  description: string;
+  shortVideo: string;
+  poster: string;
+  tags: string[];
+  metrics: { interest: number; views: number; };
+  milestones: Array<{ label: string; date: string; }>;
+  traction: Array<{ metric: string; value: string; date: string; }>;
+  team: Array<{ id: string; name: string; role: string; }>;
+  [key: string]: any;
+}
 
 type SwipeDirection = 'left' | 'right' | 'up' | 'down' | 'diagonal-up-left' | 'diagonal-up-right';
 

@@ -8,7 +8,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Slider } from '@/components/ui/slider';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useSmartSearch } from '@/hooks/investor/useSmartSearch';
-import { mockStartups } from "@/data/investor/mockData";
 import { 
   Search, 
   Filter, 
@@ -25,6 +24,9 @@ import {
   History
 } from 'lucide-react';
 import { cn } from "@/lib/investor/utils";
+
+// Empty startups array - no mockdata
+const emptyStartups: any[] = [];
 
 interface SmartSearchInterfaceProps {
   onStartupSelect?: (startup: any) => void;
@@ -47,7 +49,7 @@ export function SmartSearchInterface({ onStartupSelect, className }: SmartSearch
     searchResults,
     saveSearch,
     getSavedSearches
-  } = useSmartSearch(mockStartups);
+  } = useSmartSearch(emptyStartups);
 
   const savedSearches = getSavedSearches();
 

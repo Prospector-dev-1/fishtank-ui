@@ -4,7 +4,9 @@ import { Button } from '@/components/investor/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/investor/ui/card';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/investor/ui/avatar';
 import { Badge } from '@/components/investor/ui/badge';
-import { mockTeamProfiles, mockStartups } from "@/data/investor/mockData";
+// No mock data - empty arrays
+const mockStartups: any[] = [];
+const mockTeamProfiles: any[] = [];
 
 export default function TeamMemberProfile() {
   const { id, memberId } = useParams();

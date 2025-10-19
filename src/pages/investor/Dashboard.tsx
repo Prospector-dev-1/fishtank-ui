@@ -6,7 +6,7 @@ import { TrendingUp, AlertCircle, Clock, DollarSign, Users, Target, Calendar, Fi
 import { useNavigate } from "react-router-dom";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/investor/ui/tabs";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/investor/ui/carousel";
-import { mockStartups } from "@/data/investor/mockData";
+// Removed mockStartups import
 interface Deal {
   id: string;
   company: string;
@@ -207,11 +207,8 @@ const portfolioMetrics = {
   quarterlyReturn: "+18.5%"
 };
 
-// Top 5 pitches of the day based on interest and views
-const top5Pitches = mockStartups.map(startup => ({
-  ...startup,
-  score: startup.metrics.interest + startup.metrics.views * 0.5
-})).sort((a, b) => b.score - a.score).slice(0, 5);
+// Top 5 pitches of the day - empty array (no mock data)
+const top5Pitches: any[] = [];
 export default function Dashboard() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<"urgent" | "pipeline">("urgent");
@@ -504,7 +501,14 @@ export default function Dashboard() {
           loop: true
         }} className="w-full">
             <CarouselContent className="-ml-2 md:-ml-4">
-              {top5Pitches.map((pitch, index) => <CarouselItem key={pitch.id} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
+              {top5Pitches.length === 0 ? (
+                <CarouselItem className="pl-2 md:pl-4">
+                  <div className="p-8 text-center text-muted-foreground">
+                    <p className="text-lg font-medium mb-2">No pitches available</p>
+                    <p className="text-sm">Mock data has been removed. Connect your data source to see pitches here.</p>
+                  </div>
+                </CarouselItem>
+              ) : top5Pitches.map((pitch, index) => <CarouselItem key={pitch.id} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
                   <Card className="overflow-hidden cursor-pointer hover:shadow-lg transition-all group" onClick={() => navigate(`/investor/startup/${pitch.id}`)}>
                     <div className="relative aspect-video bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center">
                       <img src={pitch.poster} alt={pitch.name} className="w-full h-full object-cover" />

@@ -2,7 +2,13 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
-import { Startup } from "@/data/startups";
+
+// Startup type - no longer from mockData
+interface Startup {
+  id: string;
+  name: string;
+  [key: string]: any;
+}
 
 interface ApplyModalProps {
   isOpen: boolean;

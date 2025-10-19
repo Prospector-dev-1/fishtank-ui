@@ -7,7 +7,6 @@ import { Progress } from '@/components/ui/progress';
 import { MetricDisplay } from "@/components/investor/MetricDisplay";
 import { EnhancedCard } from "@/components/investor/EnhancedCard";
 import { useAIRecommendations } from '@/hooks/investor/useAIRecommendations';
-import { mockStartups } from "@/data/investor/mockData";
 import { 
   TrendingUp, 
   TrendingDown, 
@@ -29,6 +28,9 @@ import {
 } from 'lucide-react';
 import { PieChart as RechartsPieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, LineChart, Line, Area, AreaChart } from 'recharts';
 import { cn } from "@/lib/investor/utils";
+
+// Empty startups array - no mockdata
+const mockStartups: any[] = [];
 
 const COLORS = {
   primary: 'hsl(var(--primary))',

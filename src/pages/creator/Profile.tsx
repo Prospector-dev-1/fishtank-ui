@@ -16,8 +16,6 @@ import { Label } from "@/components/creator/ui/label";
 import ProfileSettings from "@/components/creator/ProfileSettings";
 import { ServiceModal } from "@/components/creator/ServiceModal";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/creator/ui/tabs";
-import { currentCreator } from "@/lib/creator/mockData";
-
 export default function Profile() {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -43,37 +41,21 @@ export default function Profile() {
     try {
       setLoading(true);
 
-      // Use mock data instead of Supabase
+      // Initialize with empty data - no mock data
       setProfileData({
-        full_name: currentCreator.name,
-        avatar_url: currentCreator.avatar,
-        bio: currentCreator.bio,
-        location: "San Francisco, CA",
-        hourly_rate: 85,
-        years_experience: 5,
+        full_name: user.email?.split('@')[0] || "Creator",
+        avatar_url: `https://api.dicebear.com/7.x/avataaars/svg?seed=${user?.email}`,
+        bio: "",
+        location: "",
+        hourly_rate: 0,
+        years_experience: 0,
         availability_status: 'available'
       });
 
-      // Map services from mock data
-      setServices(currentCreator.services.map(s => ({
-        id: s.id,
-        title: s.title,
-        description: s.description,
-        price: s.price,
-        delivery_days: parseInt(s.timeline.split('-')[0]),
-        active: true
-      })));
-
-      // Set skills from mock data
-      setSkills(currentCreator.skills);
-
-      // Map past projects from mock data
-      setPastProjects(currentCreator.portfolio.map(p => ({
-        id: p.id,
-        title: p.title,
-        image_url: p.thumbnail,
-        description: p.category
-      })));
+      // Empty arrays - no mock data
+      setServices([]);
+      setSkills([]);
+      setPastProjects([]);
 
     } catch (error) {
       console.error('Error loading profile:', error);

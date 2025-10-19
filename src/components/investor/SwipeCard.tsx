@@ -2,9 +2,22 @@ import { useState, useRef } from 'react';
 import { VideoPlayer } from "@/components/investor/VideoPlayer";
 import { Chip } from "@/components/investor/ui/chip";
 import { X, Info, Heart, Clock } from 'lucide-react';
-import { Startup } from "@/data/investor/mockData";
 import { cn } from "@/lib/investor/utils";
 import { TimeReminderModal } from "@/components/investor/TimeReminderModal";
+
+// Startup type - no longer from mockData
+interface Startup {
+  id: string;
+  name: string;
+  founder: string;
+  stage: string;
+  sector: string;
+  tagline: string;
+  shortVideo: string;
+  poster: string;
+  [key: string]: any;
+}
+
 interface SwipeCardProps {
   startup: Startup;
   onPass: () => void;

@@ -7,10 +7,13 @@ import { BottomModal } from "@/components/investor/BottomModal";
 import { TimeReminderModal } from "@/components/investor/TimeReminderModal";
 import { Chip } from "@/components/investor/ui/chip";
 import { Heart, Bookmark, FileText, MoreHorizontal, Share, Flag, RotateCcw, Info, Clock, Search, Filter } from 'lucide-react';
-import { mockStartups } from "@/data/investor/mockData";
 import { useToast } from "@/components/investor/ui/use-toast";
 import { useNavigate } from 'react-router-dom';
 import { cn } from "@/lib/investor/utils";
+
+// No mock data - empty array
+const mockStartups: any[] = [];
+
 export default function Discover() {
   const [mode, setMode] = useState<'scroll' | 'swipe'>('scroll');
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -204,6 +207,38 @@ export default function Discover() {
     });
     setShowMoreModal(false);
   };
+  
+  // Show empty state when no startups are available
+  if (filteredStartups.length === 0) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center p-4">
+        <div className="text-center max-w-md space-y-4">
+          <div className="w-20 h-20 bg-muted rounded-full mx-auto flex items-center justify-center mb-6">
+            <Search className="w-10 h-10 text-muted-foreground" />
+          </div>
+          <h2 className="text-2xl font-bold text-foreground">No Startups Available</h2>
+          <p className="text-muted-foreground text-lg">
+            The Tank is currently empty. Mock data has been removed and needs to be replaced with real data from your API or database.
+          </p>
+          <div className="pt-4 space-y-2">
+            <p className="text-sm text-muted-foreground">
+              To populate this page, connect your startup data source in:
+            </p>
+            <code className="block bg-muted px-4 py-2 rounded-lg text-sm text-left">
+              src/pages/investor/Discover.tsx
+            </code>
+          </div>
+          <button
+            onClick={() => navigate('/investor/dashboard')}
+            className="mt-6 px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
+          >
+            Go to Dashboard
+          </button>
+        </div>
+      </div>
+    );
+  }
+  
   if (!currentStartup) return null;
 
   // Render swipe mode
