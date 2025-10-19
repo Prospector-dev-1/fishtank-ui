@@ -22,9 +22,20 @@ import {
   ArrowDownRight,
   Zap,
   ArrowRight,
+  Play,
+  Eye,
+  Flame,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/investor/ui/tabs";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/investor/ui/carousel";
+import { mockStartups } from "@/data/investor/mockData";
 interface Deal {
   id: string;
   company: string;
@@ -239,10 +250,21 @@ const portfolioMetrics = {
   totalInvested: "$4.2M",
   activeDeals: 7,
   pipelineValue: "$12.8M",
+  unreadMessages: 3,
   avgTicketSize: "$600K",
   sectors: ["Fintech", "HealthTech", "CleanTech", "EdTech"],
   quarterlyReturn: "+18.5%",
 };
+
+// Top 5 pitches of the day based on interest and views
+const top5Pitches = mockStartups
+  .map((startup) => ({
+    ...startup,
+    score: startup.metrics.interest + startup.metrics.views * 0.5,
+  }))
+  .sort((a, b) => b.score - a.score)
+  .slice(0, 5);
+
 export default function Dashboard() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<"urgent" | "pipeline">("urgent");
@@ -538,65 +560,88 @@ export default function Dashboard() {
             <div className="text-sm text-muted-foreground">Innovators contacted</div>
           </Card>
           <Card className="p-4">
-            <div className="text-2xl font-bold text-success">{portfolioMetrics.pipelineValue}</div>
+            <div className="text-2xl font-bold text-success">{portfolioMetrics.unreadMessages}</div>
             <div className="text-sm text-muted-foreground">Unread messages</div>
           </Card>
         </div>
 
-        {/* Deal Flow Tabs */}
-
-        {/* Quick Actions */}
-        <Card className="p-6">
-          <h3 className="text-lg font-semibold mb-4">Quick Actions</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Button
-              variant="outline"
-              className="justify-start h-auto p-4"
-              onClick={() => navigate("/investor/portfolio")}
-            >
-              <div className="flex items-center w-full">
-                <Target className="w-5 h-5 mr-3" />
-                <div className="text-left">
-                  <div className="font-medium">Review Portfolio</div>
-                  <div className="text-sm text-muted-foreground">Check performance metrics</div>
-                </div>
-                <ChevronRight className="w-4 h-4 ml-auto" />
-              </div>
-            </Button>
-
-            <Button
-              variant="outline"
-              className="justify-start h-auto p-4"
-              onClick={() => navigate("/investor/messages")}
-            >
-              <div className="flex items-center w-full">
-                <Users className="w-5 h-5 mr-3" />
-                <div className="text-left">
-                  <div className="font-medium">Founder Updates</div>
-                  <div className="text-sm text-muted-foreground">3 unread messages</div>
-                </div>
-                <ChevronRight className="w-4 h-4 ml-auto" />
-              </div>
-            </Button>
-
-            <Button variant="outline" className="justify-start h-auto p-4">
-              <div className="flex items-center w-full">
-                <FileText className="w-5 h-5 mr-3" />
-                <div className="text-left">
-                  <div className="font-medium">Due Diligence</div>
-                  <div className="text-sm text-muted-foreground">2 reports pending</div>
-                </div>
-                <ChevronRight className="w-4 h-4 ml-auto" />
-              </div>
-            </Button>
+        {/* Top 5 of the Day */}
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-2xl font-bold flex items-center gap-2">
+                <Flame className="w-6 h-6 text-orange-500" />
+                Top 5 of the Day
+              </h2>
+              <p className="text-muted-foreground text-sm">Most engaging pitches today</p>
+            </div>
           </div>
-        </Card>
+
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            className="w-full"
+          >
+            <CarouselContent className="-ml-2 md:-ml-4">
+              {top5Pitches.map((pitch, index) => (
+                <CarouselItem key={pitch.id} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
+                  <Card
+                    className="overflow-hidden cursor-pointer hover:shadow-lg transition-all group"
+                    onClick={() => navigate(`/investor/startup/${pitch.id}`)}
+                  >
+                    <div className="relative aspect-video bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center">
+                      <img
+                        src={pitch.poster}
+                        alt={pitch.name}
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors flex items-center justify-center">
+                        <Play className="w-12 h-12 text-white opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all" />
+                      </div>
+                      <div className="absolute top-2 left-2 bg-orange-500 text-white px-2 py-1 rounded-md text-xs font-bold flex items-center gap-1">
+                        <Flame className="w-3 h-3" />#{index + 1}
+                      </div>
+                    </div>
+                    <div className="p-4 space-y-3">
+                      <div>
+                        <h3 className="font-semibold text-lg truncate">{pitch.name}</h3>
+                        <p className="text-sm text-muted-foreground truncate">{pitch.tagline}</p>
+                      </div>
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <Badge variant="outline" className="text-xs">
+                          {pitch.stage}
+                        </Badge>
+                        <Badge variant="outline" className="text-xs">
+                          {pitch.sector}
+                        </Badge>
+                      </div>
+                      <div className="flex items-center justify-between text-sm pt-2 border-t border-border">
+                        <div className="flex items-center gap-1 text-muted-foreground">
+                          <Eye className="w-4 h-4" />
+                          <span>{pitch.metrics.views.toLocaleString()}</span>
+                        </div>
+                        <div className="flex items-center gap-1 text-primary">
+                          <TrendingUp className="w-4 h-4" />
+                          <span>{pitch.metrics.interest} interested</span>
+                        </div>
+                      </div>
+                    </div>
+                  </Card>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="hidden md:flex -left-4" />
+            <CarouselNext className="hidden md:flex -right-4" />
+          </Carousel>
+        </div>
 
         {/* Industry Categories Section */}
         <div className="space-y-4">
           <h2 className="text-2xl font-bold">What would you like to see</h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-4">
             {/* Software Card */}
             <Card className="p-6 bg-card border-border hover:shadow-lg transition-shadow">
               <h3 className="text-xl font-bold mb-4">Software</h3>
