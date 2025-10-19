@@ -5,7 +5,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Plus, MoreVertical, Edit, Share, Video, Eye, TrendingUp, Play, Users, Settings } from 'lucide-react';
+import { Plus, MoreVertical, Edit, Share, Video, Eye, TrendingUp, Play, Users, Settings, Shield, ChevronRight, Zap } from 'lucide-react';
 import { toast } from 'sonner';
 import { recordView } from "@/lib/innovator/tankApi";
 import { useTeamPermissions } from "@/hooks/innovator/useTeamPermissions";
@@ -14,6 +14,67 @@ import { supabase } from '@/integrations/supabase/client';
 import { TankAnalyticsSummary } from './TankAnalyticsSummary';
 import { TeamManagement } from './TeamManagement';
 import { InnovationPreview } from './InnovationPreview';
+// Mock pitches for demo purposes
+const MOCK_PITCHES: Pitch[] = [
+  {
+    id: 'pitch_aquasense_1',
+    innovation_id: 'innovation_aquasense',
+    user_id: 'mock_user',
+    title: 'AquaSense - Smart Water Management Demo',
+    description: 'Demonstrating our IoT sensor technology for precision agriculture',
+    caption: '💧 Saving water, one farm at a time. Our IoT sensors help farmers reduce water waste by 40%! #AgriTech #IoT #Sustainability',
+    hashtags: ['AgriTech', 'IoT', 'Sustainability', 'WaterConservation', 'SmartFarming'],
+    video_url: 'https://example.com/video.mp4',
+    thumbnail_url: 'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=400',
+    deck_url: null,
+    status: 'published',
+    visibility: 'public',
+    funding_goal: 500000,
+    funding_raised: 125000,
+    views_count: 234,
+    created_at: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
+    updated_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString()
+  },
+  {
+    id: 'pitch_aquasense_2',
+    innovation_id: 'innovation_aquasense',
+    user_id: 'mock_user',
+    title: 'AquaSense Traction Update',
+    description: 'Quick update on our growth and beta farm results',
+    caption: '🚀 25 beta farms, 32% water reduction, $1,200 annual savings per farm. The numbers speak for themselves! #GrowthUpdate #StartupTraction',
+    hashtags: ['GrowthUpdate', 'StartupTraction', 'AgriTech', 'ROI'],
+    video_url: 'https://example.com/video2.mp4',
+    thumbnail_url: 'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=400',
+    deck_url: null,
+    status: 'published',
+    visibility: 'public',
+    funding_goal: 500000,
+    funding_raised: 125000,
+    views_count: 156,
+    created_at: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+    updated_at: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString()
+  },
+  {
+    id: 'pitch_healthbridge_1',
+    innovation_id: 'innovation_healthbridge',
+    user_id: 'mock_user',
+    title: 'HealthBridge - Breaking Mental Health Barriers',
+    description: 'AI-powered instant therapist matching',
+    caption: '🧠 Mental health support shouldn\'t take 3 months. HealthBridge connects you with therapists instantly using AI. #MentalHealth #HealthTech #AI',
+    hashtags: ['MentalHealth', 'HealthTech', 'AI', 'Telemedicine', 'WellnessTech'],
+    video_url: 'https://example.com/video3.mp4',
+    thumbnail_url: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=400',
+    deck_url: null,
+    status: 'draft',
+    visibility: 'private',
+    funding_goal: 500000,
+    funding_raised: 0,
+    views_count: 42,
+    created_at: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+    updated_at: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString()
+  }
+];
+
 interface TankDashboardProps {
   innovation: Innovation;
 }
@@ -25,13 +86,39 @@ export function TankDashboard({
   const [pitches, setPitches] = useState<Pitch[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [showPreview, setShowPreview] = useState(false);
+  const [ndaEnabled, setNdaEnabled] = useState(true);
   const { canEditInnovation, canCreatePitch, canAccessTankUI } = useTeamPermissions(innovation.id);
+  
   useEffect(() => {
     recordView('innovation', innovation.id);
     loadPitches();
+    loadNDASettings();
   }, [innovation.id]);
+
+  const loadNDASettings = () => {
+    try {
+      const savedSettings = localStorage.getItem(`nda_settings_${innovation.id}`);
+      if (savedSettings) {
+        const settings = JSON.parse(savedSettings);
+        setNdaEnabled(settings.ndaRequired ?? true);
+      }
+    } catch (error) {
+      console.error('Error loading NDA settings:', error);
+    }
+  };
   const loadPitches = async () => {
     try {
+      // Check if this is a mock innovation
+      const isMockInnovation = innovation.id.startsWith('innovation_');
+      
+      if (isMockInnovation) {
+        // Filter mock pitches for this innovation
+        const innovationPitches = MOCK_PITCHES.filter(p => p.innovation_id === innovation.id);
+        setPitches(innovationPitches);
+        setIsLoading(false);
+        return;
+      }
+      
       const {
         data,
         error
@@ -138,6 +225,51 @@ export function TankDashboard({
         {/* Team Management */}
         <TeamManagement innovationId={innovation.id} />
 
+        {/* NDA Settings Card */}
+        {canEditInnovation && (
+          <div className="ios-card bg-card">
+            <div className="p-4">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center shrink-0">
+                  <Shield className="w-6 h-6 text-primary" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-base font-semibold mb-1">NDA Settings</h3>
+                  <p className="text-sm text-muted-foreground mb-3">
+                    Protect your innovation with customizable non-disclosure agreements
+                  </p>
+                  
+                  {/* NDA Quick Stats */}
+                  <div className="grid grid-cols-2 gap-2 mb-3">
+                    <div className="bg-muted/30 rounded-xl p-2">
+                      <div className="text-xs text-muted-foreground mb-0.5">NDA Status</div>
+                      <div className={`text-sm font-semibold ${ndaEnabled ? 'text-green-600' : 'text-gray-500'}`}>
+                        {ndaEnabled ? 'Active' : 'Disabled'}
+                      </div>
+                    </div>
+                    <div className="bg-muted/30 rounded-xl p-2">
+                      <div className="text-xs text-muted-foreground mb-0.5">Signatures</div>
+                      <div className="text-sm font-semibold">
+                        {innovation.id.startsWith('innovation_') ? '12' : '0'}
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="w-full rounded-full"
+                    onClick={() => navigate('/innovator/tank/innovation/nda-settings')}
+                  >
+                    Manage NDA Settings
+                    <ChevronRight className="w-4 h-4 ml-1" />
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Analytics Summary */}
         <TankAnalyticsSummary pitches={pitches} />
 
@@ -240,14 +372,25 @@ export function TankDashboard({
                   </div>
 
                   {/* Actions */}
-                  <div className="flex gap-2">
-                    <Button size="sm" variant="outline" className="flex-1 rounded-full" onClick={() => navigate(`/innovator/pitch/${pitch.id}`)}>
-                      <Eye className="w-4 h-4 mr-1" />
-                      View
-                    </Button>
-                    <Button size="sm" variant="outline" className="flex-1 rounded-full" onClick={() => navigate(`/innovator/tank/pitch/${pitch.id}/analytics`)}>
-                      <TrendingUp className="w-4 h-4 mr-1" />
-                      Analytics
+                  <div className="flex flex-col gap-2">
+                    <div className="flex gap-2">
+                      <Button size="sm" variant="outline" className="flex-1 rounded-full" onClick={() => navigate(`/innovator/pitch/${pitch.id}`)}>
+                        <Eye className="w-4 h-4 mr-1" />
+                        View
+                      </Button>
+                      <Button size="sm" variant="outline" className="flex-1 rounded-full" onClick={() => navigate(`/innovator/tank/pitch/${pitch.id}/analytics`)}>
+                        <TrendingUp className="w-4 h-4 mr-1" />
+                        Analytics
+                      </Button>
+                    </div>
+                    <Button 
+                      size="sm" 
+                      variant="default" 
+                      className="w-full rounded-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700" 
+                      onClick={() => navigate(`/innovator/tank/boost/${pitch.id}`)}
+                    >
+                      <Zap className="w-4 h-4 mr-1" />
+                      Boost Pitch
                     </Button>
                   </div>
                 </div>

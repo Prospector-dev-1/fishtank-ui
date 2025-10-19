@@ -39,6 +39,40 @@ export const TankAnalyticsSummary = ({ pitches }: TankAnalyticsSummaryProps) => 
     try {
       const pitchIds = pitches.map(p => p.id);
       
+      // Check if any pitch belongs to a mock innovation
+      const hasMockPitches = pitches.some(p => p.innovation_id.startsWith('innovation_'));
+      
+      if (hasMockPitches) {
+        // Generate mock analytics data for demo
+        const totalViews = Math.floor(Math.random() * 300) + 150;
+        const avgEngagement = Math.floor(Math.random() * 40) + 35; // 35-75%
+        const avgWatchTime = Math.floor(Math.random() * 30) + 45; // 45-75 seconds
+        const investorInterest = Math.floor(Math.random() * 20) + 15; // 15-35 unique viewers
+        const weeklyTrend = Math.floor(Math.random() * 60) - 10; // -10% to +50%
+        
+        setMetrics({
+          totalViews,
+          avgEngagement,
+          avgWatchTime,
+          investorInterest,
+          weeklyTrend
+        });
+        
+        // Generate mock views over time (last 7 days)
+        const mockViewsOverTime: ViewData[] = [];
+        for (let i = 6; i >= 0; i--) {
+          const date = new Date();
+          date.setDate(date.getDate() - i);
+          mockViewsOverTime.push({
+            date: date.toISOString().split('T')[0],
+            views: Math.floor(Math.random() * 50) + 10
+          });
+        }
+        setViewsOverTime(mockViewsOverTime);
+        setIsLoading(false);
+        return;
+      }
+      
       const { data: analyticsData, error } = await supabase
         .from('pitch_analytics')
         .select('*')
@@ -59,20 +93,20 @@ export const TankAnalyticsSummary = ({ pitches }: TankAnalyticsSummaryProps) => 
       }
 
       // Calculate total views
-      const totalViews = analyticsData.reduce((sum, record) => sum + (record.views || 0), 0);
+      const totalViews = analyticsData.reduce((sum: number, record: any) => sum + (record.views || 0), 0);
 
       // Calculate average engagement rate
       const avgEngagement = analyticsData.length > 0
-        ? analyticsData.reduce((sum, record) => sum + (Number(record.engagement_rate) || 0), 0) / analyticsData.length
+        ? analyticsData.reduce((sum: number, record: any) => sum + (Number(record.engagement_rate) || 0), 0) / analyticsData.length
         : 0;
 
       // Calculate average watch time
       const avgWatchTime = analyticsData.length > 0
-        ? analyticsData.reduce((sum, record) => sum + (record.avg_watch_time || 0), 0) / analyticsData.length
+        ? analyticsData.reduce((sum: number, record: any) => sum + (record.avg_watch_time || 0), 0) / analyticsData.length
         : 0;
 
       // Calculate investor interest (unique viewers)
-      const investorInterest = analyticsData.reduce((sum, record) => sum + (record.unique_viewers || 0), 0);
+      const investorInterest = analyticsData.reduce((sum: number, record: any) => sum + (record.unique_viewers || 0), 0);
 
       // Calculate 7-day trend
       const sevenDaysAgo = new Date();
@@ -81,15 +115,15 @@ export const TankAnalyticsSummary = ({ pitches }: TankAnalyticsSummaryProps) => 
       fourteenDaysAgo.setDate(fourteenDaysAgo.getDate() - 14);
 
       const recentViews = analyticsData
-        .filter(record => new Date(record.date) >= sevenDaysAgo)
-        .reduce((sum, record) => sum + (record.views || 0), 0);
+        .filter((record: any) => new Date(record.date) >= sevenDaysAgo)
+        .reduce((sum: number, record: any) => sum + (record.views || 0), 0);
 
       const previousViews = analyticsData
-        .filter(record => {
+        .filter((record: any) => {
           const date = new Date(record.date);
           return date >= fourteenDaysAgo && date < sevenDaysAgo;
         })
-        .reduce((sum, record) => sum + (record.views || 0), 0);
+        .reduce((sum: number, record: any) => sum + (record.views || 0), 0);
 
       const weeklyTrend = previousViews > 0 
         ? ((recentViews - previousViews) / previousViews) * 100 
@@ -104,7 +138,7 @@ export const TankAnalyticsSummary = ({ pitches }: TankAnalyticsSummaryProps) => 
       });
 
       // Prepare views over time data (last 7 days)
-      const viewsByDate = analyticsData.reduce((acc, record) => {
+      const viewsByDate = analyticsData.reduce((acc: Record<string, number>, record: any) => {
         const dateKey = record.date;
         acc[dateKey] = (acc[dateKey] || 0) + (record.views || 0);
         return acc;
@@ -113,7 +147,7 @@ export const TankAnalyticsSummary = ({ pitches }: TankAnalyticsSummaryProps) => 
       const sortedViews = Object.entries(viewsByDate)
         .sort(([a], [b]) => new Date(a).getTime() - new Date(b).getTime())
         .slice(-7)
-        .map(([date, views]) => ({ date, views }));
+        .map(([date, views]) => ({ date, views: views as number }));
 
       setViewsOverTime(sortedViews);
     } catch (error) {

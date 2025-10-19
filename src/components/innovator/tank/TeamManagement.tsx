@@ -90,6 +90,22 @@ export function TeamManagement({
   };
   const loadInnovation = async () => {
     try {
+      // Check if this is a mock innovation
+      const isMockInnovation = innovationId.startsWith('innovation_');
+      
+      if (isMockInnovation) {
+        // For mock innovations, use hardcoded data
+        const mockTitles: Record<string, string> = {
+          'innovation_aquasense': 'AquaSense',
+          'innovation_healthbridge': 'HealthBridge'
+        };
+        
+        const { data: { user } } = await supabase.auth.getUser();
+        setInnovationTitle(mockTitles[innovationId] || 'Demo Innovation');
+        setInnovationOwnerId(user?.id || 'mock_user');
+        return;
+      }
+      
       const {
         data,
         error
@@ -107,6 +123,10 @@ export function TeamManagement({
     }
   };
   const ensureOwnerInTeam = async (ownerId: string) => {
+    // Don't try to add mock innovation owners to database
+    const isMockInnovation = innovationId.startsWith('innovation_');
+    if (isMockInnovation) return;
+    
     try {
       const {
         data: existingMember

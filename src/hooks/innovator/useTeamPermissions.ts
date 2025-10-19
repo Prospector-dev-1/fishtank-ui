@@ -49,6 +49,32 @@ export const useTeamPermissions = (innovationId: string | undefined): TeamPermis
           return;
         }
 
+        // Check if this is a mock innovation (starts with 'innovation_')
+        const isMockInnovation = innovationId.startsWith('innovation_');
+        
+        if (isMockInnovation) {
+          // Grant founder permissions for mock innovations
+          console.log('🎯 Mock innovation detected - granting founder permissions', {
+            innovationId,
+            userId: user.id
+          });
+          setPermissions({
+            permissionLevel: 'founder',
+            isFounder: true,
+            isCoFounder: false,
+            isMember: false,
+            isCollaborator: false,
+            canEditInnovation: true,
+            canDeleteInnovation: true,
+            canManageTeam: true,
+            canCreatePitch: true,
+            canViewAnalytics: true,
+            canAccessTankUI: true,
+            isLoading: false,
+          });
+          return;
+        }
+
         // Check if user is the founder (innovation owner)
         const { data: innovation } = await supabase
           .from('innovations')

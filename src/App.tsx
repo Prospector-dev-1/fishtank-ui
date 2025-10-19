@@ -37,9 +37,11 @@ import InnovatorHome from "@/pages/innovator/Home";
 import InnovatorTank from "@/pages/innovator/Tank";
 import InnovatorEditInnovation from "@/pages/innovator/EditInnovation";
 import InnovatorInnovationSettings from "@/pages/innovator/InnovationSettings";
+import InnovatorNDASettings from "@/pages/innovator/NDASettings";
 import InnovatorCreatePitch from "@/pages/innovator/CreatePitch";
 import InnovatorPitchView from "@/pages/innovator/PitchView";
 import InnovatorPitchAnalytics from "@/pages/innovator/PitchAnalytics";
+import InnovatorBoostPitch from "@/pages/innovator/BoostPitch";
 import InnovatorNetwork from "@/pages/innovator/Network";
 import InnovatorCollaborate from "@/pages/innovator/Collaborate";
 import InnovatorProfile from "@/pages/innovator/Profile";
@@ -126,6 +128,14 @@ function InnovatorAppContent() {
           }
         />
         <Route
+          path="tank/innovation/nda-settings"
+          element={
+            <InnovatorProtectedRoute>
+              <InnovatorNDASettings />
+            </InnovatorProtectedRoute>
+          }
+        />
+        <Route
           path="tank/pitch/new"
           element={
             <InnovatorProtectedRoute>
@@ -138,6 +148,14 @@ function InnovatorAppContent() {
           element={
             <InnovatorProtectedRoute>
               <InnovatorPitchAnalytics />
+            </InnovatorProtectedRoute>
+          }
+        />
+        <Route
+          path="tank/boost/:pitchId"
+          element={
+            <InnovatorProtectedRoute>
+              <InnovatorBoostPitch />
             </InnovatorProtectedRoute>
           }
         />
