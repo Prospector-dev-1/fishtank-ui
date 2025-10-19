@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowLeft, Send, MoreVertical, Bell } from 'lucide-react';
+import { ArrowLeft, Send, MoreVertical, Bell, Search } from 'lucide-react';
 import { Card, CardContent } from '@/components/investor/ui/card';
 import { Button } from '@/components/investor/ui/button';
 import { Input } from '@/components/investor/ui/input';
@@ -10,16 +10,26 @@ export default function Messages() {
   const [selectedChat, setSelectedChat] = useState<string | null>(null);
   const [messageText, setMessageText] = useState('');
   const [activeFilter, setActiveFilter] = useState<FilterType>('all');
+  const [searchQuery, setSearchQuery] = useState('');
   const selectedMessage = mockMessages.find(msg => msg.id === selectedChat);
   const chatMessages = selectedChat ? mockConversations[selectedChat as keyof typeof mockConversations] || [] : [];
 
-  // Filter messages based on active filter
+  // Filter messages based on active filter and search query
   const filteredMessages = mockMessages.filter(message => {
-    if (activeFilter === 'all') return true;
-    if (activeFilter === 'messages') return message.type === 'direct';
-    if (activeFilter === 'teams') return message.type === 'team';
-    if (activeFilter === 'system') return message.type === 'system';
-    return true;
+    // Apply type filter
+    let matchesFilter = true;
+    if (activeFilter === 'all') matchesFilter = true;
+    else if (activeFilter === 'messages') matchesFilter = message.type === 'direct';
+    else if (activeFilter === 'teams') matchesFilter = message.type === 'team';
+    else if (activeFilter === 'system') matchesFilter = message.type === 'system';
+    
+    // Apply search query
+    const matchesSearch = searchQuery.trim() === '' || 
+      message.startup.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      message.founder.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      message.lastMessage.toLowerCase().includes(searchQuery.toLowerCase());
+    
+    return matchesFilter && matchesSearch;
   });
   const quickReplies = ["Thanks for reaching out!", "I'd like to schedule a call", "Can you send more details?", "What's your current runway?", "Impressive traction!"];
   if (selectedChat) {
@@ -95,6 +105,18 @@ export default function Messages() {
   return <div className="min-h-screen bg-background pb-20">
       <div className="container-safe space-y-6 py-[3px]">
         <h1 className="text-h1 font-bold">Inbox</h1>
+        
+        {/* Search Bar */}
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+          <Input
+            type="text"
+            placeholder="Search messages, startups, founders..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-10"
+          />
+        </div>
         
         <FilterTabs activeFilter={activeFilter} onFilterChange={setActiveFilter} className="sticky top-0 bg-background/80 backdrop-blur-sm z-10 py-2" />
 

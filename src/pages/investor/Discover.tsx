@@ -6,7 +6,7 @@ import { ModeSwitch } from "@/components/investor/ModeSwitch";
 import { BottomModal } from "@/components/investor/BottomModal";
 import { TimeReminderModal } from "@/components/investor/TimeReminderModal";
 import { Chip } from "@/components/investor/ui/chip";
-import { Heart, Bookmark, FileText, MoreHorizontal, Share, Flag, RotateCcw, Info, Clock } from 'lucide-react';
+import { Heart, Bookmark, FileText, MoreHorizontal, Share, Flag, RotateCcw, Info, Clock, Search, Filter } from 'lucide-react';
 import { mockStartups } from "@/data/investor/mockData";
 import { useToast } from "@/components/investor/ui/use-toast";
 import { useNavigate } from 'react-router-dom';
@@ -210,8 +210,18 @@ export default function Discover() {
   if (mode === 'swipe') {
     return <div className="relative h-screen bg-background">
         {/* Mode Switch */}
-        <div className="absolute top-4 right-4 z-10">
+        <div className="absolute top-4 left-4 z-10">
           <ModeSwitch mode={mode} onModeChange={setMode} />
+        </div>
+        
+        {/* Search and Filter Icons */}
+        <div className="absolute top-4 right-4 z-10 flex items-center space-x-2">
+          <button className="w-10 h-10 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center shadow-lg hover:bg-background transition-colors" onClick={() => toast({ title: "Search", description: "Search functionality coming soon" })}>
+            <Search className="w-5 h-5" />
+          </button>
+          <button className="w-10 h-10 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center shadow-lg hover:bg-background transition-colors" onClick={() => toast({ title: "Filter", description: "Filter functionality coming soon" })}>
+            <Filter className="w-5 h-5" />
+          </button>
         </div>
         
         <SwipeCard startup={currentStartup} onPass={handlePass} onInterested={handleInterested} onDeepDive={handleDeepDive} isInterested={false} />
@@ -221,8 +231,18 @@ export default function Discover() {
   // Render scroll mode (TikTok-style)
   return <div className="relative h-screen w-full bg-black overflow-hidden">
       {/* Mode Switch */}
-      <div className="fixed top-4 right-4 z-50">
+      <div className="fixed top-4 left-4 z-50">
         <ModeSwitch mode={mode} onModeChange={setMode} />
+      </div>
+      
+      {/* Search and Filter Icons */}
+      <div className="fixed top-4 right-4 z-50 flex items-center space-x-2">
+        <button className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center shadow-lg hover:bg-white/30 transition-colors" onClick={() => toast({ title: "Search", description: "Search functionality coming soon" })}>
+          <Search className="w-5 h-5 text-white" />
+        </button>
+        <button className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center shadow-lg hover:bg-white/30 transition-colors" onClick={() => toast({ title: "Filter", description: "Filter functionality coming soon" })}>
+          <Filter className="w-5 h-5 text-white" />
+        </button>
       </div>
       
       {/* Pull to Refresh Indicator */}
