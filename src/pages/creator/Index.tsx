@@ -555,7 +555,19 @@ const Index = () => {
       <div className="space-y-4 animate-slide-up">
         <h2 className="text-xl font-bold text-foreground">Browse by category</h2>
         <div className="grid grid-cols-2 gap-3">
-          {categories.map((category, index) => {})}
+          {categories.map((category, index) => <Card key={index} className="p-4 shadow-card hover:shadow-elegant transition-all duration-200 cursor-pointer active:scale-[0.98]" onClick={() => navigate("/discover")}>
+              <CardContent className="p-0">
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 bg-muted/30 rounded-full flex items-center justify-center flex-shrink-0">
+                    <category.icon className="h-5 w-5 text-muted-foreground" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-semibold text-foreground text-sm mb-1">{category.name}</h3>
+                    <p className="text-xs text-muted-foreground">{category.description}</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>)}
         </div>
       </div>
 
