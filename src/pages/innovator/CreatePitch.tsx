@@ -1,20 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useTeamPermissions } from "@/hooks/innovator/useTeamPermissions";
-import { Button } from '@/components/innovator/ui/button';
 import { Input } from '@/components/innovator/ui/input';
 import { Textarea } from '@/components/innovator/ui/textarea';
-import { Label } from '@/components/innovator/ui/label';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/innovator/ui/card';
-import { Badge } from '@/components/innovator/ui/badge';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/innovator/ui/select';
-import { ArrowLeft, Upload, CheckCircle } from 'lucide-react';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/innovator/ui/sheet';
+import { X, ChevronRight, Hash, Globe, Video, Image as ImageIcon } from 'lucide-react';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
-import { FishtankHeader } from "@/components/innovator/layout/FishtankHeader";
 import { innovationAPI } from "@/lib/innovator/tankApi";
 import type { Innovation } from "@/types";
 const pitchSchema = z.object({
@@ -33,6 +28,12 @@ export default function CreatePitch() {
   const [innovation, setInnovation] = useState<Innovation | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [permissionsChecked, setPermissionsChecked] = useState(false);
+  const [showDetailsSheet, setShowDetailsSheet] = useState(false);
+  const [videoPreview, setVideoPreview] = useState<string | null>(null);
+  const [thumbnailPreview, setThumbnailPreview] = useState<string | null>(null);
+  const videoInputRef = useRef<HTMLInputElement>(null);
+  const thumbnailInputRef = useRef<HTMLInputElement>(null);
+  
   const {
     canCreatePitch,
     isLoading: permissionsLoading
@@ -83,12 +84,24 @@ export default function CreatePitch() {
     }
     setInnovation(primaryInnovation);
   };
-  const handleFileUpload = (field: 'video_url' | 'thumbnail_url') => {
-    // Simulate file upload
-    const fileName = field === 'video_url' ? 'pitch-video.mp4' : 'thumbnail.jpg';
-    const fakeUrl = `https://example.com/${fileName}`;
-    form.setValue(field, fakeUrl);
-    toast.success(`${fileName} uploaded successfully`);
+  const handleVideoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const url = URL.createObjectURL(file);
+      setVideoPreview(url);
+      form.setValue('video_url', url);
+      toast.success('Video added');
+    }
+  };
+
+  const handleThumbnailUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const url = URL.createObjectURL(file);
+      setThumbnailPreview(url);
+      form.setValue('thumbnail_url', url);
+      toast.success('Thumbnail added');
+    }
   };
   const onSubmit = async (data: PitchFormData) => {
     if (!innovation) return;
@@ -132,116 +145,209 @@ export default function CreatePitch() {
     }
   };
   if (!innovation) {
-    return <div className="min-h-screen bg-background flex items-center justify-center">
+    return (
+      <div className="fixed inset-0 bg-black flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
-          <p className="text-muted-foreground mt-2">Loading...</p>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto"></div>
+          <p className="text-white/70 mt-2">Loading...</p>
         </div>
-      </div>;
-  }
-  return <div className="min-h-screen bg-background">
-      <FishtankHeader title="Create Pitch" showLogo={false} />
-      
-      <div className="max-w-3xl mx-auto p-6">
-        <Button variant="ghost" size="sm" onClick={() => navigate('/innovator/tank')} className="mb-4">
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Back to Tank
-        </Button>
-
-        <Card className="mb-6">
-          <CardHeader>
-            <CardTitle>Pitching: {innovation.company_name}</CardTitle>
-            <p className="text-sm text-muted-foreground">{innovation.tagline}</p>
-          </CardHeader>
-        </Card>
-
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Pitch Details</CardTitle>
-              <p className="text-sm text-muted-foreground">
-                Create a compelling pitch for your innovation
-              </p>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div>
-                <Label htmlFor="title">Pitch Title *</Label>
-                <Input id="title" placeholder="e.g. Our Revolutionary IoT Solution" {...form.register('title')} />
-                {form.formState.errors.title && <p className="text-sm text-destructive mt-1">
-                    {form.formState.errors.title.message}
-                  </p>}
-              </div>
-
-              <div>
-                <Label htmlFor="caption">Caption *</Label>
-                <Textarea id="caption" placeholder="Write a compelling caption for your pitch..." className="min-h-[100px]" maxLength={500} {...form.register('caption')} />
-                <div className="flex justify-between mt-1">
-                  {form.formState.errors.caption && <p className="text-sm text-destructive">
-                      {form.formState.errors.caption.message}
-                    </p>}
-                  <p className="text-xs text-muted-foreground ml-auto">
-                    {form.watch('caption')?.length || 0}/500
-                  </p>
-                </div>
-              </div>
-
-              
-
-              <div>
-                <Label>Pitch Video</Label>
-                <div className="border-2 border-dashed border-border rounded-lg p-4 text-center">
-                  <Upload className="w-6 h-6 text-muted-foreground mx-auto mb-2" />
-                  <p className="text-sm text-muted-foreground mb-2">
-                    Upload your pitch video
-                  </p>
-                  <Button type="button" variant="outline" size="sm" onClick={() => handleFileUpload('video_url')}>
-                    Choose File
-                  </Button>
-                  {form.watch('video_url') && <div className="mt-2 flex items-center justify-center">
-                      <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
-                      <span className="text-sm text-green-600">Video uploaded</span>
-                    </div>}
-                </div>
-              </div>
-
-              <div>
-                <Label>Thumbnail</Label>
-                <div className="border-2 border-dashed border-border rounded-lg p-4 text-center">
-                  <Upload className="w-6 h-6 text-muted-foreground mx-auto mb-2" />
-                  <p className="text-sm text-muted-foreground mb-2">
-                    Upload a thumbnail for your pitch
-                  </p>
-                  <Button type="button" variant="outline" size="sm" onClick={() => handleFileUpload('thumbnail_url')}>
-                    Choose File
-                  </Button>
-                  {form.watch('thumbnail_url') && <div className="mt-2 flex items-center justify-center">
-                      <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
-                      <span className="text-sm text-green-600">Thumbnail uploaded</span>
-                    </div>}
-                </div>
-              </div>
-
-              <div>
-                <Label htmlFor="hashtags">Hashtags</Label>
-                <Input id="hashtags" placeholder="e.g. ai, innovation, startup" {...form.register('hashtags')} />
-                <p className="text-xs text-muted-foreground mt-1">
-                  Separate multiple hashtags with commas
-                </p>
-              </div>
-
-              
-            </CardContent>
-          </Card>
-
-          <div className="flex gap-3">
-            <Button type="button" variant="outline" onClick={() => navigate('/innovator/tank')} className="flex-1">
-              Cancel
-            </Button>
-            <Button type="submit" disabled={isSubmitting} className="flex-1">
-              {isSubmitting ? 'Creating Pitch...' : 'Create Pitch'}
-            </Button>
-          </div>
-        </form>
       </div>
-    </div>;
+    );
+  }
+  return (
+    <div className="fixed inset-0 bg-black flex flex-col">
+      {/* Top Bar */}
+      <div className="safe-top flex items-center justify-between px-4 py-3 bg-black/50 backdrop-blur-sm z-10">
+        <button
+          onClick={() => navigate('/innovator/tank')}
+          className="text-white p-2 active:scale-95 transition-transform"
+        >
+          <X className="w-6 h-6" />
+        </button>
+        <span className="text-white text-sm font-medium">New Pitch</span>
+        <div className="w-10" />
+      </div>
+
+      {/* Video Preview Area */}
+      <div className="flex-1 relative bg-gradient-to-br from-gray-900 to-gray-800">
+        {videoPreview ? (
+          <video
+            src={videoPreview}
+            className="w-full h-full object-cover"
+            controls
+            playsInline
+          />
+        ) : (
+          <div className="w-full h-full flex flex-col items-center justify-center">
+            <div className="w-24 h-24 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center mb-4">
+              <Video className="w-12 h-12 text-white/70" />
+            </div>
+            <p className="text-white/70 text-sm mb-2">Add your pitch video</p>
+            <button
+              onClick={() => videoInputRef.current?.click()}
+              className="px-6 py-2.5 bg-white text-black rounded-full font-semibold text-sm active:scale-95 transition-transform"
+            >
+              Select Video
+            </button>
+          </div>
+        )}
+        
+        {/* Thumbnail Preview Overlay */}
+        {thumbnailPreview && (
+          <div className="absolute bottom-4 left-4 w-16 h-16 rounded-lg overflow-hidden border-2 border-white/50">
+            <img src={thumbnailPreview} alt="Thumbnail" className="w-full h-full object-cover" />
+          </div>
+        )}
+      </div>
+
+      {/* Bottom Action Bar */}
+      <div className="safe-bottom bg-black border-t border-white/10">
+        <div className="px-4 py-3 space-y-3">
+          {/* Quick Actions */}
+          <div className="flex gap-2">
+            <button
+              onClick={() => videoInputRef.current?.click()}
+              className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-white/10 rounded-xl text-white text-sm font-medium active:scale-95 transition-transform"
+            >
+              <Video className="w-4 h-4" />
+              {videoPreview ? 'Change Video' : 'Add Video'}
+            </button>
+            <button
+              onClick={() => thumbnailInputRef.current?.click()}
+              className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-white/10 rounded-xl text-white text-sm font-medium active:scale-95 transition-transform"
+            >
+              <ImageIcon className="w-4 h-4" />
+              Thumbnail
+            </button>
+          </div>
+
+          {/* Caption Input */}
+          <button
+            onClick={() => setShowDetailsSheet(true)}
+            className="w-full flex items-center gap-3 px-4 py-3 bg-white/5 rounded-xl text-left active:bg-white/10 transition-colors"
+          >
+            <div className="flex-1">
+              <p className="text-white/50 text-xs mb-1">Caption</p>
+              <p className="text-white text-sm line-clamp-1">
+                {form.watch('caption') || 'Add a caption for your pitch...'}
+              </p>
+            </div>
+            <ChevronRight className="w-5 h-5 text-white/50" />
+          </button>
+
+          {/* Post Button */}
+          <button
+            onClick={form.handleSubmit(onSubmit)}
+            disabled={isSubmitting || !videoPreview}
+            className="w-full py-3.5 bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-full font-bold text-base disabled:opacity-50 disabled:from-gray-600 disabled:to-gray-600 active:scale-[0.98] transition-all"
+          >
+            {isSubmitting ? 'Posting...' : 'Post Pitch'}
+          </button>
+        </div>
+      </div>
+
+      {/* Hidden File Inputs */}
+      <input
+        ref={videoInputRef}
+        type="file"
+        accept="video/*"
+        onChange={handleVideoUpload}
+        className="hidden"
+      />
+      <input
+        ref={thumbnailInputRef}
+        type="file"
+        accept="image/*"
+        onChange={handleThumbnailUpload}
+        className="hidden"
+      />
+
+      {/* Details Sheet */}
+      <Sheet open={showDetailsSheet} onOpenChange={setShowDetailsSheet}>
+        <SheetContent side="bottom" className="h-[85vh] rounded-t-3xl">
+          <SheetHeader className="mb-6">
+            <SheetTitle>Pitch Details</SheetTitle>
+          </SheetHeader>
+          
+          <div className="space-y-6 overflow-y-auto max-h-[calc(85vh-8rem)] pb-6">
+            {/* Title */}
+            <div>
+              <label className="text-sm font-medium mb-2 block">Title *</label>
+              <Input
+                placeholder="Give your pitch a title"
+                {...form.register('title')}
+                className="bg-secondary/50 border-0"
+              />
+              {form.formState.errors.title && (
+                <p className="text-sm text-destructive mt-1">
+                  {form.formState.errors.title.message}
+                </p>
+              )}
+            </div>
+
+            {/* Caption */}
+            <div>
+              <label className="text-sm font-medium mb-2 block">
+                Caption *
+                <span className="text-muted-foreground ml-2">
+                  {form.watch('caption')?.length || 0}/500
+                </span>
+              </label>
+              <Textarea
+                placeholder="Write a compelling caption..."
+                {...form.register('caption')}
+                maxLength={500}
+                rows={4}
+                className="bg-secondary/50 border-0 resize-none"
+              />
+              {form.formState.errors.caption && (
+                <p className="text-sm text-destructive mt-1">
+                  {form.formState.errors.caption.message}
+                </p>
+              )}
+            </div>
+
+            {/* Hashtags */}
+            <div>
+              <label className="text-sm font-medium mb-2 flex items-center gap-2">
+                <Hash className="w-4 h-4" />
+                Hashtags
+              </label>
+              <Input
+                placeholder="ai, innovation, startup"
+                {...form.register('hashtags')}
+                className="bg-secondary/50 border-0"
+              />
+              <p className="text-xs text-muted-foreground mt-1">
+                Separate with commas
+              </p>
+            </div>
+
+            {/* Visibility */}
+            <div>
+              <label className="text-sm font-medium mb-2 flex items-center gap-2">
+                <Globe className="w-4 h-4" />
+                Visibility
+              </label>
+              <select
+                {...form.register('visibility')}
+                className="w-full px-4 py-3 bg-secondary/50 rounded-lg border-0"
+              >
+                <option value="public">Public</option>
+                <option value="unlisted">Unlisted</option>
+                <option value="private">Private</option>
+              </select>
+            </div>
+
+            {/* Innovation Info */}
+            <div className="pt-4 border-t">
+              <p className="text-sm text-muted-foreground mb-1">Pitching for</p>
+              <p className="font-semibold">{innovation.company_name}</p>
+              <p className="text-sm text-muted-foreground">{innovation.tagline}</p>
+            </div>
+          </div>
+        </SheetContent>
+      </Sheet>
+    </div>
+  );
 }
