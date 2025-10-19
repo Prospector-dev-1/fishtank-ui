@@ -460,7 +460,7 @@ export default function Dashboard() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <Card className="p-4">
             <div className="text-2xl font-bold text-primary">{portfolioMetrics.activeDeals}</div>
-            <div className="text-sm text-muted-foreground">Active Investments</div>
+            <div className="text-sm text-muted-foreground">Innovators contacted</div>
           </Card>
           <Card className="p-4">
             <div className="text-2xl font-bold text-success">{portfolioMetrics.pipelineValue}</div>
