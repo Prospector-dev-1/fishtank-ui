@@ -297,10 +297,7 @@ export default function Profile() {
         {/* Quick Actions */}
         <div className="flex flex-wrap gap-3 mb-6">
           
-          <Button onClick={() => navigate("/innovator/tank")} variant="outline">
-            <Video className="h-4 w-4 mr-2" />
-            Create Pitch
-          </Button>
+          
           {stats.innovations > 0 && <Button onClick={() => navigate("/innovator/analytics")} variant="outline">
               View Analytics
             </Button>}
