@@ -609,28 +609,7 @@ const Index = () => {
       
 
       {/* Recent Notifications */}
-      <Card className="shadow-card animate-slide-up">
-        <CardHeader className="pb-3">
-          <CardTitle className="text-lg">Recent Activity</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3">
-          {notifications.length > 0 ? notifications.map(notification => <div key={notification.id} className="flex items-start gap-3 p-3 rounded-lg hover:bg-muted/30 transition-colors">
-                <div className="w-2 h-2 rounded-full bg-primary mt-3 flex-shrink-0" />
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm leading-relaxed">{notification.message}</p>
-                  <p className="text-xs text-muted-foreground font-medium">
-                    {new Date(notification.created_at).toLocaleDateString()}
-                  </p>
-                </div>
-              </div>) : <div className="text-center py-8 text-muted-foreground">
-              <div className="bg-muted/30 p-4 rounded-full w-16 h-16 mx-auto mb-3 flex items-center justify-center">
-                <Mail className="h-8 w-8" />
-              </div>
-              <p className="font-medium">No notifications yet</p>
-              <p className="text-sm">We'll notify you when something happens</p>
-            </div>}
-        </CardContent>
-      </Card>
+      
     </div>;
 };
 export default Index;
