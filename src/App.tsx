@@ -84,6 +84,7 @@ function InnovatorAppContent() {
     "/innovator/network",
     "/innovator/collaborate",
     "/innovator/messaging",
+    "/innovator/profile",
   ];
   const pathname = window.location.pathname;
   const showNavigation = mainPages.includes(pathname);
