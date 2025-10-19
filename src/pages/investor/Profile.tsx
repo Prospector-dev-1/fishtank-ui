@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Camera, Moon, Sun, Bell, Shield, LogOut, Settings, Globe, Mail, HardDrive, User, Lock, Smartphone } from 'lucide-react';
+import { Camera, Moon, Sun, Bell, Shield, LogOut, Settings, Globe, Mail, HardDrive, User, Lock, Smartphone, X, Plus } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/investor/ui/card';
 import { Button } from '@/components/investor/ui/button';
 import { Input } from '@/components/investor/ui/input';
@@ -20,6 +20,8 @@ export default function Profile() {
   const [privacyMode, setPrivacyMode] = useState(false);
   const [emailNotifications, setEmailNotifications] = useState(true);
   const [language, setLanguage] = useState('en');
+  const [newSector, setNewSector] = useState('');
+  const [newStage, setNewStage] = useState('');
   const { toast } = useToast();
 
   const handleSave = () => {
@@ -43,6 +45,80 @@ export default function Profile() {
     toast({
       title: "Settings saved!",
       description: "Your preferences have been updated.",
+    });
+  };
+
+  const addSector = () => {
+    if (newSector.trim() && !user.preferences.sectors.includes(newSector.trim())) {
+      setUser({
+        ...user,
+        preferences: { 
+          ...user.preferences, 
+          sectors: [...user.preferences.sectors, newSector.trim()] 
+        }
+      });
+      setNewSector('');
+      toast({
+        title: "Sector added",
+        description: `${newSector.trim()} added to your preferences.`,
+      });
+    }
+  };
+
+  const addStage = () => {
+    if (newStage.trim() && !user.preferences.stages.includes(newStage.trim())) {
+      setUser({
+        ...user,
+        preferences: { 
+          ...user.preferences, 
+          stages: [...user.preferences.stages, newStage.trim()] 
+        }
+      });
+      setNewStage('');
+      toast({
+        title: "Stage added",
+        description: `${newStage.trim()} added to your preferences.`,
+      });
+    }
+  };
+
+  const removeSector = (sector: string) => {
+    setUser({
+      ...user,
+      preferences: { 
+        ...user.preferences, 
+        sectors: user.preferences.sectors.filter(s => s !== sector) 
+      }
+    });
+  };
+
+  const removeStage = (stage: string) => {
+    setUser({
+      ...user,
+      preferences: { 
+        ...user.preferences, 
+        stages: user.preferences.stages.filter(s => s !== stage) 
+      }
+    });
+  };
+
+  const toggleSector = (sector: string) => {
+    const newSectors = user.preferences.sectors.includes(sector)
+      ? user.preferences.sectors.filter(s => s !== sector)
+      : [...user.preferences.sectors, sector];
+    setUser({
+      ...user,
+      preferences: { ...user.preferences, sectors: newSectors }
+    });
+  };
+
+  const toggleStage = (stage: string) => {
+    const newStages = user.preferences.stages.includes(stage)
+      ? user.preferences.stages.filter(s => s !== stage)
+      : [...user.preferences.stages, stage];
+    setUser({
+      ...user,
+      preferences: { ...user.preferences, stages: newStages }
     });
   };
 
@@ -309,59 +385,155 @@ export default function Profile() {
           <CardHeader>
             <CardTitle>Investment Preferences</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-6">
+            {/* Preferred Sectors */}
             <div>
-              <Label className="text-sm font-medium">Preferred Sectors</Label>
-              <div className="flex flex-wrap gap-2 mt-2">
-                {sectors.map((sector) => (
-                  <Chip
-                    key={sector}
-                    variant={user.preferences.sectors.includes(sector) ? "primary" : "secondary"}
-                    size="sm"
-                    className={isEditing ? "cursor-pointer" : ""}
-                    onClick={() => {
-                      if (isEditing) {
-                        const newSectors = user.preferences.sectors.includes(sector)
-                          ? user.preferences.sectors.filter(s => s !== sector)
-                          : [...user.preferences.sectors, sector];
-                        setUser({
-                          ...user,
-                          preferences: { ...user.preferences, sectors: newSectors }
-                        });
-                      }
-                    }}
-                  >
-                    {sector}
-                  </Chip>
-                ))}
-              </div>
+              <Label className="text-sm font-medium mb-3 block">Preferred Sectors</Label>
+              
+              {/* User's Selected Sectors */}
+              {user.preferences.sectors.length > 0 && (
+                <div className="flex flex-wrap gap-2 mb-3">
+                  {user.preferences.sectors.map((sector) => (
+                    <Chip
+                      key={sector}
+                      variant="primary"
+                      size="sm"
+                      className={isEditing ? "cursor-pointer group" : ""}
+                    >
+                      {sector}
+                      {isEditing && (
+                        <button
+                          onClick={() => removeSector(sector)}
+                          className="ml-1 hover:bg-primary-foreground/20 rounded-full p-0.5"
+                        >
+                          <X className="w-3 h-3" />
+                        </button>
+                      )}
+                    </Chip>
+                  ))}
+                </div>
+              )}
+
+              {/* Add New Sector Input */}
+              {isEditing && (
+                <div>
+                  <div className="flex gap-2 mb-3">
+                    <Input
+                      placeholder="Add custom sector..."
+                      value={newSector}
+                      onChange={(e) => setNewSector(e.target.value)}
+                      onKeyPress={(e) => {
+                        if (e.key === 'Enter') {
+                          e.preventDefault();
+                          addSector();
+                        }
+                      }}
+                      className="flex-1"
+                    />
+                    <Button size="sm" onClick={addSector} disabled={!newSector.trim()}>
+                      <Plus className="w-4 h-4 mr-1" />
+                      Add
+                    </Button>
+                  </div>
+                  
+                  {/* Suggested Sectors */}
+                  <div className="space-y-2">
+                    <Label className="text-xs text-muted-foreground">Quick add:</Label>
+                    <div className="flex flex-wrap gap-2">
+                      {sectors
+                        .filter(sector => !user.preferences.sectors.includes(sector))
+                        .map((sector) => (
+                          <Chip
+                            key={sector}
+                            variant="secondary"
+                            size="sm"
+                            className="cursor-pointer hover:bg-primary hover:text-primary-foreground transition-colors"
+                            onClick={() => toggleSector(sector)}
+                          >
+                            <Plus className="w-3 h-3 mr-1" />
+                            {sector}
+                          </Chip>
+                        ))}
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
 
+            <Separator />
+
+            {/* Preferred Stages */}
             <div>
-              <Label className="text-sm font-medium">Preferred Stages</Label>
-              <div className="flex flex-wrap gap-2 mt-2">
-                {stages.map((stage) => (
-                  <Chip
-                    key={stage}
-                    variant={user.preferences.stages.includes(stage) ? "primary" : "secondary"}
-                    size="sm"
-                    className={isEditing ? "cursor-pointer" : ""}
-                    onClick={() => {
-                      if (isEditing) {
-                        const newStages = user.preferences.stages.includes(stage)
-                          ? user.preferences.stages.filter(s => s !== stage)
-                          : [...user.preferences.stages, stage];
-                        setUser({
-                          ...user,
-                          preferences: { ...user.preferences, stages: newStages }
-                        });
-                      }
-                    }}
-                  >
-                    {stage}
-                  </Chip>
-                ))}
-              </div>
+              <Label className="text-sm font-medium mb-3 block">Preferred Stages</Label>
+              
+              {/* User's Selected Stages */}
+              {user.preferences.stages.length > 0 && (
+                <div className="flex flex-wrap gap-2 mb-3">
+                  {user.preferences.stages.map((stage) => (
+                    <Chip
+                      key={stage}
+                      variant="primary"
+                      size="sm"
+                      className={isEditing ? "cursor-pointer group" : ""}
+                    >
+                      {stage}
+                      {isEditing && (
+                        <button
+                          onClick={() => removeStage(stage)}
+                          className="ml-1 hover:bg-primary-foreground/20 rounded-full p-0.5"
+                        >
+                          <X className="w-3 h-3" />
+                        </button>
+                      )}
+                    </Chip>
+                  ))}
+                </div>
+              )}
+
+              {/* Add New Stage Input */}
+              {isEditing && (
+                <div>
+                  <div className="flex gap-2 mb-3">
+                    <Input
+                      placeholder="Add custom stage..."
+                      value={newStage}
+                      onChange={(e) => setNewStage(e.target.value)}
+                      onKeyPress={(e) => {
+                        if (e.key === 'Enter') {
+                          e.preventDefault();
+                          addStage();
+                        }
+                      }}
+                      className="flex-1"
+                    />
+                    <Button size="sm" onClick={addStage} disabled={!newStage.trim()}>
+                      <Plus className="w-4 h-4 mr-1" />
+                      Add
+                    </Button>
+                  </div>
+                  
+                  {/* Suggested Stages */}
+                  <div className="space-y-2">
+                    <Label className="text-xs text-muted-foreground">Quick add:</Label>
+                    <div className="flex flex-wrap gap-2">
+                      {stages
+                        .filter(stage => !user.preferences.stages.includes(stage))
+                        .map((stage) => (
+                          <Chip
+                            key={stage}
+                            variant="secondary"
+                            size="sm"
+                            className="cursor-pointer hover:bg-primary hover:text-primary-foreground transition-colors"
+                            onClick={() => toggleStage(stage)}
+                          >
+                            <Plus className="w-3 h-3 mr-1" />
+                            {stage}
+                          </Chip>
+                        ))}
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </CardContent>
         </Card>
