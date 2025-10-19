@@ -19,7 +19,7 @@ const pitchSchema = z.object({
   thumbnail_url: z.string().optional(),
   hashtags: z.string().optional(),
   visibility: z.enum(["public", "private", "unlisted"]),
-  status: z.enum(["draft", "published"]),
+  status: z.enum(["draft", "published"])
 });
 type PitchFormData = z.infer<typeof pitchSchema>;
 export default function CreatePitch() {
@@ -31,7 +31,10 @@ export default function CreatePitch() {
   const [thumbnailPreview, setThumbnailPreview] = useState<string | null>(null);
   const videoInputRef = useRef<HTMLInputElement>(null);
   const thumbnailInputRef = useRef<HTMLInputElement>(null);
-  const { canCreatePitch, isLoading: permissionsLoading } = useTeamPermissions(innovation?.id);
+  const {
+    canCreatePitch,
+    isLoading: permissionsLoading
+  } = useTeamPermissions(innovation?.id);
   const form = useForm<PitchFormData>({
     resolver: zodResolver(pitchSchema),
     defaultValues: {
@@ -42,8 +45,8 @@ export default function CreatePitch() {
       thumbnail_url: "",
       hashtags: "",
       visibility: "public",
-      status: "published",
-    },
+      status: "published"
+    }
   });
   useEffect(() => {
     loadInnovation();
@@ -56,7 +59,7 @@ export default function CreatePitch() {
         console.log("❌ Permission denied - redirecting", {
           canCreatePitch,
           permissionsLoading,
-          innovationId: innovation?.id,
+          innovationId: innovation?.id
         });
         toast.error("You do not have permission to create pitches");
         navigate("/innovator/tank");
@@ -64,7 +67,7 @@ export default function CreatePitch() {
         console.log("✅ Permission granted - can create pitch", {
           canCreatePitch,
           permissionsLoading,
-          innovationId: innovation?.id,
+          innovationId: innovation?.id
         });
       }
     }
@@ -101,7 +104,9 @@ export default function CreatePitch() {
     setIsSubmitting(true);
     try {
       const {
-        data: { user },
+        data: {
+          user
+        }
       } = await supabase.auth.getUser();
       if (!user) {
         toast.error("Please sign in to create a pitch");
@@ -109,12 +114,7 @@ export default function CreatePitch() {
       }
 
       // Parse hashtags from comma-separated string
-      const hashtagsArray = data.hashtags
-        ? data.hashtags
-            .split(",")
-            .map((tag) => tag.trim().replace(/^#/, ""))
-            .filter(Boolean)
-        : [];
+      const hashtagsArray = data.hashtags ? data.hashtags.split(",").map(tag => tag.trim().replace(/^#/, "")).filter(Boolean) : [];
       const pitchData = {
         user_id: user.id,
         innovation_id: innovation.id,
@@ -125,9 +125,11 @@ export default function CreatePitch() {
         thumbnail_url: data.thumbnail_url,
         hashtags: hashtagsArray,
         visibility: data.visibility,
-        status: data.status,
+        status: data.status
       };
-      const { error } = await supabase.from("pitches").insert([pitchData]);
+      const {
+        error
+      } = await supabase.from("pitches").insert([pitchData]);
       if (error) throw error;
       toast.success("Pitch created successfully!");
       navigate("/innovator/tank");
@@ -139,23 +141,17 @@ export default function CreatePitch() {
     }
   };
   if (!innovation) {
-    return (
-      <div className="fixed inset-0 bg-black flex items-center justify-center">
+    return <div className="fixed inset-0 bg-black flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto"></div>
           <p className="text-white/70 mt-2">Loading...</p>
         </div>
-      </div>
-    );
+      </div>;
   }
-  return (
-    <div className="fixed inset-0 bg-black flex flex-col">
+  return <div className="fixed inset-0 bg-black flex flex-col">
       {/* Top Bar */}
       <div className="safe-top flex items-center justify-between px-4 py-3 bg-black/50 backdrop-blur-sm z-10">
-        <button
-          onClick={() => navigate("/innovator/tank")}
-          className="text-white p-2 active:scale-95 transition-transform"
-        >
+        <button onClick={() => navigate("/innovator/tank")} className="text-white p-2 active:scale-95 transition-transform">
           <X className="w-6 h-6" />
         </button>
         <span className="text-white text-sm font-medium">New Pitch</span>
@@ -164,29 +160,20 @@ export default function CreatePitch() {
 
       {/* Video Preview Area */}
       <div className="flex-1 relative bg-gradient-to-br from-gray-900 to-gray-800">
-        {videoPreview ? (
-          <video src={videoPreview} className="w-full h-full object-cover" controls playsInline />
-        ) : (
-          <div className="w-full h-full flex flex-col items-center justify-center">
+        {videoPreview ? <video src={videoPreview} className="w-full h-full object-cover" controls playsInline /> : <div className="w-full h-full flex flex-col items-center justify-center">
             <div className="w-24 h-24 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center mb-4">
               <Video className="w-12 h-12 text-white/70" />
             </div>
             <p className="text-white/70 text-sm mb-2">Add your pitch video</p>
-            <button
-              onClick={() => videoInputRef.current?.click()}
-              className="px-6 py-2.5 bg-white text-black rounded-full font-semibold text-sm active:scale-95 transition-transform"
-            >
+            <button onClick={() => videoInputRef.current?.click()} className="px-6 py-2.5 bg-white text-black rounded-full font-semibold text-sm active:scale-95 transition-transform">
               Select Video
             </button>
-          </div>
-        )}
+          </div>}
 
         {/* Thumbnail Preview Overlay */}
-        {thumbnailPreview && (
-          <div className="absolute bottom-4 left-4 w-16 h-16 rounded-lg overflow-hidden border-2 border-white/50">
+        {thumbnailPreview && <div className="absolute bottom-4 left-4 w-16 h-16 rounded-lg overflow-hidden border-2 border-white/50">
             <img src={thumbnailPreview} alt="Thumbnail" className="w-full h-full object-cover" />
-          </div>
-        )}
+          </div>}
       </div>
 
       {/* Bottom Details Form */}
@@ -194,34 +181,18 @@ export default function CreatePitch() {
         <div className="px-4 py-4 space-y-4">
           {/* Quick Actions */}
           <div className="flex gap-2">
-            <button
-              onClick={() => videoInputRef.current?.click()}
-              className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-white/10 rounded-xl text-white text-sm font-medium active:scale-95 transition-transform"
-            >
+            <button onClick={() => videoInputRef.current?.click()} className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-white/10 rounded-xl text-white text-sm font-medium active:scale-95 transition-transform">
               <Video className="w-4 h-4" />
               {videoPreview ? "Change Video" : "Add Video"}
             </button>
-            <button
-              onClick={() => thumbnailInputRef.current?.click()}
-              className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-white/10 rounded-xl text-white text-sm font-medium active:scale-95 transition-transform"
-            >
+            <button onClick={() => thumbnailInputRef.current?.click()} className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-white/10 rounded-xl text-white text-sm font-medium active:scale-95 transition-transform">
               <ImageIcon className="w-4 h-4" />
               Thumbnail
             </button>
           </div>
 
           {/* Title */}
-          <div>
-            <label className="text-white/70 text-xs mb-1.5 block">Title *</label>
-            <Input
-              placeholder="Give your pitch a title"
-              {...form.register("title")}
-              className="bg-white/5 border-white/10 text-white placeholder:text-white/40"
-            />
-            {form.formState.errors.title && (
-              <p className="text-sm text-red-400 mt-1">{form.formState.errors.title.message}</p>
-            )}
-          </div>
+          
 
           {/* Caption */}
           <div>
@@ -229,16 +200,8 @@ export default function CreatePitch() {
               <span>Caption *</span>
               <span className="text-white/50">{form.watch("caption")?.length || 0}/500</span>
             </label>
-            <Textarea
-              placeholder="Write a compelling caption..."
-              {...form.register("caption")}
-              maxLength={500}
-              rows={3}
-              className="bg-white/5 border-white/10 text-white placeholder:text-white/40 resize-none"
-            />
-            {form.formState.errors.caption && (
-              <p className="text-sm text-red-400 mt-1">{form.formState.errors.caption.message}</p>
-            )}
+            <Textarea placeholder="Write a compelling caption..." {...form.register("caption")} maxLength={500} rows={3} className="bg-white/5 border-white/10 text-white placeholder:text-white/40 resize-none" />
+            {form.formState.errors.caption && <p className="text-sm text-red-400 mt-1">{form.formState.errors.caption.message}</p>}
           </div>
 
           {/* Hashtags */}
@@ -247,11 +210,7 @@ export default function CreatePitch() {
               <Hash className="w-3.5 h-3.5" />
               Tags
             </label>
-            <Input
-              placeholder="ai, innovation, startup"
-              {...form.register("hashtags")}
-              className="bg-white/5 border-white/10 text-white placeholder:text-white/40"
-            />
+            <Input placeholder="ai, innovation, startup" {...form.register("hashtags")} className="bg-white/5 border-white/10 text-white placeholder:text-white/40" />
             <p className="text-xs text-white/50 mt-1">Separate with commas</p>
           </div>
 
@@ -265,11 +224,7 @@ export default function CreatePitch() {
           </div>
 
           {/* Post Button */}
-          <button
-            onClick={form.handleSubmit(onSubmit)}
-            disabled={isSubmitting || !videoPreview}
-            className="w-full py-3.5 bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-full font-bold text-base disabled:opacity-50 disabled:from-gray-600 disabled:to-gray-600 active:scale-[0.98] transition-all"
-          >
+          <button onClick={form.handleSubmit(onSubmit)} disabled={isSubmitting || !videoPreview} className="w-full py-3.5 bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-full font-bold text-base disabled:opacity-50 disabled:from-gray-600 disabled:to-gray-600 active:scale-[0.98] transition-all">
             {isSubmitting ? "Posting..." : "Post Pitch"}
           </button>
         </div>
@@ -278,6 +233,5 @@ export default function CreatePitch() {
       {/* Hidden File Inputs */}
       <input ref={videoInputRef} type="file" accept="video/*" onChange={handleVideoUpload} className="hidden" />
       <input ref={thumbnailInputRef} type="file" accept="image/*" onChange={handleThumbnailUpload} className="hidden" />
-    </div>
-  );
+    </div>;
 }
