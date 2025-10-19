@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Startup } from "@/data/startups";
 import { ApplyModal } from "./ApplyModal";
-import { NDAModal } from "./NDAModal";
 
 interface ExpandableStartupCardProps {
   startup: Startup;
@@ -14,20 +13,10 @@ interface ExpandableStartupCardProps {
 }
 
 export function ExpandableStartupCard({ startup, expanded, setExpanded, onRequest }: ExpandableStartupCardProps) {
-  const [showNDA, setShowNDA] = useState(false);
   const [applyRole, setApplyRole] = useState<string | null>(null);
 
   const handleRequest = (payload?: any) => {
-    if (startup.ndaRequired) {
-      setShowNDA(true);
-    } else {
-      onRequest(payload);
-    }
-  };
-
-  const handleNDAAgree = () => {
-    setShowNDA(false);
-    onRequest();
+    onRequest(payload);
   };
 
   const handleApplySubmit = (payload: any) => {
@@ -44,11 +33,6 @@ export function ExpandableStartupCard({ startup, expanded, setExpanded, onReques
           <img className="h-full w-full object-cover" src={startup.bannerUrl} alt={startup.name} />
         ) : (
           <div className="flex h-full w-full items-center justify-center bg-neutral-800 text-neutral-500">No Image</div>
-        )}
-        {startup.ndaRequired && (
-          <div className="absolute left-3 top-3 rounded-full bg-black/80 px-2.5 py-1 text-xs font-medium text-white">
-            NDA
-          </div>
         )}
       </div>
 
@@ -218,13 +202,6 @@ export function ExpandableStartupCard({ startup, expanded, setExpanded, onReques
       </div>
 
       {/* Modals */}
-      <NDAModal
-        isOpen={showNDA}
-        onClose={() => setShowNDA(false)}
-        onAgree={handleNDAAgree}
-        startupName={startup.name}
-      />
-
       <ApplyModal
         isOpen={!!applyRole}
         onClose={() => setApplyRole(null)}
