@@ -565,38 +565,7 @@ const Index = () => {
       </div>
 
       {/* This Week Tasks */}
-      <Card className="shadow-card animate-slide-up">
-        <CardHeader className="pb-3">
-          <CardTitle className="text-lg flex items-center gap-2">
-            <div className="bg-accent/10 p-2 rounded-full">
-              <Clock className="h-5 w-5 text-accent" />
-            </div>
-            This Week
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3">
-          {thisWeekTasks.length > 0 ? thisWeekTasks.map(task => <div key={task.id} className="flex items-center gap-3 p-4 rounded-xl bg-gradient-subtle border hover:shadow-card transition-all duration-200">
-                <div className="flex-1 min-w-0">
-                  <p className="font-semibold text-base">{task.title}</p>
-                  <p className="text-sm text-muted-foreground truncate">{task.project}</p>
-                </div>
-                <div className="text-right">
-                  <Badge variant={task.status === "in-progress" ? "default" : task.status === "submitted" ? "secondary" : "outline"} className="text-xs mb-2 font-medium">
-                    {task.status === "in-progress" && <Clock className="h-3 w-3 mr-1" />}
-                    {task.status === "submitted" && <CheckCircle2 className="h-3 w-3 mr-1" />}
-                    {task.status}
-                  </Badge>
-                  <p className="text-xs text-muted-foreground font-medium">{task.due}</p>
-                </div>
-              </div>) : <div className="text-center py-8 text-muted-foreground">
-              <div className="bg-muted/30 p-4 rounded-full w-16 h-16 mx-auto mb-3 flex items-center justify-center">
-                <Clock className="h-8 w-8" />
-              </div>
-              <p className="font-medium">No active tasks</p>
-              <p className="text-sm">You're all caught up!</p>
-            </div>}
-        </CardContent>
-      </Card>
+      
 
       {/* Pending Releases */}
       
