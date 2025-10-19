@@ -295,13 +295,7 @@ export default function Profile() {
         </div>
 
         {/* Quick Actions */}
-        <div className="flex flex-wrap gap-3 mb-6">
-          
-          
-          {stats.innovations > 0 && <Button onClick={() => navigate("/innovator/analytics")} variant="outline">
-              View Analytics
-            </Button>}
-        </div>
+        
 
         {/* Tabs */}
         <Tabs defaultValue="overview" className="w-full">
