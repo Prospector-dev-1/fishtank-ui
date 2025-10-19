@@ -50,8 +50,8 @@ export default function Home() {
   const quickActions = [
     {
       icon: Rocket,
-      title: "Create Pitch",
-      description: "Share your innovation",
+      title: "Create a New Pitch",
+      description: "Increase the odds of your innovation being found by an investor",
       color: "bg-gradient-primary",
       action: () => navigate("/innovator/tank/pitch/new"),
     },
