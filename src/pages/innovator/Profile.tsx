@@ -8,15 +8,17 @@ import { Badge } from "@/components/innovator/ui/badge";
 import { Separator } from "@/components/innovator/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/innovator/ui/tabs";
 import { FishtankHeader } from "@/components/innovator/layout/FishtankHeader";
-import { User, Mail, MapPin, Briefcase, Edit, Settings, Rocket, Video, Users, Lightbulb } from "lucide-react";
+import { Mail, MapPin, Briefcase, Edit, Settings, Rocket, Video, Users, Lightbulb, Save, X } from "lucide-react";
 import { toast } from "@/components/innovator/ui/use-toast";
 import { EmptyState } from "@/components/innovator/ui/empty-state";
-import { Skeleton } from "@/components/innovator/ui/skeleton";
-import { getMockProfileData, USE_MOCK_PROFILE } from "@/lib/innovator/mockProfileData";
+import { Input } from "@/components/innovator/ui/input";
+import { Textarea } from "@/components/innovator/ui/textarea";
 export default function Profile() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const [profile, setProfile] = useState<any>(null);
+  const [isEditingOverview, setIsEditingOverview] = useState(false);
+  const [editedProfile, setEditedProfile] = useState<any>(null);
   const [stats, setStats] = useState({
     innovations: 0,
     pitches: 0,
@@ -30,18 +32,6 @@ export default function Profile() {
   }, []);
   const loadProfile = async () => {
     try {
-      // Use mock data if enabled
-      if (USE_MOCK_PROFILE) {
-        const mockData = getMockProfileData();
-        setProfile(mockData.profile);
-        setInnovations(mockData.innovations);
-        setPitches(mockData.pitches);
-        setStats(mockData.stats);
-        setIsLoading(false);
-        return;
-      }
-
-      // Otherwise, load from backend
       const {
         data: {
           user
@@ -79,6 +69,107 @@ export default function Profile() {
       setIsLoading(false);
     }
   };
+
+  const handleEditOverview = () => {
+    setEditedProfile({ ...profile });
+    setIsEditingOverview(true);
+  };
+
+  const handleCancelEdit = () => {
+    setEditedProfile(null);
+    setIsEditingOverview(false);
+  };
+
+  const handleSaveOverview = async () => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      const { error } = await supabase
+        .from("profiles")
+        .update({
+          location: editedProfile.location,
+          company: editedProfile.company,
+          bio: editedProfile.bio,
+          website: editedProfile.website,
+          skills: editedProfile.skills,
+          interests: editedProfile.interests,
+          seeking: editedProfile.seeking,
+        })
+        .eq("id", user.id);
+
+      if (error) throw error;
+
+      setProfile(editedProfile);
+      setIsEditingOverview(false);
+      toast({
+        title: "Success",
+        description: "Profile updated successfully",
+      });
+    } catch (error) {
+      console.error("Error saving profile:", error);
+      toast({
+        title: "Error",
+        description: "Failed to save profile changes",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleSkillChange = (index: number, value: string) => {
+    const newSkills = [...(editedProfile.skills || [])];
+    newSkills[index] = value;
+    setEditedProfile({ ...editedProfile, skills: newSkills });
+  };
+
+  const handleAddSkill = () => {
+    setEditedProfile({
+      ...editedProfile,
+      skills: [...(editedProfile.skills || []), ""],
+    });
+  };
+
+  const handleRemoveSkill = (index: number) => {
+    const newSkills = (editedProfile.skills || []).filter((_: any, i: number) => i !== index);
+    setEditedProfile({ ...editedProfile, skills: newSkills });
+  };
+
+  const handleInterestChange = (index: number, value: string) => {
+    const newInterests = [...(editedProfile.interests || [])];
+    newInterests[index] = value;
+    setEditedProfile({ ...editedProfile, interests: newInterests });
+  };
+
+  const handleAddInterest = () => {
+    setEditedProfile({
+      ...editedProfile,
+      interests: [...(editedProfile.interests || []), ""],
+    });
+  };
+
+  const handleRemoveInterest = (index: number) => {
+    const newInterests = (editedProfile.interests || []).filter((_: any, i: number) => i !== index);
+    setEditedProfile({ ...editedProfile, interests: newInterests });
+  };
+
+  const handleSeekingChange = (index: number, value: string) => {
+    const newSeeking = [...(editedProfile.seeking || [])];
+    newSeeking[index] = value;
+    setEditedProfile({ ...editedProfile, seeking: newSeeking });
+  };
+
+  const handleAddSeeking = () => {
+    setEditedProfile({
+      ...editedProfile,
+      seeking: [...(editedProfile.seeking || []), ""],
+    });
+  };
+
+  const handleRemoveSeeking = (index: number) => {
+    const newSeeking = (editedProfile.seeking || []).filter((_: any, i: number) => i !== index);
+    setEditedProfile({ ...editedProfile, seeking: newSeeking });
+  };
+
   if (isLoading) {
     return <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
@@ -95,15 +186,6 @@ export default function Profile() {
   return <div className="min-h-screen bg-background pb-16">
       <FishtankHeader title="Profile" showLogo={false} showProfile={false} />
       <div className="container mx-auto px-4 py-8 max-w-6xl">
-        {/* Mock Data Indicator */}
-        {USE_MOCK_PROFILE && <div className="mb-4 p-3 bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-lg">
-            <p className="text-sm text-blue-800 dark:text-blue-200">
-              <span className="font-semibold">Mock Data Mode:</span> You're viewing sample profile data. 
-              Set <code className="px-1 py-0.5 bg-blue-100 dark:bg-blue-900 rounded text-xs">USE_MOCK_PROFILE = false</code> in 
-              <code className="px-1 py-0.5 bg-blue-100 dark:bg-blue-900 rounded text-xs ml-1">mockProfileData.ts</code> to use real backend data.
-            </p>
-          </div>}
-        
         {/* Header Card */}
         <Card className="mb-6">
           <CardHeader>
@@ -213,7 +295,26 @@ export default function Profile() {
           <TabsContent value="overview" className="space-y-6">
             <Card>
               <CardHeader>
-                <CardTitle>About</CardTitle>
+                <div className="flex items-center justify-between">
+                  <CardTitle>About</CardTitle>
+                  {!isEditingOverview ? (
+                    <Button variant="outline" size="sm" onClick={handleEditOverview}>
+                      <Edit className="h-4 w-4 mr-2" />
+                      Edit
+                    </Button>
+                  ) : (
+                    <div className="flex gap-2">
+                      <Button variant="outline" size="sm" onClick={handleCancelEdit}>
+                        <X className="h-4 w-4 mr-2" />
+                        Cancel
+                      </Button>
+                      <Button size="sm" onClick={handleSaveOverview}>
+                        <Save className="h-4 w-4 mr-2" />
+                        Save
+                      </Button>
+                    </div>
+                  )}
+                </div>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex flex-col gap-2">
@@ -221,63 +322,217 @@ export default function Profile() {
                     <Mail className="h-4 w-4" />
                     <span>{profile.email}</span>
                   </div>
-                  {profile.location && <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <MapPin className="h-4 w-4" />
-                      <span>{profile.location}</span>
-                    </div>}
-                  {profile.company && <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <Briefcase className="h-4 w-4" />
-                      <span>{profile.company}</span>
-                    </div>}
+                  
+                  {/* Location */}
+                  {!isEditingOverview ? (
+                    profile.location && (
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <MapPin className="h-4 w-4" />
+                        <span>{profile.location}</span>
+                      </div>
+                    )
+                  ) : (
+                    <div className="flex items-center gap-2">
+                      <MapPin className="h-4 w-4 text-muted-foreground" />
+                      <Input
+                        value={editedProfile.location || ""}
+                        onChange={(e) => setEditedProfile({ ...editedProfile, location: e.target.value })}
+                        placeholder="Location"
+                        className="flex-1"
+                      />
+                    </div>
+                  )}
+                  
+                  {/* Company */}
+                  {!isEditingOverview ? (
+                    profile.company && (
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Briefcase className="h-4 w-4" />
+                        <span>{profile.company}</span>
+                      </div>
+                    )
+                  ) : (
+                    <div className="flex items-center gap-2">
+                      <Briefcase className="h-4 w-4 text-muted-foreground" />
+                      <Input
+                        value={editedProfile.company || ""}
+                        onChange={(e) => setEditedProfile({ ...editedProfile, company: e.target.value })}
+                        placeholder="Company"
+                        className="flex-1"
+                      />
+                    </div>
+                  )}
                 </div>
 
-                {profile.bio && <>
+                {/* Bio */}
+                {(!isEditingOverview && profile.bio) || isEditingOverview ? (
+                  <>
                     <Separator />
                     <div>
                       <h3 className="font-semibold mb-2">Bio</h3>
-                      <p className="text-sm text-muted-foreground">{profile.bio}</p>
+                      {!isEditingOverview ? (
+                        <p className="text-sm text-muted-foreground">{profile.bio}</p>
+                      ) : (
+                        <Textarea
+                          value={editedProfile.bio || ""}
+                          onChange={(e) => setEditedProfile({ ...editedProfile, bio: e.target.value })}
+                          placeholder="Tell us about yourself..."
+                          rows={4}
+                        />
+                      )}
                     </div>
-                  </>}
+                  </>
+                ) : null}
 
-                {profile.website && <>
+                {/* Website */}
+                {(!isEditingOverview && profile.website) || isEditingOverview ? (
+                  <>
                     <Separator />
                     <div>
                       <h3 className="font-semibold mb-2">Website</h3>
-                      <a href={profile.website} target="_blank" rel="noopener noreferrer" className="text-sm text-primary hover:underline">
-                        {profile.website}
-                      </a>
+                      {!isEditingOverview ? (
+                        <a href={profile.website} target="_blank" rel="noopener noreferrer" className="text-sm text-primary hover:underline">
+                          {profile.website}
+                        </a>
+                      ) : (
+                        <Input
+                          value={editedProfile.website || ""}
+                          onChange={(e) => setEditedProfile({ ...editedProfile, website: e.target.value })}
+                          placeholder="https://yourwebsite.com"
+                        />
+                      )}
                     </div>
-                  </>}
+                  </>
+                ) : null}
 
-                {profile.skills && profile.skills.length > 0 && <>
+                {/* Skills */}
+                {(!isEditingOverview && profile.skills && profile.skills.length > 0) || isEditingOverview ? (
+                  <>
                     <Separator />
                     <div>
-                      <h3 className="font-semibold mb-2">Skills</h3>
-                      <div className="flex flex-wrap gap-2">
-                        {profile.skills.map((skill: string, idx: number) => <Badge key={idx} variant="secondary">{skill}</Badge>)}
+                      <div className="flex items-center justify-between mb-2">
+                        <h3 className="font-semibold">Skills</h3>
+                        {isEditingOverview && (
+                          <Button variant="outline" size="sm" onClick={handleAddSkill}>
+                            Add Skill
+                          </Button>
+                        )}
                       </div>
+                      {!isEditingOverview ? (
+                        <div className="flex flex-wrap gap-2">
+                          {profile.skills.map((skill: string, idx: number) => (
+                            <Badge key={idx} variant="secondary">{skill}</Badge>
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="space-y-2">
+                          {(editedProfile.skills || []).map((skill: string, idx: number) => (
+                            <div key={idx} className="flex gap-2">
+                              <Input
+                                value={skill}
+                                onChange={(e) => handleSkillChange(idx, e.target.value)}
+                                placeholder="Enter a skill"
+                              />
+                              <Button
+                                variant="outline"
+                                size="icon"
+                                onClick={() => handleRemoveSkill(idx)}
+                              >
+                                <X className="h-4 w-4" />
+                              </Button>
+                            </div>
+                          ))}
+                        </div>
+                      )}
                     </div>
-                  </>}
+                  </>
+                ) : null}
 
-                {profile.interests && profile.interests.length > 0 && <>
+                {/* Interests */}
+                {(!isEditingOverview && profile.interests && profile.interests.length > 0) || isEditingOverview ? (
+                  <>
                     <Separator />
                     <div>
-                      <h3 className="font-semibold mb-2">Interests</h3>
-                      <div className="flex flex-wrap gap-2">
-                        {profile.interests.map((interest: string, idx: number) => <Badge key={idx} variant="outline">{interest}</Badge>)}
+                      <div className="flex items-center justify-between mb-2">
+                        <h3 className="font-semibold">Interests</h3>
+                        {isEditingOverview && (
+                          <Button variant="outline" size="sm" onClick={handleAddInterest}>
+                            Add Interest
+                          </Button>
+                        )}
                       </div>
+                      {!isEditingOverview ? (
+                        <div className="flex flex-wrap gap-2">
+                          {profile.interests.map((interest: string, idx: number) => (
+                            <Badge key={idx} variant="outline">{interest}</Badge>
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="space-y-2">
+                          {(editedProfile.interests || []).map((interest: string, idx: number) => (
+                            <div key={idx} className="flex gap-2">
+                              <Input
+                                value={interest}
+                                onChange={(e) => handleInterestChange(idx, e.target.value)}
+                                placeholder="Enter an interest"
+                              />
+                              <Button
+                                variant="outline"
+                                size="icon"
+                                onClick={() => handleRemoveInterest(idx)}
+                              >
+                                <X className="h-4 w-4" />
+                              </Button>
+                            </div>
+                          ))}
+                        </div>
+                      )}
                     </div>
-                  </>}
+                  </>
+                ) : null}
 
-                {profile.seeking && profile.seeking.length > 0 && <>
+                {/* Looking For */}
+                {(!isEditingOverview && profile.seeking && profile.seeking.length > 0) || isEditingOverview ? (
+                  <>
                     <Separator />
                     <div>
-                      <h3 className="font-semibold mb-2">Looking For</h3>
-                      <div className="flex flex-wrap gap-2">
-                        {profile.seeking.map((seek: string, idx: number) => <Badge key={idx} variant="default">{seek}</Badge>)}
+                      <div className="flex items-center justify-between mb-2">
+                        <h3 className="font-semibold">Looking For</h3>
+                        {isEditingOverview && (
+                          <Button variant="outline" size="sm" onClick={handleAddSeeking}>
+                            Add Item
+                          </Button>
+                        )}
                       </div>
+                      {!isEditingOverview ? (
+                        <div className="flex flex-wrap gap-2">
+                          {profile.seeking.map((seek: string, idx: number) => (
+                            <Badge key={idx} variant="default">{seek}</Badge>
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="space-y-2">
+                          {(editedProfile.seeking || []).map((seek: string, idx: number) => (
+                            <div key={idx} className="flex gap-2">
+                              <Input
+                                value={seek}
+                                onChange={(e) => handleSeekingChange(idx, e.target.value)}
+                                placeholder="What are you looking for?"
+                              />
+                              <Button
+                                variant="outline"
+                                size="icon"
+                                onClick={() => handleRemoveSeeking(idx)}
+                              >
+                                <X className="h-4 w-4" />
+                              </Button>
+                            </div>
+                          ))}
+                        </div>
+                      )}
                     </div>
-                  </>}
+                  </>
+                ) : null}
               </CardContent>
             </Card>
           </TabsContent>

@@ -318,7 +318,7 @@ export default function EditProfile() {
                 <Button
                   type="button"
                   variant="outline"
-                  onClick={() => navigate("/profile")}
+                  onClick={() => navigate("/innovator/profile")}
                 >
                   Cancel
                 </Button>
