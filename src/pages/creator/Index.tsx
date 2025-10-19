@@ -354,328 +354,329 @@ const Index = () => {
     },
   ];
   return (
-    <div className="pb-20 px-4 pt-6 max-w-md mx-auto space-y-6 relative animate-fade-in">
-      <ProfileHeader />
+    <div className="min-h-screen bg-background pb-20">
+      {/* Mobile-Optimized Header */}
+      <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="flex h-14 items-center justify-between px-4">
+          <h1 className="text-lg font-bold text-foreground">Home</h1>
+          <ProfileHeader />
+        </div>
+      </header>
 
-      {/* Header */}
+      {/* Main Content - Mobile First */}
+      <div className="px-4 py-4 space-y-6">
+        {/* Welcome Card - Mobile Optimized */}
+        <Card className="bg-gradient-to-br from-primary/10 to-primary/5 border-primary/20 shadow-card">
+          <CardContent className="p-4">
+            <div className="flex items-start justify-between mb-3">
+              <div className="flex-1">
+                <h2 className="text-xl font-bold text-foreground mb-2">
+                  Hey {userProfile?.full_name?.split(" ")[0] || "there"}, ready to help build the next big thing?
+                </h2>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Find innovation projects that match your skills and interests.
+                </p>
+              </div>
+              <Star className="h-5 w-5 text-primary flex-shrink-0 ml-2" fill="currentColor" />
+            </div>
 
-      {/* Welcome Card - Similar to screenshot */}
-      <Card className="bg-gradient-to-br from-primary/10 to-primary/5 border-primary/20 shadow-elegant animate-scale-in">
-        <CardContent className="p-6">
-          <div className="flex items-start justify-between mb-4">
-            <div className="flex-1">
-              <h2 className="text-2xl font-bold text-foreground mb-2">
-                Hey {userProfile?.full_name?.split(" ")[0] || "there"}, ready to help build the next big thing?
-              </h2>
-              <p className="text-muted-foreground mb-4">
-                Find innovation projects that match your skills and interests.
+            <div className="space-y-2 mb-3">
+              <Button
+                className="w-full bg-foreground hover:bg-foreground/90 text-background shadow-sm"
+                onClick={() => navigate("/creator/discover")}
+              >
+                <TrendingUp className="h-4 w-4 mr-2" />
+                Browse Projects
+              </Button>
+              <Button
+                variant="outline"
+                className="w-full border-border/50"
+                onClick={() => navigate("/creator/settings")}
+              >
+                <Settings className="h-4 w-4 mr-2" />
+                Preferences
+              </Button>
+            </div>
+
+            <div className="pt-3 border-t border-border/20">
+              <p className="text-xs text-muted-foreground">
+                Trending: AI • Marketing • App Dev
               </p>
-
-              <div className="space-y-3">
-                <Button
-                  className="w-full bg-foreground hover:bg-foreground/90 text-background shadow-sm"
-                  onClick={() => navigate("/creator/discover")}
-                >
-                  <TrendingUp className="h-5 w-5 mr-2" />
-                  Browse Projects
-                </Button>
-                <Button
-                  variant="outline"
-                  className="w-full border-border/50"
-                  onClick={() => navigate("/creator/settings")}
-                >
-                  <Settings className="h-5 w-5 mr-2" />
-                  Preferences
-                </Button>
-              </div>
-
-              <div className="mt-4 pt-4 border-t border-border/20">
-                <p className="text-sm text-muted-foreground">Trending: AI • Marketing • App Dev</p>
-              </div>
             </div>
-            <div className="ml-4">
-              <Star className="h-6 w-6 text-primary" fill="currentColor" />
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* New Metric Cards */}
-      <div className="grid grid-cols-2 gap-4 animate-slide-up">
-        {metrics.map((metric, index) => (
-          <Card
-            key={index}
-            className="p-6 text-center shadow-card hover:shadow-elegant transition-all duration-200 cursor-pointer active:scale-[0.98]"
-            onClick={() => {
-              if (metric.label === "New Chats") navigate("/inbox");
-              if (metric.label === "Active Jobs") navigate("/discover");
-            }}
-          >
-            <CardContent className="p-0">
-              <metric.icon className={`h-8 w-8 mx-auto mb-3 ${metric.color}`} strokeWidth={1.5} />
-              <div className="text-2xl font-bold text-foreground mb-1">{metric.value}</div>
-              <div className="text-sm text-muted-foreground mb-3">{metric.label}</div>
-              {metric.progress && (
-                <div className="w-full bg-muted/30 rounded-full h-2">
-                  <div
-                    className="bg-primary h-2 rounded-full transition-all duration-300"
-                    style={{
-                      width: `${metric.progress}%`,
-                    }}
-                  ></div>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-
-      {/* Earnings Overview Widget */}
-      <Card
-        className="bg-gradient-primary text-white shadow-elegant animate-scale-in cursor-pointer hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]"
-        onClick={() => navigate("/creator/earnings")}
-      >
-        <CardContent className="p-6">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex-1">
-              <p className="text-white/80 text-sm font-medium">Total Earnings</p>
-              <p className="text-3xl font-bold tracking-tight">${totalEarnings.toLocaleString()}</p>
-              <p className="text-white/70 text-sm">Released: ${releasedEarnings.toLocaleString()}</p>
-            </div>
-            <div className="bg-white/10 p-3 rounded-full">
-              <TrendingUp className="h-8 w-8 text-white" />
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-3 text-sm mb-4">
-            <div className="bg-white/10 p-3 rounded-lg">
-              <p className="text-white/80 font-medium text-xs">Balance</p>
-              <p className="font-semibold text-base">${releasedEarnings.toLocaleString()}</p>
-            </div>
-            <div className="bg-white/10 p-3 rounded-lg">
-              <p className="text-white/80 font-medium text-xs">Next Payout</p>
-              <p className="font-semibold text-base">Oct 25</p>
-            </div>
-            <div className="bg-white/10 p-3 rounded-lg">
-              <p className="text-white/80 font-medium text-xs">Held</p>
-              <p className="font-semibold text-base">${heldEarnings.toLocaleString()}</p>
-            </div>
-            <div className="bg-white/10 p-3 rounded-lg">
-              <p className="text-white/80 font-medium text-xs">Pending</p>
-              <p className="font-semibold text-base">${pendingEarnings.toLocaleString()}</p>
-            </div>
-          </div>
-
-          <Button
-            variant="secondary"
-            size="sm"
-            className="w-full bg-white/20 hover:bg-white/30 text-white border-white/30"
-            onClick={(e) => {
-              e.stopPropagation();
-              navigate("/creator/earnings");
-            }}
-          >
-            View Full Details
-            <DollarSign className="ml-2 h-4 w-4" />
-          </Button>
-        </CardContent>
-      </Card>
-
-      {/* Friend Requests */}
-      {friendRequests.length > 0 && (
-        <Card className="shadow-card animate-slide-up">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-lg flex items-center gap-2">
-              <div className="bg-accent/10 p-2 rounded-full">
-                <UserPlus className="h-5 w-5 text-accent" />
-              </div>
-              Friend Requests ({friendRequests.length})
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            {friendRequests.map((request) => (
-              <div
-                key={request.id}
-                className="p-4 rounded-xl bg-gradient-subtle border border-accent/10 hover:shadow-elegant transition-all duration-200"
-              >
-                <div className="flex items-center gap-3">
-                  <img
-                    src={request.avatar}
-                    alt={request.name}
-                    className="w-12 h-12 rounded-full border-2 border-accent/20 cursor-pointer"
-                    onClick={() => navigate(`/creator/creators/${request.from_user_id}`)}
-                  />
-                  <div className="flex-1 min-w-0">
-                    <h4
-                      className="font-semibold text-base cursor-pointer hover:text-primary transition-colors"
-                      onClick={() => navigate(`/creator/creators/${request.from_user_id}`)}
-                    >
-                      {request.name}
-                    </h4>
-                    <p className="text-sm text-muted-foreground">Wants to connect with you</p>
-                  </div>
-                  <div className="flex gap-2">
-                    <Button size="sm" className="shadow-sm" onClick={() => handleAcceptFriendRequest(request.id)}>
-                      <Check className="h-4 w-4" />
-                    </Button>
-                    <Button size="sm" variant="outline" onClick={() => handleDeclineFriendRequest(request.id)}>
-                      <X className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            ))}
           </CardContent>
         </Card>
-      )}
 
-      {/* Invitations */}
-      {activeInvitations.length > 0 && (
-        <Card className="shadow-card animate-slide-up">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-lg flex items-center gap-2">
-              <div className="bg-primary/10 p-2 rounded-full">
-                <Mail className="h-5 w-5 text-primary" />
-              </div>
-              New Invitations ({activeInvitations.length})
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            {activeInvitations.map((invitation) => (
-              <div
-                key={invitation.id}
-                className="p-4 rounded-xl bg-gradient-subtle border border-primary/10 hover:shadow-elegant transition-all duration-200"
-              >
-                <div className="flex items-start gap-3">
-                  <img
-                    src={invitation.avatar}
-                    alt={invitation.from}
-                    className="w-12 h-12 rounded-full border-2 border-primary/20"
-                  />
-                  <div className="flex-1 min-w-0">
-                    <h4 className="font-semibold text-base">{invitation.title}</h4>
-                    <p className="text-sm text-muted-foreground mb-2">
-                      From {invitation.from} • <span className="font-semibold text-success">${invitation.budget}</span>{" "}
-                      • {invitation.timeline}
-                    </p>
-                    <p className="text-sm text-muted-foreground mb-3 leading-relaxed">{invitation.message}</p>
-                    <div className="flex gap-2">
-                      <Button size="sm" className="flex-1 shadow-sm">
-                        Accept
-                      </Button>
-                      <Button size="sm" variant="outline" className="flex-1">
-                        Decline
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </CardContent>
-        </Card>
-      )}
-
-      {/* Workroom Section */}
-      <div className="space-y-4 animate-slide-up">
-        <h2 className="text-xl font-bold text-foreground">Your Workroom</h2>
-        <div className="space-y-3">
-          {projects.length > 0 ? (
-            projects.map((project) => (
-              <Card key={project.id} className="p-4 shadow-card hover:shadow-elegant transition-all duration-200">
-                <CardContent className="p-0">
-                  <div className="flex items-center justify-between mb-3">
-                    <h3 className="font-semibold text-foreground">{project.name}</h3>
-                    <Badge className={`text-xs px-2 py-1 ${project.statusColor}`}>{project.status}</Badge>
-                  </div>
-                  <div className="w-full bg-muted/30 rounded-full h-2 mb-3">
+        {/* Metrics Overview - Mobile Grid */}
+        <div className="grid grid-cols-2 gap-3">
+          {metrics.map((metric, index) => (
+            <Card
+              key={index}
+              className="p-4 text-center shadow-card hover:shadow-elegant transition-all duration-200 cursor-pointer active:scale-[0.98]"
+              onClick={() => {
+                if (metric.label === "New Chats") navigate("/inbox");
+                if (metric.label === "Active Jobs") navigate("/discover");
+              }}
+            >
+              <CardContent className="p-0">
+                <metric.icon className={`h-6 w-6 mx-auto mb-2 ${metric.color}`} strokeWidth={1.5} />
+                <div className="text-xl font-bold text-foreground mb-1">{metric.value}</div>
+                <div className="text-xs text-muted-foreground mb-2">{metric.label}</div>
+                {metric.progress && (
+                  <div className="w-full bg-muted/30 rounded-full h-1.5">
                     <div
-                      className="bg-primary h-2 rounded-full transition-all duration-300"
+                      className="bg-primary h-1.5 rounded-full transition-all duration-300"
                       style={{
-                        width: `${project.progress}%`,
+                        width: `${metric.progress}%`,
                       }}
                     ></div>
                   </div>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center text-sm text-muted-foreground">
-                      <Clock className="h-4 w-4 mr-1" />
-                      Due {project.dueDate}
-                    </div>
-                    <Button variant="outline" size="sm" className="text-xs">
-                      Open
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))
-          ) : (
-            <Card className="shadow-card">
-              <CardContent className="p-6 text-center">
-                <div className="bg-muted/30 p-4 rounded-full w-16 h-16 mx-auto mb-3 flex items-center justify-center">
-                  <Briefcase className="h-8 w-8 text-muted-foreground" />
-                </div>
-                <p className="font-medium text-muted-foreground">No active projects</p>
-                <p className="text-sm text-muted-foreground">Start exploring opportunities!</p>
-              </CardContent>
-            </Card>
-          )}
-        </div>
-      </div>
-
-      {/* Quick Actions */}
-      <div className="grid grid-cols-2 gap-4 animate-slide-up">
-        <Button
-          variant="outline"
-          className="h-auto p-6 flex flex-col gap-3 shadow-card hover:shadow-elegant transition-all duration-200"
-          onClick={() => navigate("/creator/proposals")}
-        >
-          <div className="bg-primary/10 p-3 rounded-full">
-            <Plus className="h-6 w-6 text-primary" />
-          </div>
-          <span className="text-sm font-semibold">Post Service</span>
-        </Button>
-        <Button
-          variant="outline"
-          className="h-auto p-6 flex flex-col gap-3 shadow-card hover:shadow-elegant transition-all duration-200"
-          onClick={() => navigate("/creator/settings")}
-        >
-          <div className="bg-accent/10 p-3 rounded-full">
-            <Calendar className="h-6 w-6 text-accent" />
-          </div>
-          <span className="text-sm font-semibold">Set Availability</span>
-        </Button>
-      </div>
-
-      {/* Browse by Category */}
-      <div className="space-y-4 animate-slide-up">
-        <h2 className="text-xl font-bold text-foreground">Browse by category</h2>
-        <div className="grid grid-cols-2 gap-3">
-          {categories.map((category, index) => (
-            <Card
-              key={index}
-              className="p-4 shadow-card hover:shadow-elegant transition-all duration-200 cursor-pointer active:scale-[0.98]"
-              onClick={() => navigate("discover")}
-            >
-              <CardContent className="p-0">
-                <div className="flex items-start gap-3">
-                  <div className="w-10 h-10 bg-muted/30 rounded-full flex items-center justify-center flex-shrink-0">
-                    <category.icon className="h-5 w-5 text-muted-foreground" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h3 className="font-semibold text-foreground text-sm mb-1">{category.name}</h3>
-                    <p className="text-xs text-muted-foreground">{category.description}</p>
-                  </div>
-                </div>
+                )}
               </CardContent>
             </Card>
           ))}
         </div>
+
+        {/* Earnings Overview - Mobile Optimized */}
+        <Card
+          className="bg-gradient-primary text-white shadow-card cursor-pointer"
+          onClick={() => navigate("/creator/earnings")}
+        >
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex-1">
+                <p className="text-white/80 text-xs font-medium">Total Earnings</p>
+                <p className="text-2xl font-bold tracking-tight">${totalEarnings.toLocaleString()}</p>
+                <p className="text-white/70 text-xs">Released: ${releasedEarnings.toLocaleString()}</p>
+              </div>
+              <div className="bg-white/10 p-2 rounded-full">
+                <TrendingUp className="h-6 w-6 text-white" />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2 text-sm mb-3">
+              <div className="bg-white/10 p-2 rounded-lg">
+                <p className="text-white/80 font-medium text-xs">Balance</p>
+                <p className="font-semibold text-sm">${releasedEarnings.toLocaleString()}</p>
+              </div>
+              <div className="bg-white/10 p-2 rounded-lg">
+                <p className="text-white/80 font-medium text-xs">Next Payout</p>
+                <p className="font-semibold text-sm">Oct 25</p>
+              </div>
+              <div className="bg-white/10 p-2 rounded-lg">
+                <p className="text-white/80 font-medium text-xs">Held</p>
+                <p className="font-semibold text-sm">${heldEarnings.toLocaleString()}</p>
+              </div>
+              <div className="bg-white/10 p-2 rounded-lg">
+                <p className="text-white/80 font-medium text-xs">Pending</p>
+                <p className="font-semibold text-sm">${pendingEarnings.toLocaleString()}</p>
+              </div>
+            </div>
+
+            <Button
+              variant="secondary"
+              size="sm"
+              className="w-full bg-white/20 hover:bg-white/30 text-white border-white/30 text-xs"
+              onClick={(e) => {
+                e.stopPropagation();
+                navigate("/creator/earnings");
+              }}
+            >
+              View Full Details
+              <DollarSign className="ml-2 h-3 w-3" />
+            </Button>
+          </CardContent>
+        </Card>
+
+        {/* Friend Requests - Mobile Optimized */}
+        {friendRequests.length > 0 && (
+          <Card className="shadow-card">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-base flex items-center gap-2">
+                <div className="bg-accent/10 p-1.5 rounded-full">
+                  <UserPlus className="h-4 w-4 text-accent" />
+                </div>
+                Friend Requests ({friendRequests.length})
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              {friendRequests.map((request) => (
+                <div
+                  key={request.id}
+                  className="p-3 rounded-lg bg-gradient-subtle border border-accent/10"
+                >
+                  <div className="flex items-center gap-3">
+                    <img
+                      src={request.avatar}
+                      alt={request.name}
+                      className="w-10 h-10 rounded-full border-2 border-accent/20 cursor-pointer"
+                      onClick={() => navigate(`/creator/creators/${request.from_user_id}`)}
+                    />
+                    <div className="flex-1 min-w-0">
+                      <h4
+                        className="font-semibold text-sm cursor-pointer hover:text-primary transition-colors"
+                        onClick={() => navigate(`/creator/creators/${request.from_user_id}`)}
+                      >
+                        {request.name}
+                      </h4>
+                      <p className="text-xs text-muted-foreground">Wants to connect with you</p>
+                    </div>
+                    <div className="flex gap-2">
+                      <Button size="sm" className="shadow-sm h-8 w-8 p-0" onClick={() => handleAcceptFriendRequest(request.id)}>
+                        <Check className="h-3 w-3" />
+                      </Button>
+                      <Button size="sm" variant="outline" className="h-8 w-8 p-0" onClick={() => handleDeclineFriendRequest(request.id)}>
+                        <X className="h-3 w-3" />
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+          </CardContent>
+        </Card>
+      )}
+
+        {/* Invitations - Mobile Optimized */}
+        {activeInvitations.length > 0 && (
+          <Card className="shadow-card">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-base flex items-center gap-2">
+                <div className="bg-primary/10 p-1.5 rounded-full">
+                  <Mail className="h-4 w-4 text-primary" />
+                </div>
+                New Invitations ({activeInvitations.length})
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              {activeInvitations.map((invitation) => (
+                <div
+                  key={invitation.id}
+                  className="p-3 rounded-lg bg-gradient-subtle border border-primary/10"
+                >
+                  <div className="flex items-start gap-3">
+                    <img
+                      src={invitation.avatar}
+                      alt={invitation.from}
+                      className="w-10 h-10 rounded-full border-2 border-primary/20"
+                    />
+                    <div className="flex-1 min-w-0">
+                      <h4 className="font-semibold text-sm">{invitation.title}</h4>
+                      <p className="text-xs text-muted-foreground mb-2">
+                        From {invitation.from} • <span className="font-semibold text-success">${invitation.budget}</span>{" "}
+                        • {invitation.timeline}
+                      </p>
+                      <p className="text-xs text-muted-foreground mb-3 leading-relaxed">{invitation.message}</p>
+                      <div className="flex gap-2">
+                        <Button size="sm" className="flex-1 shadow-sm text-xs h-8">
+                          Accept
+                        </Button>
+                        <Button size="sm" variant="outline" className="flex-1 text-xs h-8">
+                          Decline
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Workroom Section - Mobile Optimized */}
+        <div>
+          <h2 className="text-lg font-bold text-foreground mb-4">Your Workroom</h2>
+          <div className="space-y-3">
+            {projects.length > 0 ? (
+              projects.map((project) => (
+                <Card key={project.id} className="p-3 shadow-card">
+                  <CardContent className="p-0">
+                    <div className="flex items-center justify-between mb-2">
+                      <h3 className="font-semibold text-sm text-foreground">{project.name}</h3>
+                      <Badge className={`text-xs px-2 py-0.5 ${project.statusColor}`}>{project.status}</Badge>
+                    </div>
+                    <div className="w-full bg-muted/30 rounded-full h-1.5 mb-2">
+                      <div
+                        className="bg-primary h-1.5 rounded-full transition-all duration-300"
+                        style={{
+                          width: `${project.progress}%`,
+                        }}
+                      ></div>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center text-xs text-muted-foreground">
+                        <Clock className="h-3 w-3 mr-1" />
+                        Due {project.dueDate}
+                      </div>
+                      <Button variant="outline" size="sm" className="text-xs h-7">
+                        Open
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))
+            ) : (
+              <Card className="shadow-card">
+                <CardContent className="p-6 text-center">
+                  <div className="bg-muted/30 p-3 rounded-full w-12 h-12 mx-auto mb-2 flex items-center justify-center">
+                    <Briefcase className="h-6 w-6 text-muted-foreground" />
+                  </div>
+                  <p className="font-medium text-sm text-muted-foreground">No active projects</p>
+                  <p className="text-xs text-muted-foreground">Start exploring opportunities!</p>
+                </CardContent>
+              </Card>
+            )}
+          </div>
+        </div>
+
+        {/* Quick Actions - Mobile Optimized */}
+        <div className="grid grid-cols-2 gap-3">
+          <Button
+            variant="outline"
+            className="h-auto p-4 flex flex-col gap-2 shadow-card"
+            onClick={() => navigate("/creator/proposals")}
+          >
+            <div className="bg-primary/10 p-2 rounded-full">
+              <Plus className="h-5 w-5 text-primary" />
+            </div>
+            <span className="text-xs font-semibold">Post Service</span>
+          </Button>
+          <Button
+            variant="outline"
+            className="h-auto p-4 flex flex-col gap-2 shadow-card"
+            onClick={() => navigate("/creator/settings")}
+          >
+            <div className="bg-accent/10 p-2 rounded-full">
+              <Calendar className="h-5 w-5 text-accent" />
+            </div>
+            <span className="text-xs font-semibold">Set Availability</span>
+          </Button>
+        </div>
+
+        {/* Browse by Category - Mobile Optimized */}
+        <div>
+          <h2 className="text-lg font-bold text-foreground mb-4">Browse by Category</h2>
+          <div className="grid grid-cols-2 gap-3">
+            {categories.map((category, index) => (
+              <Card
+                key={index}
+                className="p-3 shadow-card hover:shadow-elegant transition-all duration-200 cursor-pointer active:scale-[0.98]"
+                onClick={() => navigate("discover")}
+              >
+                <CardContent className="p-0">
+                  <div className="flex flex-col items-center text-center gap-2">
+                    <div className="w-10 h-10 bg-muted/30 rounded-full flex items-center justify-center">
+                      <category.icon className="h-5 w-5 text-muted-foreground" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-foreground text-xs mb-0.5">{category.name}</h3>
+                      <p className="text-xs text-muted-foreground leading-tight">{category.description}</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
       </div>
-
-      {/* This Week Tasks */}
-
-      {/* Pending Releases */}
-
-      {/* Recent Notifications */}
     </div>
   );
 };
