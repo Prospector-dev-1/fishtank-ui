@@ -363,6 +363,49 @@ const Index = () => {
         </div>
       </div>
 
+      {/* Welcome Card - Similar to screenshot */}
+      <Card className="bg-gradient-to-br from-primary/10 to-primary/5 border-primary/20 shadow-elegant animate-scale-in">
+        <CardContent className="p-6">
+          <div className="flex items-start justify-between mb-4">
+            <div className="flex-1">
+              <h2 className="text-2xl font-bold text-foreground mb-2">
+                Hey {userProfile?.full_name?.split(" ")[0] || "there"}, ready to help build the next big thing?
+              </h2>
+              <p className="text-muted-foreground mb-4">
+                Find innovation projects that match your skills and interests.
+              </p>
+              
+              <div className="space-y-3">
+                <Button
+                  className="w-full bg-foreground hover:bg-foreground/90 text-background shadow-sm"
+                  onClick={() => navigate("/creator/discover")}
+                >
+                  <TrendingUp className="h-5 w-5 mr-2" />
+                  Browse Projects
+                </Button>
+                <Button
+                  variant="outline"
+                  className="w-full border-border/50"
+                  onClick={() => navigate("/creator/settings")}
+                >
+                  <Settings className="h-5 w-5 mr-2" />
+                  Preferences
+                </Button>
+              </div>
+              
+              <div className="mt-4 pt-4 border-t border-border/20">
+                <p className="text-sm text-muted-foreground">
+                  Trending: AI • Marketing • App Dev
+                </p>
+              </div>
+            </div>
+            <div className="ml-4">
+              <Star className="h-6 w-6 text-primary" fill="currentColor" />
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* New Metric Cards */}
       <div className="grid grid-cols-2 gap-4 animate-slide-up">
         {metrics.map((metric, index) => (
@@ -412,7 +455,15 @@ const Index = () => {
             </div>
           </div>
           
-          <div className="grid grid-cols-3 gap-3 text-sm mb-4">
+          <div className="grid grid-cols-2 gap-3 text-sm mb-4">
+            <div className="bg-white/10 p-3 rounded-lg">
+              <p className="text-white/80 font-medium text-xs">Balance</p>
+              <p className="font-semibold text-base">${releasedEarnings.toLocaleString()}</p>
+            </div>
+            <div className="bg-white/10 p-3 rounded-lg">
+              <p className="text-white/80 font-medium text-xs">Next Payout</p>
+              <p className="font-semibold text-base">Oct 25</p>
+            </div>
             <div className="bg-white/10 p-3 rounded-lg">
               <p className="text-white/80 font-medium text-xs">Held</p>
               <p className="font-semibold text-base">${heldEarnings.toLocaleString()}</p>
@@ -420,10 +471,6 @@ const Index = () => {
             <div className="bg-white/10 p-3 rounded-lg">
               <p className="text-white/80 font-medium text-xs">Pending</p>
               <p className="font-semibold text-base">${pendingEarnings.toLocaleString()}</p>
-            </div>
-            <div className="bg-white/10 p-3 rounded-lg">
-              <p className="text-white/80 font-medium text-xs">This Month</p>
-              <p className="font-semibold text-base">${thisMonthEarnings.toLocaleString()}</p>
             </div>
           </div>
 
