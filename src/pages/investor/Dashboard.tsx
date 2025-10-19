@@ -540,7 +540,7 @@ export default function Dashboard() {
 
         {/* Industry Categories Section */}
         <div className="space-y-4">
-          <h2 className="text-2xl font-bold">What would you like to see</h2>
+          <h2 className="text-2xl font-bold">Browse by category</h2>
 
           <div className="grid grid-cols-2 gap-4">
             {/* Software Card */}
