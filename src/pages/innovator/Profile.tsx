@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/innovator/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/innovator/ui/avatar";
@@ -8,57 +8,35 @@ import { Badge } from "@/components/innovator/ui/badge";
 import { Separator } from "@/components/innovator/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/innovator/ui/tabs";
 import { FishtankHeader } from "@/components/innovator/layout/FishtankHeader";
-import { Mail, MapPin, Briefcase, Edit, Settings, Rocket, Video, Users, Lightbulb, Save, X, Eye } from "lucide-react";
+import { Mail, MapPin, Briefcase, Settings, Save, X, Video, Users, Edit } from "lucide-react";
 import { toast } from "@/components/innovator/ui/use-toast";
 import { Input } from "@/components/innovator/ui/input";
 import { Textarea } from "@/components/innovator/ui/textarea";
-import { getMockProfileData } from "@/lib/innovator/mockProfileData";
 export default function Profile() {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
   const [isLoading, setIsLoading] = useState(true);
   const [profile, setProfile] = useState<any>(null);
   const [isEditingOverview, setIsEditingOverview] = useState(false);
   const [editedProfile, setEditedProfile] = useState<any>(null);
-  const [useMockData, setUseMockData] = useState(searchParams.get('mock') === 'true');
   const [stats, setStats] = useState({
     innovations: 0,
     pitches: 0,
     connections: 0,
     teams: 0
   });
+  
   useEffect(() => {
     loadProfile();
-  }, [useMockData]);
-  const toggleMockData = (enabled: boolean) => {
-    setUseMockData(enabled);
-    // Update URL parameter
-    const url = new URL(window.location.href);
-    if (enabled) {
-      url.searchParams.set('mock', 'true');
-    } else {
-      url.searchParams.delete('mock');
-    }
-    window.history.pushState({}, '', url);
-  };
+  }, []);
   const loadProfile = async () => {
     try {
-      // Load mock data if enabled
-      if (useMockData) {
-        const mockData = getMockProfileData();
-        setProfile(mockData.profile);
-        setStats(mockData.stats);
-        setIsLoading(false);
-        return;
-      }
       const {
         data: {
           user
         }
       } = await supabase.auth.getUser();
       if (!user) {
-        // If no user, offer to view mock profile instead
-        setIsLoading(false);
+        navigate("/innovator/auth");
         return;
       }
       const {
@@ -205,32 +183,12 @@ export default function Profile() {
   }
   if (!profile) {
     return <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-center space-y-4">
-          <p className="text-muted-foreground">Profile not found</p>
-          <Button onClick={() => toggleMockData(true)} variant="outline">
-            <Eye className="h-4 w-4 mr-2" />
-            View Mock Profile
-          </Button>
-        </div>
+        <p className="text-muted-foreground">Profile not found</p>
       </div>;
   }
   return <div className="min-h-screen bg-background pb-16">
       <FishtankHeader title="Profile" showLogo={false} showProfile={false} />
       <div className="container mx-auto px-4 py-8 max-w-6xl">
-        {/* Mock Data Indicator */}
-        {useMockData && <div className="mb-4 p-4 bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-lg flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Eye className="h-5 w-5 text-blue-600 dark:text-blue-400" />
-              <div>
-                <p className="font-semibold text-blue-900 dark:text-blue-100">Viewing Mock Profile</p>
-                <p className="text-sm text-blue-700 dark:text-blue-300">This is preview data showing what your profile will look like once the backend is integrated.</p>
-              </div>
-            </div>
-            <Button onClick={() => toggleMockData(false)} variant="outline" size="sm">
-              Exit Preview
-            </Button>
-          </div>}
-        
         {/* Header Card */}
         <Card className="mb-6">
           <CardHeader>
@@ -246,10 +204,6 @@ export default function Profile() {
                 </div>
               </div>
               <div className="flex gap-2">
-                {!useMockData && <Button variant="outline" size="sm" onClick={() => toggleMockData(true)}>
-                    <Eye className="h-4 w-4 mr-2" />
-                    Preview Mode
-                  </Button>}
                 <Button variant="outline" size="sm" onClick={() => navigate("edit")} title="Account & Privacy Settings">
                   <Settings className="h-4 w-4 mr-2" />
                   Account
