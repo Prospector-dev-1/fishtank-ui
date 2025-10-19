@@ -409,10 +409,13 @@ const Index = () => {
           {metrics.map((metric, index) => (
             <Card
               key={index}
-              className="p-4 text-center shadow-card hover:shadow-elegant transition-all duration-200 cursor-pointer active:scale-[0.98]"
+              className={`p-4 text-center shadow-card ${
+                metric.label === "New Chats"
+                  ? "hover:shadow-elegant transition-all duration-200 cursor-pointer active:scale-[0.98]"
+                  : ""
+              }`}
               onClick={() => {
-                if (metric.label === "New Chats") navigate("/inbox");
-                if (metric.label === "Active Jobs") navigate("/discover");
+                if (metric.label === "New Chats") navigate("/creator/inbox");
               }}
             >
               <CardContent className="p-0">
