@@ -194,5 +194,42 @@
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
   }
+
+  /* Section utilities for consistent spacing */
+  .section-padding {
+    @apply px-4;
+  }
+
+  .section-title {
+    @apply text-xl font-bold mb-4;
+  }
+
+  /* Gradient utilities */
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-transparent;
+  }
+
+  .gradient-hero {
+    @apply bg-gradient-to-br from-primary via-blue-500 to-cyan-400;
+  }
+
+  .gradient-primary {
+    @apply bg-gradient-to-br from-primary to-blue-600;
+  }
+
+  /* Interaction utilities */
+  .hover-lift {
+    @apply transition-transform duration-200 ease-out hover:-translate-y-1;
+  }
+
+  /* Scrollbar hide utility */
+  .scrollbar-hide {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
 }
 
