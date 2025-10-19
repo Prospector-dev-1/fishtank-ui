@@ -186,7 +186,7 @@ export default function Home() {
             Trending Now
           </h2>
         </div>
-        <div className="swipe-container gap-3 -mx-4 px-4">
+        <div className="swipe-container gap-3 -mx-4 px-4 pb-2">
           {[
             {
               title: "AI Innovation",
@@ -203,10 +203,20 @@ export default function Home() {
               tag: "Rising",
               color: "bg-blue-500",
             },
+            {
+              title: "HealthTech",
+              tag: "Popular",
+              color: "bg-purple-500",
+            },
+            {
+              title: "Web3",
+              tag: "Trending",
+              color: "bg-orange-500",
+            },
           ].map((trend, idx) => (
             <Card
               key={idx}
-              className="swipe-item ios-card p-4 w-40 cursor-pointer hover-lift"
+              className="swipe-item ios-card p-4 w-40 flex-shrink-0 cursor-pointer hover-lift active:scale-95 transition-smooth"
               onClick={() => navigate("/innovator/network")}
             >
               <Badge className={`${trend.color} text-white border-0 mb-2`}>{trend.tag}</Badge>

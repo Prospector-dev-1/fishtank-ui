@@ -120,22 +120,23 @@ export const CreateOpportunityModal = ({ open, onOpenChange, onSuccess }: Create
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle>Post New Opportunity</DialogTitle>
+      <DialogContent className="w-[calc(100vw-2rem)] max-w-2xl max-h-[85vh] sm:max-h-[90vh] overflow-y-auto p-4 sm:p-6">
+        <DialogHeader className="pb-4">
+          <DialogTitle className="text-lg sm:text-xl">Post New Opportunity</DialogTitle>
         </DialogHeader>
 
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 sm:space-y-6">
           {/* Role Title */}
           <div>
-            <Label htmlFor="role">Role Title *</Label>
+            <Label htmlFor="role" className="text-sm font-medium">Role Title *</Label>
             <Input
               id="role"
               placeholder="e.g. Senior React Developer"
+              className="mt-1.5 h-11 text-base"
               {...form.register("role")}
             />
             {form.formState.errors.role && (
-              <p className="text-sm text-red-500 mt-1">
+              <p className="text-xs sm:text-sm text-red-500 mt-1.5">
                 {form.formState.errors.role.message}
               </p>
             )}
@@ -143,15 +144,15 @@ export const CreateOpportunityModal = ({ open, onOpenChange, onSuccess }: Create
 
           {/* Description */}
           <div>
-            <Label htmlFor="description">Description *</Label>
+            <Label htmlFor="description" className="text-sm font-medium">Description *</Label>
             <Textarea
               id="description"
               placeholder="Describe the role, responsibilities, and what you're looking for..."
-              className="min-h-[100px]"
+              className="mt-1.5 min-h-[100px] sm:min-h-[120px] text-base resize-none"
               {...form.register("description")}
             />
             {form.formState.errors.description && (
-              <p className="text-sm text-red-500 mt-1">
+              <p className="text-xs sm:text-sm text-red-500 mt-1.5">
                 {form.formState.errors.description.message}
               </p>
             )}
@@ -159,14 +160,15 @@ export const CreateOpportunityModal = ({ open, onOpenChange, onSuccess }: Create
 
           {/* Deliverables */}
           <div>
-            <Label>Deliverables *</Label>
-            <div className="space-y-2">
+            <Label className="text-sm font-medium">Deliverables *</Label>
+            <div className="space-y-2 mt-1.5">
               {deliverables.map((deliverable, index) => (
                 <div key={index} className="flex gap-2">
                   <Input
-                    placeholder="e.g. Build responsive dashboard components"
+                    placeholder="e.g. Build responsive dashboard"
                     value={deliverable}
                     onChange={(e) => updateDeliverable(index, e.target.value)}
+                    className="h-11 text-base"
                   />
                   {deliverables.length > 1 && (
                     <Button
@@ -174,6 +176,7 @@ export const CreateOpportunityModal = ({ open, onOpenChange, onSuccess }: Create
                       variant="outline"
                       size="icon"
                       onClick={() => removeDeliverable(index)}
+                      className="h-11 w-11 shrink-0"
                     >
                       <X className="w-4 h-4" />
                     </Button>
@@ -185,6 +188,7 @@ export const CreateOpportunityModal = ({ open, onOpenChange, onSuccess }: Create
                 variant="outline"
                 size="sm"
                 onClick={addDeliverable}
+                className="w-full sm:w-auto h-10"
               >
                 <Plus className="w-4 h-4 mr-2" />
                 Add Deliverable
@@ -193,43 +197,49 @@ export const CreateOpportunityModal = ({ open, onOpenChange, onSuccess }: Create
           </div>
 
           {/* Commitment */}
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
             <div>
-              <Label htmlFor="hoursPerWeek">Hours/Week *</Label>
+              <Label htmlFor="hoursPerWeek" className="text-sm font-medium">Hours/Week *</Label>
               <Input
                 id="hoursPerWeek"
                 type="number"
                 min="1"
                 max="40"
+                className="mt-1.5 h-11 text-base"
                 {...form.register("hoursPerWeek", { valueAsNumber: true })}
               />
             </div>
             <div>
-              <Label htmlFor="durationWeeks">Duration (weeks) *</Label>
+              <Label htmlFor="durationWeeks" className="text-sm font-medium">Duration (weeks) *</Label>
               <Input
                 id="durationWeeks"
                 type="number"
                 min="1"
                 max="52"
+                className="mt-1.5 h-11 text-base"
                 {...form.register("durationWeeks", { valueAsNumber: true })}
               />
             </div>
             <div>
-              <Label htmlFor="startDate">Start Date *</Label>
+              <Label htmlFor="startDate" className="text-sm font-medium">Start Date *</Label>
               <Input
                 id="startDate"
                 type="date"
+                className="mt-1.5 h-11 text-base"
                 {...form.register("startDate")}
               />
             </div>
           </div>
 
           {/* Compensation */}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             <div>
-              <Label>Compensation Type *</Label>
-              <Select onValueChange={(value) => form.setValue("compensationType", value as any)}>
-                <SelectTrigger>
+              <Label className="text-sm font-medium">Compensation Type *</Label>
+              <Select 
+                onValueChange={(value) => form.setValue("compensationType", value as any)}
+                defaultValue="paid"
+              >
+                <SelectTrigger className="mt-1.5 h-11">
                   <SelectValue placeholder="Select type" />
                 </SelectTrigger>
                 <SelectContent>
@@ -241,10 +251,11 @@ export const CreateOpportunityModal = ({ open, onOpenChange, onSuccess }: Create
               </Select>
             </div>
             <div>
-              <Label htmlFor="compensationRange">Range (optional)</Label>
+              <Label htmlFor="compensationRange" className="text-sm font-medium">Range (optional)</Label>
               <Input
                 id="compensationRange"
                 placeholder="e.g. $40-60/hour"
+                className="mt-1.5 h-11 text-base"
                 {...form.register("compensationRange")}
               />
             </div>
@@ -252,9 +263,12 @@ export const CreateOpportunityModal = ({ open, onOpenChange, onSuccess }: Create
 
           {/* Location */}
           <div>
-            <Label>Location *</Label>
-            <Select onValueChange={(value) => form.setValue("location", value as any)}>
-              <SelectTrigger>
+            <Label className="text-sm font-medium">Location *</Label>
+            <Select 
+              onValueChange={(value) => form.setValue("location", value as any)}
+              defaultValue="remote"
+            >
+              <SelectTrigger className="mt-1.5 h-11">
                 <SelectValue placeholder="Select location" />
               </SelectTrigger>
               <SelectContent>
@@ -266,43 +280,56 @@ export const CreateOpportunityModal = ({ open, onOpenChange, onSuccess }: Create
 
           {/* Tags */}
           <div>
-            <Label>Tags *</Label>
-            <div className="space-y-2">
+            <Label className="text-sm font-medium">Tags *</Label>
+            <div className="space-y-2 mt-1.5">
               <div className="flex gap-2">
                 <Input
                   placeholder="Add a tag..."
                   value={newTag}
                   onChange={(e) => setNewTag(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addTag())}
+                  className="h-11 text-base"
                 />
-                <Button type="button" variant="outline" onClick={addTag}>
+                <Button 
+                  type="button" 
+                  variant="outline" 
+                  onClick={addTag}
+                  className="h-11 px-4 shrink-0"
+                >
                   Add
                 </Button>
               </div>
-              <div className="flex flex-wrap gap-1">
-                {tags.map((tag) => (
-                  <Badge key={tag} variant="secondary" className="cursor-pointer" onClick={() => removeTag(tag)}>
-                    {tag} <X className="w-3 h-3 ml-1" />
-                  </Badge>
-                ))}
-              </div>
+              {tags.length > 0 && (
+                <div className="flex flex-wrap gap-1.5 mt-2">
+                  {tags.map((tag) => (
+                    <Badge 
+                      key={tag} 
+                      variant="secondary" 
+                      className="cursor-pointer px-2.5 py-1.5 text-sm"
+                      onClick={() => removeTag(tag)}
+                    >
+                      {tag} <X className="w-3 h-3 ml-1.5" />
+                    </Badge>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
 
           {/* Actions */}
-          <div className="flex gap-3">
+          <div className="flex flex-col-reverse sm:flex-row gap-3 pt-2">
             <Button
               type="button"
               variant="outline"
               onClick={() => onOpenChange(false)}
-              className="flex-1"
+              className="flex-1 h-11"
             >
               Cancel
             </Button>
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="flex-1"
+              className="flex-1 h-11"
             >
               {isSubmitting ? "Posting..." : "Post Opportunity"}
             </Button>
