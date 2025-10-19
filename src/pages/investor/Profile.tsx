@@ -11,7 +11,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Separator } from '@/components/investor/ui/separator';
 import { mockUser } from "@/data/investor/mockData";
 import { useToast } from "@/components/investor/ui/use-toast";
-
 export default function Profile() {
   const [user, setUser] = useState(mockUser);
   const [isEditing, setIsEditing] = useState(false);
@@ -22,127 +21,116 @@ export default function Profile() {
   const [language, setLanguage] = useState('en');
   const [newSector, setNewSector] = useState('');
   const [newStage, setNewStage] = useState('');
-  const { toast } = useToast();
-
+  const {
+    toast
+  } = useToast();
   const handleSave = () => {
     setIsEditing(false);
     toast({
       title: "Profile updated!",
-      description: "Your changes have been saved.",
+      description: "Your changes have been saved."
     });
   };
-
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
     document.documentElement.classList.toggle('dark');
     toast({
       title: darkMode ? "Light mode enabled" : "Dark mode enabled",
-      description: "Theme preference saved.",
+      description: "Theme preference saved."
     });
   };
-
   const handleSettingsSave = () => {
     toast({
       title: "Settings saved!",
-      description: "Your preferences have been updated.",
+      description: "Your preferences have been updated."
     });
   };
-
   const addSector = () => {
     if (newSector.trim() && !user.preferences.sectors.includes(newSector.trim())) {
       setUser({
         ...user,
-        preferences: { 
-          ...user.preferences, 
-          sectors: [...user.preferences.sectors, newSector.trim()] 
+        preferences: {
+          ...user.preferences,
+          sectors: [...user.preferences.sectors, newSector.trim()]
         }
       });
       setNewSector('');
       toast({
         title: "Sector added",
-        description: `${newSector.trim()} added to your preferences.`,
+        description: `${newSector.trim()} added to your preferences.`
       });
     }
   };
-
   const addStage = () => {
     if (newStage.trim() && !user.preferences.stages.includes(newStage.trim())) {
       setUser({
         ...user,
-        preferences: { 
-          ...user.preferences, 
-          stages: [...user.preferences.stages, newStage.trim()] 
+        preferences: {
+          ...user.preferences,
+          stages: [...user.preferences.stages, newStage.trim()]
         }
       });
       setNewStage('');
       toast({
         title: "Stage added",
-        description: `${newStage.trim()} added to your preferences.`,
+        description: `${newStage.trim()} added to your preferences.`
       });
     }
   };
-
   const removeSector = (sector: string) => {
     setUser({
       ...user,
-      preferences: { 
-        ...user.preferences, 
-        sectors: user.preferences.sectors.filter(s => s !== sector) 
+      preferences: {
+        ...user.preferences,
+        sectors: user.preferences.sectors.filter(s => s !== sector)
       }
     });
   };
-
   const removeStage = (stage: string) => {
     setUser({
       ...user,
-      preferences: { 
-        ...user.preferences, 
-        stages: user.preferences.stages.filter(s => s !== stage) 
+      preferences: {
+        ...user.preferences,
+        stages: user.preferences.stages.filter(s => s !== stage)
       }
     });
   };
-
   const toggleSector = (sector: string) => {
-    const newSectors = user.preferences.sectors.includes(sector)
-      ? user.preferences.sectors.filter(s => s !== sector)
-      : [...user.preferences.sectors, sector];
+    const newSectors = user.preferences.sectors.includes(sector) ? user.preferences.sectors.filter(s => s !== sector) : [...user.preferences.sectors, sector];
     setUser({
       ...user,
-      preferences: { ...user.preferences, sectors: newSectors }
+      preferences: {
+        ...user.preferences,
+        sectors: newSectors
+      }
     });
   };
-
   const toggleStage = (stage: string) => {
-    const newStages = user.preferences.stages.includes(stage)
-      ? user.preferences.stages.filter(s => s !== stage)
-      : [...user.preferences.stages, stage];
+    const newStages = user.preferences.stages.includes(stage) ? user.preferences.stages.filter(s => s !== stage) : [...user.preferences.stages, stage];
     setUser({
       ...user,
-      preferences: { ...user.preferences, stages: newStages }
+      preferences: {
+        ...user.preferences,
+        stages: newStages
+      }
     });
   };
-
   const sectors = ['Fintech', 'HealthTech', 'AI', 'CleanTech', 'EdTech', 'Enterprise', 'Consumer'];
   const stages = ['Pre-Seed', 'Seed', 'Series A', 'Series B', 'Series C+'];
-
-  return (
-    <div className="min-h-screen bg-background pb-20">
+  return <div className="min-h-screen bg-background pb-20">
       <div className="container-safe py-6 space-y-6">
         {/* Header */}
         <div className="flex items-center justify-between">
           <h1 className="text-h1 font-bold">Profile</h1>
           <div className="flex items-center space-x-2">
-            {isEditing ? (
-              <>
+            {isEditing ? <>
                 <Button variant="outline" size="sm" onClick={() => setIsEditing(false)}>
                   Cancel
                 </Button>
                 <Button size="sm" onClick={handleSave}>
                   Save
                 </Button>
-              </>
-            ) : (
-              <>
+              </> : <>
                 <Button variant="outline" size="sm" onClick={() => setIsEditing(true)}>
                   Edit
                 </Button>
@@ -297,8 +285,7 @@ export default function Profile() {
                     </div>
                   </SheetContent>
                 </Sheet>
-              </>
-            )}
+              </>}
           </div>
         </div>
 
@@ -308,75 +295,43 @@ export default function Profile() {
             <div className="relative inline-block mb-6">
               <div className="w-24 h-24 rounded-full mx-auto overflow-hidden bg-gradient-to-br from-primary/20 to-primary/40 p-1">
                 <div className="w-full h-full rounded-full overflow-hidden bg-muted flex items-center justify-center">
-                  <img 
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face" 
-                    alt="Profile"
-                    className="w-full h-full object-cover"
-                  />
+                  <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face" alt="Profile" className="w-full h-full object-cover" />
                 </div>
               </div>
-              {isEditing && (
-                <Button 
-                  size="sm" 
-                  className="absolute -bottom-1 -right-1 rounded-full w-8 h-8 p-0"
-                >
+              {isEditing && <Button size="sm" className="absolute -bottom-1 -right-1 rounded-full w-8 h-8 p-0">
                   <Camera className="w-4 h-4" />
-                </Button>
-              )}
+                </Button>}
             </div>
             
-            {isEditing ? (
-              <div className="space-y-3 max-w-xs mx-auto">
+            {isEditing ? <div className="space-y-3 max-w-xs mx-auto">
                 <div>
                   <Label htmlFor="name">Name</Label>
-                  <Input
-                    id="name"
-                    value={user.name}
-                    onChange={(e) => setUser({ ...user, name: e.target.value })}
-                  />
+                  <Input id="name" value={user.name} onChange={e => setUser({
+                ...user,
+                name: e.target.value
+              })} />
                 </div>
                 <div>
                   <Label htmlFor="title">Title</Label>
-                  <Input
-                    id="title"
-                    value={user.title}
-                    onChange={(e) => setUser({ ...user, title: e.target.value })}
-                  />
+                  <Input id="title" value={user.title} onChange={e => setUser({
+                ...user,
+                title: e.target.value
+              })} />
                 </div>
                 <div>
                   <Label htmlFor="email">Email</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    value={user.email}
-                    onChange={(e) => setUser({ ...user, email: e.target.value })}
-                  />
+                  <Input id="email" type="email" value={user.email} onChange={e => setUser({
+                ...user,
+                email: e.target.value
+              })} />
                 </div>
-              </div>
-            ) : (
-              <div className="mb-6">
+              </div> : <div className="mb-6">
                 <h2 className="text-2xl font-bold mb-2">{user.name}</h2>
                 <p className="text-muted-foreground">{user.email}</p>
-              </div>
-            )}
+              </div>}
 
             {/* Investment Statistics */}
-            {!isEditing && (
-              <div className="grid grid-cols-3 gap-4 mt-6">
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-blue-400 mb-1">12</div>
-                  <div className="text-sm text-muted-foreground">Investments</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-green-400 mb-1">$2.5M</div>
-                  <div className="text-sm text-muted-foreground">Total Value</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-yellow-400 mb-1">4.2x</div>
-                  <div className="text-sm text-muted-foreground">Avg Return</div>
-                </div>
-              </div>
-            )}
+            {!isEditing}
           </CardContent>
         </Card>
 
@@ -391,45 +346,24 @@ export default function Profile() {
               <Label className="text-sm font-medium mb-3 block">Preferred Sectors</Label>
               
               {/* User's Selected Sectors */}
-              {user.preferences.sectors.length > 0 && (
-                <div className="flex flex-wrap gap-2 mb-3">
-                  {user.preferences.sectors.map((sector) => (
-                    <Chip
-                      key={sector}
-                      variant="primary"
-                      size="sm"
-                      className={isEditing ? "cursor-pointer group" : ""}
-                    >
+              {user.preferences.sectors.length > 0 && <div className="flex flex-wrap gap-2 mb-3">
+                  {user.preferences.sectors.map(sector => <Chip key={sector} variant="primary" size="sm" className={isEditing ? "cursor-pointer group" : ""}>
                       {sector}
-                      {isEditing && (
-                        <button
-                          onClick={() => removeSector(sector)}
-                          className="ml-1 hover:bg-primary-foreground/20 rounded-full p-0.5"
-                        >
+                      {isEditing && <button onClick={() => removeSector(sector)} className="ml-1 hover:bg-primary-foreground/20 rounded-full p-0.5">
                           <X className="w-3 h-3" />
-                        </button>
-                      )}
-                    </Chip>
-                  ))}
-                </div>
-              )}
+                        </button>}
+                    </Chip>)}
+                </div>}
 
               {/* Add New Sector Input */}
-              {isEditing && (
-                <div>
+              {isEditing && <div>
                   <div className="flex gap-2 mb-3">
-                    <Input
-                      placeholder="Add custom sector..."
-                      value={newSector}
-                      onChange={(e) => setNewSector(e.target.value)}
-                      onKeyPress={(e) => {
-                        if (e.key === 'Enter') {
-                          e.preventDefault();
-                          addSector();
-                        }
-                      }}
-                      className="flex-1"
-                    />
+                    <Input placeholder="Add custom sector..." value={newSector} onChange={e => setNewSector(e.target.value)} onKeyPress={e => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    addSector();
+                  }
+                }} className="flex-1" />
                     <Button size="sm" onClick={addSector} disabled={!newSector.trim()}>
                       <Plus className="w-4 h-4 mr-1" />
                       Add
@@ -440,24 +374,13 @@ export default function Profile() {
                   <div className="space-y-2">
                     <Label className="text-xs text-muted-foreground">Quick add:</Label>
                     <div className="flex flex-wrap gap-2">
-                      {sectors
-                        .filter(sector => !user.preferences.sectors.includes(sector))
-                        .map((sector) => (
-                          <Chip
-                            key={sector}
-                            variant="secondary"
-                            size="sm"
-                            className="cursor-pointer hover:bg-primary hover:text-primary-foreground transition-colors"
-                            onClick={() => toggleSector(sector)}
-                          >
+                      {sectors.filter(sector => !user.preferences.sectors.includes(sector)).map(sector => <Chip key={sector} variant="secondary" size="sm" className="cursor-pointer hover:bg-primary hover:text-primary-foreground transition-colors" onClick={() => toggleSector(sector)}>
                             <Plus className="w-3 h-3 mr-1" />
                             {sector}
-                          </Chip>
-                        ))}
+                          </Chip>)}
                     </div>
                   </div>
-                </div>
-              )}
+                </div>}
             </div>
 
             <Separator />
@@ -467,45 +390,24 @@ export default function Profile() {
               <Label className="text-sm font-medium mb-3 block">Preferred Stages</Label>
               
               {/* User's Selected Stages */}
-              {user.preferences.stages.length > 0 && (
-                <div className="flex flex-wrap gap-2 mb-3">
-                  {user.preferences.stages.map((stage) => (
-                    <Chip
-                      key={stage}
-                      variant="primary"
-                      size="sm"
-                      className={isEditing ? "cursor-pointer group" : ""}
-                    >
+              {user.preferences.stages.length > 0 && <div className="flex flex-wrap gap-2 mb-3">
+                  {user.preferences.stages.map(stage => <Chip key={stage} variant="primary" size="sm" className={isEditing ? "cursor-pointer group" : ""}>
                       {stage}
-                      {isEditing && (
-                        <button
-                          onClick={() => removeStage(stage)}
-                          className="ml-1 hover:bg-primary-foreground/20 rounded-full p-0.5"
-                        >
+                      {isEditing && <button onClick={() => removeStage(stage)} className="ml-1 hover:bg-primary-foreground/20 rounded-full p-0.5">
                           <X className="w-3 h-3" />
-                        </button>
-                      )}
-                    </Chip>
-                  ))}
-                </div>
-              )}
+                        </button>}
+                    </Chip>)}
+                </div>}
 
               {/* Add New Stage Input */}
-              {isEditing && (
-                <div>
+              {isEditing && <div>
                   <div className="flex gap-2 mb-3">
-                    <Input
-                      placeholder="Add custom stage..."
-                      value={newStage}
-                      onChange={(e) => setNewStage(e.target.value)}
-                      onKeyPress={(e) => {
-                        if (e.key === 'Enter') {
-                          e.preventDefault();
-                          addStage();
-                        }
-                      }}
-                      className="flex-1"
-                    />
+                    <Input placeholder="Add custom stage..." value={newStage} onChange={e => setNewStage(e.target.value)} onKeyPress={e => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    addStage();
+                  }
+                }} className="flex-1" />
                     <Button size="sm" onClick={addStage} disabled={!newStage.trim()}>
                       <Plus className="w-4 h-4 mr-1" />
                       Add
@@ -516,24 +418,13 @@ export default function Profile() {
                   <div className="space-y-2">
                     <Label className="text-xs text-muted-foreground">Quick add:</Label>
                     <div className="flex flex-wrap gap-2">
-                      {stages
-                        .filter(stage => !user.preferences.stages.includes(stage))
-                        .map((stage) => (
-                          <Chip
-                            key={stage}
-                            variant="secondary"
-                            size="sm"
-                            className="cursor-pointer hover:bg-primary hover:text-primary-foreground transition-colors"
-                            onClick={() => toggleStage(stage)}
-                          >
+                      {stages.filter(stage => !user.preferences.stages.includes(stage)).map(stage => <Chip key={stage} variant="secondary" size="sm" className="cursor-pointer hover:bg-primary hover:text-primary-foreground transition-colors" onClick={() => toggleStage(stage)}>
                             <Plus className="w-3 h-3 mr-1" />
                             {stage}
-                          </Chip>
-                        ))}
+                          </Chip>)}
                     </div>
                   </div>
-                </div>
-              )}
+                </div>}
             </div>
           </CardContent>
         </Card>
@@ -556,6 +447,5 @@ export default function Profile() {
           </CardContent>
         </Card>
       </div>
-    </div>
-  );
+    </div>;
 }
