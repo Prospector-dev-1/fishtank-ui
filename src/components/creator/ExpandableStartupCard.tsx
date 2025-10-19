@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { ChevronDown, Plus, ExternalLink } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import React, { useState } from "react";
+import { ChevronDown, Plus, ExternalLink } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Startup } from "@/data/startups";
-import { ApplyModal } from './ApplyModal';
-import { NDAModal } from './NDAModal';
+import { ApplyModal } from "./ApplyModal";
+import { NDAModal } from "./NDAModal";
 
 interface ExpandableStartupCardProps {
   startup: Startup;
@@ -13,12 +13,7 @@ interface ExpandableStartupCardProps {
   onRequest: (payload?: any) => void;
 }
 
-export function ExpandableStartupCard({
-  startup,
-  expanded,
-  setExpanded,
-  onRequest
-}: ExpandableStartupCardProps) {
+export function ExpandableStartupCard({ startup, expanded, setExpanded, onRequest }: ExpandableStartupCardProps) {
   const [showNDA, setShowNDA] = useState(false);
   const [applyRole, setApplyRole] = useState<string | null>(null);
 
@@ -36,7 +31,7 @@ export function ExpandableStartupCard({
   };
 
   const handleApplySubmit = (payload: any) => {
-    console.log('Apply payload:', payload);
+    console.log("Apply payload:", payload);
     setApplyRole(null);
     handleRequest(payload);
   };
@@ -46,15 +41,9 @@ export function ExpandableStartupCard({
       {/* Banner */}
       <div className="relative h-40 w-full overflow-hidden rounded-t-3xl">
         {startup.bannerUrl ? (
-          <img 
-            className="h-full w-full object-cover" 
-            src={startup.bannerUrl} 
-            alt={startup.name}
-          />
+          <img className="h-full w-full object-cover" src={startup.bannerUrl} alt={startup.name} />
         ) : (
-          <div className="flex h-full w-full items-center justify-center bg-neutral-800 text-neutral-500">
-            No Image
-          </div>
+          <div className="flex h-full w-full items-center justify-center bg-neutral-800 text-neutral-500">No Image</div>
         )}
         {startup.ndaRequired && (
           <div className="absolute left-3 top-3 rounded-full bg-black/80 px-2.5 py-1 text-xs font-medium text-white">
@@ -86,10 +75,10 @@ export function ExpandableStartupCard({
           <div>
             <div className="text-neutral-500">Website</div>
             {startup.website ? (
-              <a 
-                className="text-violet-300 underline flex items-center gap-1" 
-                href={startup.website} 
-                target="_blank" 
+              <a
+                className="text-violet-300 underline flex items-center gap-1"
+                href={startup.website}
+                target="_blank"
                 rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
               >
@@ -104,9 +93,9 @@ export function ExpandableStartupCard({
         {/* Main CTA - Expand */}
         <div className="mt-4">
           <Button
-            onClick={(e) => { 
-              e.stopPropagation(); 
-              setExpanded(!expanded); 
+            onClick={(e) => {
+              e.stopPropagation();
+              setExpanded(!expanded);
             }}
             className="w-full bg-white text-black hover:bg-neutral-200 font-medium"
             size="sm"
@@ -133,9 +122,9 @@ export function ExpandableStartupCard({
                 {startup.openPositions.map((role) => (
                   <button
                     key={role}
-                    onClick={(e) => { 
-                      e.stopPropagation(); 
-                      setApplyRole(role); 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setApplyRole(role);
                     }}
                     className="inline-flex items-center gap-2 rounded-full bg-neutral-800 px-3 py-1.5 text-xs text-neutral-200 hover:bg-neutral-700 transition-colors"
                     title={`Request to join as ${role}`}
@@ -150,28 +139,32 @@ export function ExpandableStartupCard({
             {/* Tabs */}
             <Tabs defaultValue="details" className="mt-4">
               <TabsList className="grid w-full grid-cols-3 bg-neutral-800">
-                <TabsTrigger value="team" className="text-xs">Team Members</TabsTrigger>
-                <TabsTrigger value="details" className="text-xs">Details</TabsTrigger>
-                <TabsTrigger value="comments" className="text-xs">FAQs</TabsTrigger>
+                <TabsTrigger value="team" className="text-xs">
+                  Team Members
+                </TabsTrigger>
+                <TabsTrigger value="details" className="text-xs">
+                  Details
+                </TabsTrigger>
+                <TabsTrigger value="comments" className="text-xs">
+                  FAQs
+                </TabsTrigger>
               </TabsList>
 
               <TabsContent value="team" className="mt-3 space-y-2">
                 {startup.team.map((member) => (
                   <div key={member.id} className="flex items-center gap-3 p-2 rounded-lg bg-neutral-800/50">
-                    <img 
-                      src={member.avatarUrl} 
-                      alt={member.name}
-                      className="h-8 w-8 rounded-full"
-                    />
+                    <img src={member.avatarUrl} alt={member.name} className="h-8 w-8 rounded-full" />
                     <div className="flex-1 min-w-0">
                       <div className="text-sm font-medium text-neutral-200">{member.name}</div>
                       <div className="text-xs text-neutral-400">{member.role}</div>
                     </div>
-                    <Button 
-                      size="sm" 
-                      variant="outline" 
+                    <Button
+                      size="sm"
+                      variant="outline"
                       className="text-xs"
-                      onClick={(e) => { e.stopPropagation(); }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                      }}
                     >
                       Profile
                     </Button>
@@ -213,10 +206,13 @@ export function ExpandableStartupCard({
           <Button
             variant="outline"
             size="sm"
-            onClick={(e) => { e.stopPropagation(); handleRequest(); }}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleRequest();
+            }}
             className="w-full border-neutral-700 text-neutral-200 hover:bg-neutral-800"
           >
-            {startup.ndaRequired ? "Request to Join (NDA)" : "Request to Join"}
+            Request to Join
           </Button>
         </div>
       </div>
@@ -234,7 +230,7 @@ export function ExpandableStartupCard({
         onClose={() => setApplyRole(null)}
         onSubmit={handleApplySubmit}
         startup={startup}
-        role={applyRole || ''}
+        role={applyRole || ""}
       />
     </div>
   );
