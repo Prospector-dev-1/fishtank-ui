@@ -317,14 +317,7 @@ const Index = () => {
       <ProfileHeader />
 
       {/* Header */}
-      <div className="flex items-center justify-between animate-slide-up">
-        <div>
-          <h1 className="text-3xl font-bold bg-gradient-hero bg-clip-text text-slate-50">
-            Good morning, {userProfile?.full_name?.split(" ")[0] || "there"}!{" "}
-          </h1>
-          <p className="text-muted-foreground text-lg">Ready to create something amazing?</p>
-        </div>
-      </div>
+      
 
       {/* Welcome Card - Similar to screenshot */}
       <Card className="bg-gradient-to-br from-primary/10 to-primary/5 border-primary/20 shadow-elegant animate-scale-in">
